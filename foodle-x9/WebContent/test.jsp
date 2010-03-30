@@ -4,13 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Foodle by the most awesome X9</title>
+<title>Insert title here</title>
 </head>
 <body>
-
-Hi, this works
-
-testing testing
 
 </body>
 </html>
