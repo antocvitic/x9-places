@@ -8,8 +8,8 @@
 </head>
 <body>
 <% java.util.Date d = new java.util.Date(); %>
-<h1>
-<p></p>Today's date is <%= d.toString() %> and this jsp page worked!<br />
+<h1></h1>
+<p>Today's date is <%= d.toString() %> and this jsp page worked!<br />
 Lets get some data from mysql</p><br />
 
 <p>Try "John" as name or Scarlet</p>
@@ -31,7 +31,7 @@ Lets get some data from mysql</p><br />
 <p>Some links:</p>
 <a href="http://localhost:7777/solr/admin/">http://localhost:7777/solr/admin/</a>
 <a href="http://localhost:8888/">Tomcat</a>
-</h1>
+
 
 </body>
 </html>
