@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<%@page import="com.x9.foodle.user.UserModel"%>
+<%
+	UserModel user = UserModel.getFromDb(1);
+%>
+Hi: <%=user.getUsername()%>
 </body>
 </html>
