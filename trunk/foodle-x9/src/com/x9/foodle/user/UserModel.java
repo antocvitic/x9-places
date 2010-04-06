@@ -1,5 +1,12 @@
 package com.x9.foodle.user;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.x9.foodle.sql.DBUtils;
+
 public class UserModel {
 
 	private int userID;
@@ -11,7 +18,35 @@ public class UserModel {
 
 	public static UserModel getFromDb(int userID) {
 		// TODO:
-		return null;
+		UserModel user = null;
+		Connection conn = null;
+		try {
+			conn = DBUtils.openConnection();
+			PreparedStatement stm = conn
+					.prepareStatement("select * from users where userID = ?");
+			stm.setInt(0, userID);
+			boolean success = stm.execute();
+			if (!success) {
+				return null;
+			}
+
+			ResultSet result = stm.getResultSet();
+			result.next();
+
+			user = userFromResultSet(result);
+
+			result.close();
+			stm.close();
+
+			return user;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return user;
 	}
 
 	public static UserModel getFromDb(String username) {
@@ -185,5 +220,18 @@ public class UserModel {
 		this.email = copyMe.email;
 		this.reputationLevel = copyMe.reputationLevel;
 		this.isConnectedToFacebook = copyMe.isConnectedToFacebook;
+	}
+
+	private static UserModel userFromResultSet(ResultSet result)
+			throws SQLException {
+		UserModel user = new UserModel();
+		user.userID = result.getInt(result.findColumn("userID"));
+		user.username = result.getString(result.findColumn("username"));
+		user.passwordHash = result.getString(result.findColumn("passwordHash"));
+		user.email = result.getString(result.findColumn("email"));
+		user.reputationLevel = result.getInt(result.findColumn("repLevel"));
+		user.isConnectedToFacebook = result.getBoolean(result
+				.findColumn("isFBConnected"));
+		return user;
 	}
 }

@@ -25,4 +25,14 @@
 		<servlet-name>Test</servlet-name>
 		<url-pattern>/Test</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>Hello</display-name>
+		<servlet-name>Hello</servlet-name>
+		<servlet-class>com.x9.foodle.servlets.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Hello</servlet-name>
+		<url-pattern>/Hello</url-pattern>
+	</servlet-mapping>
 </web-app>
