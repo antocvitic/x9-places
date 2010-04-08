@@ -1,4 +1,4 @@
-package com.x9.foodle.servlets;
+package com.x9.foodle.testservlets;
 
 import java.io.IOException;
 import java.sql.Connection;
