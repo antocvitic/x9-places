@@ -27,12 +27,12 @@
 	</servlet-mapping>
 	<servlet>
 		<description></description>
-		<display-name>Hello</display-name>
-		<servlet-name>Hello</servlet-name>
-		<servlet-class>com.x9.foodle.servlets.HelloServlet</servlet-class>
+		<display-name>AdamTest</display-name>
+		<servlet-name>AdamTest</servlet-name>
+		<servlet-class>com.x9.foodle.testservlets.AdamTest</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Hello</servlet-name>
-		<url-pattern>/Hello</url-pattern>
+		<servlet-name>AdamTest</servlet-name>
+		<url-pattern>/adam-test</url-pattern>
 	</servlet-mapping>
 </web-app>
