@@ -74,6 +74,10 @@ public class VenueModel {
 		// TODO:
 	}
 
+	public static class Validator {
+		// TODO:
+	}
+
 	/**
 	 * Private constructor, use {@link Builder} create new venues.
 	 */
@@ -93,5 +97,42 @@ public class VenueModel {
 		this.creator = null;
 
 		this.lastUpdated = -1;
+	}
+
+	/**
+	 * Private copy constructor.
+	 * 
+	 * @param copyMe
+	 *            the user to be copied.
+	 */
+	private VenueModel(VenueModel copyMe) {
+		this();
+		copy(this, copyMe);
+	}
+
+	/**
+	 * Copies all the fields of src into dest.
+	 * 
+	 * @param dest
+	 *            the destination of the copy operation.
+	 * @param src
+	 *            the source of the copy operation.
+	 */
+	private static void copy(VenueModel dest, VenueModel src) {
+		dest.venueID = src.venueID;
+		dest.title = src.title;
+		dest.address = src.address;
+		dest.description = src.description;
+		dest.photos = src.photos;
+
+		dest.numberOfRatings = src.numberOfRatings;
+		dest.averageRating = src.averageRating;
+
+		dest.closed = src.closed;
+
+		dest.timeAdded = src.timeAdded;
+		dest.creator = src.creator;
+
+		dest.lastUpdated = src.lastUpdated;
 	}
 }
