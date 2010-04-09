@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.x9.foodle.sql.DBUtils;
 import com.x9.foodle.user.exceptions.BadEmailException;
@@ -21,31 +24,29 @@ public class UserModel {
 	private String email;
 	private String name;
 	private int reputationLevel;
+	private String sessionToken;
 	private boolean isConnectedToFacebook;
 
 	public static UserModel getFromDbByID(int userID) {
-
 		Connection conn = null;
+		PreparedStatement stm = null;
+		ResultSet result = null;
 		try {
 			conn = DBUtils.openConnection();
-			PreparedStatement stm = conn
-					.prepareStatement("select * from users where userID = ?");
+			stm = conn.prepareStatement("select * from users where userID = ?");
 			stm.setInt(1, userID);
 			boolean success = stm.execute();
 			if (!success) {
 				return null;
 			}
 
-			ResultSet result = stm.getResultSet();
+			result = stm.getResultSet();
 
 			if (!result.next()) {
 				return null;
 			}
 
 			UserModel user = userFromResultSet(result);
-
-			result.close();
-			stm.close();
 
 			return user;
 
@@ -53,16 +54,22 @@ public class UserModel {
 			throw new SQLRuntimeException("Bad SQL syntax getting user by id",
 					e);
 		} finally {
+			DBUtils.closeResultSet(result);
+			DBUtils.closeStatement(stm);
 			DBUtils.closeConnection(conn);
 		}
 	}
 
 	public static UserModel getFromDbByUsername(String username) {
+		if (username == null)
+			throw new IllegalArgumentException("username was null!");
 		Connection conn = null;
+		PreparedStatement stm = null;
+		ResultSet result = null;
 		try {
 			conn = DBUtils.openConnection();
 
-			PreparedStatement stm = conn
+			stm = conn
 					.prepareStatement("select * from users where username = ?");
 			stm.setString(1, username);
 			boolean success = stm.execute();
@@ -70,7 +77,7 @@ public class UserModel {
 				return null;
 			}
 
-			ResultSet result = stm.getResultSet();
+			result = stm.getResultSet();
 
 			if (!result.next()) {
 				return null;
@@ -78,15 +85,14 @@ public class UserModel {
 
 			UserModel user = userFromResultSet(result);
 
-			result.close();
-			stm.close();
-
 			return user;
 
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(
 					"Bad SQL syntax getting user by username", e);
 		} finally {
+			DBUtils.closeResultSet(result);
+			DBUtils.closeStatement(stm);
 			DBUtils.closeConnection(conn);
 		}
 	}
@@ -113,6 +119,10 @@ public class UserModel {
 
 	public int getReputationLevel() {
 		return reputationLevel;
+	}
+
+	public String getSessionToken() {
+		return sessionToken;
 	}
 
 	public boolean isConnectedToFacebook() {
@@ -167,6 +177,11 @@ public class UserModel {
 			user.reputationLevel = reputationLevel;
 			return this;
 		}
+
+		// public Builder setSessionToken(String sessionToken) {
+		// user.sessionToken = sessionToken;
+		// return this;
+		// }
 
 		public Builder setConnectedToFacebook(boolean isConnectedToFacebook) {
 			user.isConnectedToFacebook = isConnectedToFacebook;
@@ -237,10 +252,15 @@ public class UserModel {
 					// insert a new user
 					stm = conn
 							.prepareStatement(
-									"insert into users (username, passwordHash, email, name, repLevel, isFBConnected) "
-											+ "values (?, ?, ?, ?, ?, ?)",
+									"insert into users (username, passwordHash, email, name, repLevel, isFBConnected, sessionToken) "
+											+ "values (?, ?, ?, ?, ?, ?, ?)",
 									Statement.RETURN_GENERATED_KEYS);
 
+					// generate new session token
+					Random random = new Random(System.currentTimeMillis());
+					String token = BCrypt.hashpw(Long.toString(random
+							.nextLong()), BCrypt.gensalt());
+					stm.setString(7, token);
 				}
 
 				stm.setString(1, user.username);
@@ -327,6 +347,7 @@ public class UserModel {
 		this.email = null;
 		this.name = null;
 		this.reputationLevel = 0;
+		this.sessionToken = null;
 		this.isConnectedToFacebook = false;
 	}
 
@@ -356,6 +377,7 @@ public class UserModel {
 		dest.email = src.email;
 		dest.name = src.name;
 		dest.reputationLevel = src.reputationLevel;
+		dest.sessionToken = src.sessionToken;
 		dest.isConnectedToFacebook = src.isConnectedToFacebook;
 	}
 
@@ -378,6 +400,7 @@ public class UserModel {
 		user.email = result.getString(result.findColumn("email"));
 		user.name = result.getString(result.findColumn("name"));
 		user.reputationLevel = result.getInt(result.findColumn("repLevel"));
+		user.sessionToken = result.getString(result.findColumn("sessionToken"));
 		user.isConnectedToFacebook = result.getBoolean(result
 				.findColumn("isFBConnected"));
 		return user;

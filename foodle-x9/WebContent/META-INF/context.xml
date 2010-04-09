@@ -1,23 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Context
-	path="/foodle-x9"
-	debug="5"
-	reloadable="true"
-	crossContext="true">
+    path="/foodle-x9"
+    debug="5"
+    reloadable="true"
+    crossContext="true"
+>
 
-	<Resource
-		name="jdbc/MySQLDB"
-		auth="Container"
-		type="javax.sql.DataSource"
-		maxActive="20"
-		maxIdle="30"
-		maxWait="10000"
-		username="x9user"
-		password="x9pwd"
-		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost/x9db"
-		removeAbandoned="true"
-		removeAbandonedTimeout="60"
-		logAbandoned="true" />
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/classes</WatchedResource>
+
+
+    <Resource
+        name="jdbc/MySQLDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="20"
+        maxIdle="30"
+        maxWait="10000"
+        username="x9user"
+        password="x9pwd"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost/x9db"
+        removeAbandoned="true"
+        removeAbandonedTimeout="60"
+        logAbandoned="true" />
 
 </Context>

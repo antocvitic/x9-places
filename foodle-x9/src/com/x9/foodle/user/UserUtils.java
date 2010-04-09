@@ -19,10 +19,9 @@ public class UserUtils {
 		if (user != null)
 			return user;
 
-		// TODO: check for a logged in and connected facebook account
-		// user = getCurrentUserFacebookAccount(req);
-		// if (user != null)
-		// return user;
+		user = getCurrentUserFacebookAccount(req);
+		if (user != null)
+			return user;
 
 		return null;
 	}
@@ -35,7 +34,9 @@ public class UserUtils {
 		}
 
 		Integer uid = (Integer) session
-				.getAttribute(LoginController.LOGGED_IN_SESSION_ATTRIBUTE);
+				.getAttribute(LoginController.LOGGED_IN_SESSION_USERID);
+		String sessionToken = (String) session
+				.getAttribute(LoginController.LOGGED_IN_SESSION_SESSION_TOKEN);
 
 		if (uid == null) {
 			return null;
@@ -43,6 +44,16 @@ public class UserUtils {
 
 		UserModel user = UserModel.getFromDbByID(uid);
 
+		if (!user.getSessionToken().equals(sessionToken)) {
+			return null;
+		}
+
 		return user;
+	}
+
+	private static UserModel getCurrentUserFacebookAccount(
+			HttpServletRequest req) {
+		// TODO: check for a logged in and connected facebook account
+		return null;
 	}
 }

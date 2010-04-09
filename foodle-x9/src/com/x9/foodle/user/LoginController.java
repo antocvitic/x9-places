@@ -13,7 +13,8 @@ import org.mindrot.jbcrypt.BCrypt;
 @SuppressWarnings("serial")
 public class LoginController extends HttpServlet {
 
-	public static String LOGGED_IN_SESSION_ATTRIBUTE = "logged_in_user";
+	public static String LOGGED_IN_SESSION_USERID = "logged_in_userid";
+	public static String LOGGED_IN_SESSION_SESSION_TOKEN = "logged_in_session_token";
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -25,20 +26,21 @@ public class LoginController extends HttpServlet {
 		UserModel user = UserModel.getFromDbByUsername(username);
 
 		if (user == null) {
-			resp.sendRedirect("login_page.jsp?error=no_such_user");
+			resp.sendRedirect("login.jsp?error=no_such_user:" + username);
 			return;
 		}
 
 		if (!BCrypt.checkpw(password, user.getPasswordHash())) {
-			resp.sendRedirect("login_page.jsp?error=bad_pwd");
+			resp.sendRedirect("login.jsp?error=bad_pwd:" + password);
 			return;
 		}
 
 		HttpSession session = req.getSession();
 
-		// TODO: make it more secure, this can (probably) easily be spoofed
-		session.setAttribute(LOGGED_IN_SESSION_ATTRIBUTE, new Integer(user
+		session.setAttribute(LOGGED_IN_SESSION_USERID, new Integer(user
 				.getUserID()));
+		session.setAttribute(LOGGED_IN_SESSION_SESSION_TOKEN, user
+				.getSessionToken());
 
 		resp.sendRedirect(redirect);
 	}

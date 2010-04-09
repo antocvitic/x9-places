@@ -18,9 +18,12 @@ public class LogoutController extends HttpServlet {
 		HttpSession session = req.getSession(false);
 
 		if (session != null) {
+			session.removeAttribute(LoginController.LOGGED_IN_SESSION_USERID);
 			session
-					.removeAttribute(LoginController.LOGGED_IN_SESSION_ATTRIBUTE);
+					.removeAttribute(LoginController.LOGGED_IN_SESSION_SESSION_TOKEN);
 		}
+
+		// TODO: remove cookie
 
 		resp.sendRedirect(redirect);
 	}
