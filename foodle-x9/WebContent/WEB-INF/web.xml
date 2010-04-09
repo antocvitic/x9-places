@@ -5,13 +5,31 @@
     xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     id="WebApp_ID"
-    version="2.5"
->
+    version="2.5">
     <display-name>foodle-x9</display-name>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <!-- Filter declarations -->
+    <!--
+        More on filters:
+        http://java.sun.com/products/servlet/Filters.html
+    -->
+    <filter>
+        <filter-name>SetCharacterEncodingFilter</filter-name>
+        <filter-class>com.x9.foodle.filters.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>SetCharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- Servlet declarations -->
     <servlet>

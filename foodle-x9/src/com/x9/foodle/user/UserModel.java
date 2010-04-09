@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -231,13 +232,12 @@ public class UserModel {
 		 */
 		public UserModel apply() throws BadUsernameException,
 				BadPasswordException, BadEmailException, SQLRuntimeException {
-			// TODO: check if this works
 			// throws on bad data
 			validate();
 
 			Connection conn = null;
 			PreparedStatement stm = null;
-			ResultSet generatedKeys = null;
+			ResultSet result = null;
 			try {
 
 				conn = DBUtils.openConnection();
@@ -269,15 +269,16 @@ public class UserModel {
 				stm.setString(4, user.name);
 				stm.setInt(5, user.reputationLevel);
 				stm.setBoolean(6, user.isConnectedToFacebook);
+
 				stm.execute();
 
 				if (editMe != null) {
 					copy(editMe, user);
 				} else {
 					// retrieve the value of the auto_increment 'userID' column
-					generatedKeys = stm.getGeneratedKeys();
-					if (generatedKeys.next()) {
-						user.userID = generatedKeys.getInt(1);
+					result = stm.getGeneratedKeys();
+					if (result.next()) {
+						user.userID = result.getInt(1);
 					} else {
 						throw new SQLRuntimeException(
 								"Got no user id for new user");
@@ -291,7 +292,7 @@ public class UserModel {
 				throw new SQLRuntimeException(
 						"Bad SQL syntax inserting/updating user", e);
 			} finally {
-				DBUtils.closeResultSet(generatedKeys);
+				DBUtils.closeResultSet(result);
 				DBUtils.closeStatement(stm);
 				DBUtils.closeConnection(conn);
 			}
@@ -308,15 +309,35 @@ public class UserModel {
 				throw new BadUsernameException("username.length = "
 						+ username.length());
 			}
+
+			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
+			if (!p.matcher(username).matches()) {
+				throw new BadUsernameException(
+						"username contained invalid characters: " + username);
+			}
+
+		}
+
+		public static void validatePassword(String password)
+				throws BadPasswordException {
+			if (password == null) {
+				throw new BadPasswordException("no password");
+			}
+
+			if (password.length() < 4 || password.length() > 40) {
+				throw new BadPasswordException("password.length = "
+						+ password.length());
+			}
+
+			// TODO: check password strength?
 		}
 
 		public static void validatePasswordHash(String passwordHash)
 				throws BadPasswordException {
 			if (passwordHash == null) {
-				throw new BadPasswordException("no password");
+				throw new BadPasswordException("no password hash");
 			}
 
-			// TODO: where do we check password length/strength?
 		}
 
 		public static void validateEmail(String email) throws BadEmailException {
