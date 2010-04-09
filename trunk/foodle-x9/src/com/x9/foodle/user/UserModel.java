@@ -91,43 +91,6 @@ public class UserModel {
 		}
 	}
 
-	public static UserModel getFromDbByLogin(String username,
-			String passwordHash) {
-		// TODO: check if this method works
-		Connection conn = null;
-		try {
-			conn = DBUtils.openConnection();
-
-			PreparedStatement stm = conn
-					.prepareStatement("select * from users where username = ? and passwordHash = ?");
-			stm.setString(1, username);
-			stm.setString(2, passwordHash);
-			boolean success = stm.execute();
-			if (!success) {
-				return null;
-			}
-
-			ResultSet result = stm.getResultSet();
-
-			if (!result.next()) {
-				return null;
-			}
-
-			UserModel user = userFromResultSet(result);
-
-			result.close();
-			stm.close();
-
-			return user;
-
-		} catch (SQLException e) {
-			throw new SQLRuntimeException(
-					"Bad SQL syntax getting user by username", e);
-		} finally {
-			DBUtils.closeConnection(conn);
-		}
-	}
-
 	public int getUserID() {
 		return userID;
 	}
