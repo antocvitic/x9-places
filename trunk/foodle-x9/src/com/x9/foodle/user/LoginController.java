@@ -23,14 +23,16 @@ public class LoginController extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 
-		UserModel user = UserModel.getFromDbByUsername(username);
+		UserModel user = null;
 
-		if (user == null) {
+		if (username == null
+				|| (user = UserModel.getFromDbByUsername(username)) == null) {
 			resp.sendRedirect("login.jsp?error=no_such_user:" + username);
 			return;
 		}
 
-		if (!BCrypt.checkpw(password, user.getPasswordHash())) {
+		if (password == null
+				|| !BCrypt.checkpw(password, user.getPasswordHash())) {
 			resp.sendRedirect("login.jsp?error=bad_pwd:" + password);
 			return;
 		}
