@@ -24,7 +24,7 @@ create table users (
     email varchar(256) not null, 
     name varchar(64), 
     repLevel int, 
-    sessionToken varchar(32) default null,
+    sessionToken varchar(1024) default null,
     isFBConnected boolean, 
     primary key (userID),
     unique (username),
