@@ -1,14 +1,12 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Context
     path="/foodle-x9"
     debug="5"
     reloadable="true"
-    crossContext="true"
->
+    crossContext="true">
 
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>WEB-INF/classes</WatchedResource>
-
 
     <Resource
         name="jdbc/MySQLDB"

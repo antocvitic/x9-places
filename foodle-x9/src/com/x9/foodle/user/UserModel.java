@@ -344,7 +344,18 @@ public class UserModel {
 			if (email == null) {
 				throw new BadEmailException("no email");
 			}
-			// TODO: validate email
+			// regex copied from: http://www.regular-expressions.info/email.html
+			// with some modifications to allow for new TLDs
+			// http://en.wikipedia.org/wiki/List_of_Internet_top-level_domains
+
+			String ccTLD = "[A-Z]{2}";
+			String gTLD = "aero|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel";
+
+			Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.(?:"
+					+ ccTLD + "|" + gTLD + ")$", Pattern.CASE_INSENSITIVE);
+			if (!p.matcher(email).matches()) {
+				throw new BadEmailException("invalid email: " + email);
+			}
 		}
 
 		public static void validate(UserModel user)
