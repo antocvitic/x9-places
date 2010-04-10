@@ -13,23 +13,29 @@ grant usage on *.* to 'x9user'@'localhost' identified by 'x9pwd';
 drop user 'x9user'@'localhost';
 
 /* create database */
-create database x9db;
+create database x9db default character set utf8;
 use x9db;
 
 /* create users table */
 create table users (
     userID int not null auto_increment , 
-    username varchar(64) not null, 
-    passwordHash varchar(1024) not null, 
-    email varchar(256) not null, 
+    username varchar(64) character set latin1 not null, 
+    passwordHash varchar(1024) character set latin1 not null, 
+    email varchar(256) character set latin1 not null, 
     name varchar(64), 
     repLevel int, 
-    sessionToken varchar(1024) default null,
+    sessionToken varchar(1024) character set latin1 default null,
     isFBConnected boolean, 
     primary key (userID),
     unique (username),
     unique (email)
 ) Engine=InnoDB;
+
+/*
+    Some links on charsets:
+    MySQL Specifying Character Sets and Collations: http://dev.mysql.com/doc/refman/5.1/en/charset-syntax.html
+    Specified key was too long, utf8: http://bugs.mysql.com/bug.php?id=4541
+*/
 
 /* create and grant privliges to x9user */
 grant all on x9db.* to 'x9user'@'localhost' identified by 'x9pwd';

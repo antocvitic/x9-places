@@ -21,7 +21,7 @@ public class InvalidUserException extends Exception {
 	}
 
 	public String getURLEncodedMessage() {
-		return QuickURLEncoder.encode(getMessage());
+		return getMessage();//QuickURLEncoder.encode(getMessage());
 	}
 
 }

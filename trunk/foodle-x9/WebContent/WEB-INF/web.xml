@@ -93,4 +93,12 @@
         <servlet-name>SessionDumper</servlet-name>
         <url-pattern>/dump-session</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UserDumper</servlet-name>
+        <servlet-class>com.x9.foodle.testservlets.UserDumper</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserDumper</servlet-name>
+        <url-pattern>/dump-user</url-pattern>
+    </servlet-mapping>
 </web-app>

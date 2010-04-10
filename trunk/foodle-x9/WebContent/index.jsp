@@ -33,7 +33,8 @@ Lets get some data from mysql</p>
 <hr/>
 <p>Debug:<br />
 <a href="hasher">hash stuff with jBCrypt</a> - <a href="dump-session">dump
-current session</a></p>
+current session</a> - <a href="dump-user">dump
+user data</a></p>
 
 </body>
 </html>

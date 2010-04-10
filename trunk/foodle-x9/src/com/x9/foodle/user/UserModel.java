@@ -11,11 +11,11 @@ import java.util.regex.Pattern;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.x9.foodle.sql.DBUtils;
+import com.x9.foodle.sql.SQLRuntimeException;
 import com.x9.foodle.user.exceptions.BadEmailException;
 import com.x9.foodle.user.exceptions.BadPasswordException;
 import com.x9.foodle.user.exceptions.BadUsernameException;
 import com.x9.foodle.user.exceptions.InvalidUserException;
-import com.x9.foodle.util.SQLRuntimeException;
 
 public class UserModel {
 
@@ -437,4 +437,17 @@ public class UserModel {
 				.findColumn("isFBConnected"));
 		return user;
 	}
+
+	/**
+	 * For debug purposes only.
+	 */
+	@Override
+	public String toString() {
+		return "UserModel [userID=" + userID + ", username=" + username
+				+ ", passwordHash=" + passwordHash + ", email=" + email
+				+ ", name=" + name + ", reputationLevel=" + reputationLevel
+				+ ", sessionToken=" + sessionToken + ", isConnectedToFacebook="
+				+ isConnectedToFacebook + "]";
+	}
+
 }

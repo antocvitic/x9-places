@@ -24,7 +24,7 @@ public class QuickURLEncoder {
 	}
 
 	/**
-	 * Returns the URL encoded {@code s} as a regular UTF-8 string.s
+	 * Returns the URL encoded {@code s} as a regular UTF-8 string.
 	 * 
 	 * @param s
 	 *            the string to be decoded
@@ -39,4 +39,14 @@ public class QuickURLEncoder {
 					"UTF-8 is not supported by the URLDecoder!", e);
 		}
 	}
+	
+	public static String decodeLatin(String s) {
+		try {
+			return URLDecoder.decode(s, "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException(
+					"ISO-8859-1 is not supported by the URLDecoder!", e);
+		}
+	}
+	
 }
