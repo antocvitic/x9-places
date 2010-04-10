@@ -19,6 +19,7 @@
         password="x9pwd"
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://localhost/x9db"
+        charSet="utf8"
         removeAbandoned="true"
         removeAbandonedTimeout="60"
         logAbandoned="true" />

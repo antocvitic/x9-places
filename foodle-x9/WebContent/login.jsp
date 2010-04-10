@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%@page import="com.x9.foodle.util.QuickURLEncoder"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Login Page - Foodle-X9</title>
@@ -25,13 +26,16 @@ body {
 	text-align: center;
 }
 
+#error_div {
+    color: red;
+}
+
 #content {
 	width: 700px;
 	height: 100%;
+    margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	display: table-cell;
-	vertical-align: middle;
 }
 
 #login_div {
@@ -56,6 +60,24 @@ body {
 <body>
 
 <div id="content">
+
+<div id="error_div">
+<%
+	if (request.getParameter("error") != null) {
+		String error = request.getParameter("error");
+		String message = request.getParameter("reason");
+		if (message == null)
+			message = "Unknown reason";
+		else
+			message = message;//QuickURLEncoder.decodeLatin(message);
+%> <strong>Error:</strong> <%=error%><br />
+<strong>Reason:</strong> <%=message%> <%
+ 	}
+    
+    out.println("hejsan" + QuickURLEncoder.decode(QuickURLEncoder.encode("åäö")));
+    out.println("nsajeh" + QuickURLEncoder.decode("usernameöö+contained+invalid+characters%3A+fdsa%C3%B6"));
+ %>
+</div>
 
 <div id="login_div">
 <form action="login" method="POST">

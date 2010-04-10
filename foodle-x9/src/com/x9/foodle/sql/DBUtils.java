@@ -9,7 +9,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.x9.foodle.util.SQLRuntimeException;
 
 /**
  * A utility class for dealing the the MySQL database.

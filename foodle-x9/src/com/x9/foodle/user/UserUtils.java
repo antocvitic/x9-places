@@ -26,7 +26,7 @@ public class UserUtils {
 		return null;
 	}
 
-	public static UserModel getCurrentUserLocalAccount(HttpServletRequest req) {
+	private static UserModel getCurrentUserLocalAccount(HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
 
 		if (session == null) {
