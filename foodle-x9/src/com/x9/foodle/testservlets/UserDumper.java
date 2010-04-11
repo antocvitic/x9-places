@@ -17,6 +17,7 @@ public class UserDumper extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
 		String username = req.getParameter("uname");
 		ServletOutputStream out = resp.getOutputStream();
 		
