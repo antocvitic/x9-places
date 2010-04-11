@@ -16,6 +16,7 @@ public class SessionDumper extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
 		resp.setHeader("Cache-Control", "no-cache"); // HTTP 1.1
 		resp.setHeader("Pragma", "no-cache"); // HTTP 1.0
 		resp.setDateHeader("Expires", 0); // prevents caching at the proxy

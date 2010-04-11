@@ -16,6 +16,7 @@ public class Hasher extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
 		String password = req.getParameter("pwd");
 		password = password == null ? "password" : password;
 		String hash = BCrypt.hashpw(password, BCrypt.gensalt());
