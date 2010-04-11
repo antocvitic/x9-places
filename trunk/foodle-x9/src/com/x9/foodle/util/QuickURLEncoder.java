@@ -22,6 +22,15 @@ public class QuickURLEncoder {
 					"UTF-8 is not supported by the URLEncoder!", e);
 		}
 	}
+	
+	public static String encodeLatin(String s) {
+		try {
+			return URLEncoder.encode(s, "ISO-8859-1");
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException(
+					"UTF-8 is not supported by the URLEncoder!", e);
+		}
+	}
 
 	/**
 	 * Returns the URL encoded {@code s} as a regular UTF-8 string.
