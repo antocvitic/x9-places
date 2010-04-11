@@ -1,4 +1,4 @@
-package com.x9.foodle.sql;
+package com.x9.foodle.datastore;
 
 @SuppressWarnings("serial")
 public class SQLRuntimeException extends RuntimeException {

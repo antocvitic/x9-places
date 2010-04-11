@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.x9.foodle.sql.DBUtils;
-import com.x9.foodle.sql.SQLRuntimeException;
+import com.x9.foodle.datastore.DBUtils;
+import com.x9.foodle.datastore.SQLRuntimeException;
 import com.x9.foodle.user.exceptions.BadEmailException;
 import com.x9.foodle.user.exceptions.BadPasswordException;
 import com.x9.foodle.user.exceptions.BadUsernameException;
@@ -190,16 +190,16 @@ public class UserModel {
 		}
 
 		/**
-		 * Will throw <some-exception> if any parameters for this user is
-		 * invalid.
+		 * Will throw a subclass of {@link InvalidUserException} if any of the
+		 * parameters for this user is invalid.
 		 * 
 		 * @throws BadUsernameException
-		 *             if the username is invalid.
+		 *             see {@link Validator#validateUsername(UserModel)
 		 * @throws BadPasswordException
-		 *             if the password is invalid
+		 *             see {@link Validator#validatePasswordHash(UserModel)
 		 * @throws BadEmailException
-		 *             if the email address is invalid
-		 * 
+		 *             see {@link Validator#validateEmail(UserModel)
+		 * @see Validator#validate(UserModel)
 		 */
 		public void validate() throws BadUsernameException,
 				BadPasswordException, BadEmailException {
@@ -211,7 +211,7 @@ public class UserModel {
 		 * inserts them as a user in the database. If the builder was created
 		 * using the default constructor, a new user is inserted. If it was
 		 * created using the {@link UserModel#getEditable()} method, that user
-		 * will be updated, and all objects referencing to that user will be
+		 * will be updated, and all references to that object will be
 		 * updated.
 		 * 
 		 * Will throw subclasses of {@link InvalidUserException} if any
@@ -220,13 +220,13 @@ public class UserModel {
 		 * A user model (with a correct user id) will be returned if no
 		 * exceptions are thrown.
 		 * 
-		 * @return The user model, never null.
+		 * @return The inserted or edited user model, never null
 		 * @throws BadUsernameException
-		 *             {@link #validate()}
+		 *             see {@link #validate()}
 		 * @throws BadPasswordException
-		 *             {@link #validate()}
+		 *             see {@link #validate()}
 		 * @throws BadEmailException
-		 *             {@link #validate()}
+		 *             see {@link #validate()}
 		 * @throws SQLRuntimeException
 		 *             if an sql error occurs.
 		 */
@@ -274,6 +274,7 @@ public class UserModel {
 
 				if (editMe != null) {
 					copy(editMe, user);
+					return editMe;
 				} else {
 					// retrieve the value of the auto_increment 'userID' column
 					result = stm.getGeneratedKeys();
@@ -283,11 +284,8 @@ public class UserModel {
 						throw new SQLRuntimeException(
 								"Got no user id for new user");
 					}
-
+					return user;
 				}
-
-				return user;
-
 			} catch (SQLException e) {
 				throw new SQLRuntimeException(
 						"Bad SQL syntax inserting/updating user", e);
@@ -300,20 +298,32 @@ public class UserModel {
 	}
 
 	public static class Validator {
-		public static void validateUsername(String username)
+
+		public static void validate(UserModel user)
+				throws BadUsernameException, BadPasswordException,
+				BadEmailException {
+			validateUsername(user);
+			validatePasswordHash(user);
+			validateEmail(user);
+
+			// TODO: if account is connected to facebook, what more do we need?
+		}
+
+		public static void validateUsername(UserModel user)
 				throws BadUsernameException {
-			if (username == null) {
-				throw new BadUsernameException("no username");
+			if (user.username == null) {
+				throw new BadUsernameException("null username");
 			}
-			if (username.length() < 4 || username.length() > 20) {
+			if (user.username.length() < 4 || user.username.length() > 20) {
 				throw new BadUsernameException("username.length = "
-						+ username.length());
+						+ user.username.length());
 			}
 
 			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
-			if (!p.matcher(username).matches()) {
+			if (!p.matcher(user.username).matches()) {
 				throw new BadUsernameException(
-						"username contained invalid characters: " + username);
+						"username contained invalid characters: "
+								+ user.username);
 			}
 
 		}
@@ -332,16 +342,17 @@ public class UserModel {
 			// TODO: check password strength?
 		}
 
-		public static void validatePasswordHash(String passwordHash)
+		public static void validatePasswordHash(UserModel user)
 				throws BadPasswordException {
-			if (passwordHash == null) {
+			if (user.passwordHash == null) {
 				throw new BadPasswordException("no password hash");
 			}
 
 		}
 
-		public static void validateEmail(String email) throws BadEmailException {
-			if (email == null) {
+		public static void validateEmail(UserModel user)
+				throws BadEmailException {
+			if (user.email == null) {
 				throw new BadEmailException("no email");
 			}
 			// regex copied from: http://www.regular-expressions.info/email.html
@@ -353,19 +364,9 @@ public class UserModel {
 
 			Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.(?:"
 					+ ccTLD + "|" + gTLD + ")$", Pattern.CASE_INSENSITIVE);
-			if (!p.matcher(email).matches()) {
-				throw new BadEmailException("invalid email: " + email);
+			if (!p.matcher(user.email).matches()) {
+				throw new BadEmailException("invalid email: " + user.email);
 			}
-		}
-
-		public static void validate(UserModel user)
-				throws BadUsernameException, BadPasswordException,
-				BadEmailException {
-			validateUsername(user.username);
-			validatePasswordHash(user.passwordHash);
-			validateEmail(user.email);
-
-			// TODO: if account is connected to facebook, what more do we need?
 		}
 	}
 

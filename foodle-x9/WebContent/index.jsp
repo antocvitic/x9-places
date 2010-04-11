@@ -7,17 +7,21 @@
 <title>Foodle by the most awesome X9</title>
 </head>
 <body>
+<%@page import="com.x9.foodle.util.DateUtils"%>
 <%
-	java.util.Date d = new java.util.Date();
+	java.util.Date d = DateUtils.getNowUTC();
 %>
 <h1></h1>
-<p>Today's date is <%=d.toString()%> and this jsp page worked!<br />
+<p>Today's date is <%=DateUtils.dateToSolrDate(d)%> (UTC) and this
+jsp page worked!<br />
 Lets get some data from mysql</p>
 <br />
 
 <p><a href="login.jsp">login/register</a> - <a href="logout">logout</a></p>
 
-<hr/>
+<p><a href="venue/edit.jsp">add venue</a></p>
+
+<hr />
 <p>TODO: Test searching/querying solr here</p>
 <form action="/foodle-x9/Test" method="POST"><label
     for="VenueTitle">A Venue: </label><input id="VenueTitle"
@@ -25,16 +29,15 @@ Lets get some data from mysql</p>
 
 <input type="submit" value="Submit"></input></form>
 
-<hr/>
+<hr />
 <p>Some links:<br />
 <a href="http://localhost:7777/solr/admin/">http://localhost:7777/solr/admin/</a>
 <a href="http://localhost:8888/">Tomcat</a></p>
 
-<hr/>
+<hr />
 <p>Debug:<br />
 <a href="hasher">hash stuff with jBCrypt</a> - <a href="dump-session">dump
-current session</a> - <a href="dump-user">dump
-user data</a></p>
+current session</a> - <a href="dump-model">dump model data</a></p>
 
 </body>
 </html>
