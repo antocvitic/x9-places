@@ -1,4 +1,4 @@
-package com.x9.foodle.sql;
+package com.x9.foodle.datastore;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

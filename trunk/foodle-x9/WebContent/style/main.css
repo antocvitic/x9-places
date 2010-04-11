@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#error_div {
+    color: red;
+}
+
+#content {
+    width: 700px;
+    height: 100%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}

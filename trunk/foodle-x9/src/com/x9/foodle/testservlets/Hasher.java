@@ -17,21 +17,29 @@ public class Hasher extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
+		resp.setCharacterEncoding("UTF-8");
+		ServletOutputStream out = resp.getOutputStream();
+		out
+				.println("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
+		out.println("<title>User Dumper</title></head><body>");
+
 		String password = req.getParameter("pwd");
 		password = password == null ? "password" : password;
 		String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-		ServletOutputStream out = resp.getOutputStream();
 		out.println("Password: " + password);
 		out.println("<br/>");
 		out.println("Hash: " + hash);
-		
+
 		out.println("<br/>");
 		out.println("<br/>");
-		
+
 		out.println("<form action=\"hasher\" method=\"GET\">");
-		out.println("<input name=\"pwd\" type=\"text\" value=\"" + password + "\"/>");
+		out.println("<input name=\"pwd\" type=\"text\" value=\"" + password
+				+ "\"/>");
 		out.println("<input type=\"submit\" value=\"Hash\"/>");
 		out.println("</form>");
+
+		out.println("</body></html>");
 	}
 
 }
