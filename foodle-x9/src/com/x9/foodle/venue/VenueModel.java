@@ -25,6 +25,9 @@ import com.x9.foodle.venue.exceptions.InvalidTitleException;
 import com.x9.foodle.venue.exceptions.InvalidVenueException;
 
 public class VenueModel {
+
+	public static final String SOLR_TYPE = "venuemodel";
+
 	private String id;
 	private String title;
 	private String address;
@@ -45,7 +48,8 @@ public class VenueModel {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
-			query.setQuery("id:" + id);
+			// TODO: make the query safe
+			query.setQuery("id:" + id + " AND type:" + SOLR_TYPE);
 			QueryResponse rsp = server.query(query);
 
 			SolrDocumentList docs = rsp.getResults();
@@ -223,6 +227,7 @@ public class VenueModel {
 				SolrInputDocument doc = new SolrInputDocument();
 
 				doc.addField("id", venue.id);
+				doc.addField("type", SOLR_TYPE);
 				doc.addField("title", venue.title);
 				doc.addField("address", venue.address);
 				doc.addField("description", venue.description);

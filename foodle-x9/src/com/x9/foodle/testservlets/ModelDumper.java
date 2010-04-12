@@ -58,8 +58,14 @@ public class ModelDumper extends HttpServlet {
 		out.println("<label for=\"id\">ID (for User, username)</label>");
 		out.println("<input name=\"id\" type=\"text\" value=\"" + id + "\"/>");
 		out.println("<select name=\"type\"/>");
-		out.println("<option value=\"user\">user</option>");
-		out.println("<option value=\"venue\">venue</option>");
+
+		String[] options = { "user", "venue" };
+		for (String option : options) {
+			out.println("<option value=\"" + option + "\"");
+			if (option.equals(type))
+				out.println("selected=\"selected\"");
+			out.println(">" + option + "</option>");
+		}
 		out.println("</select/>");
 		out.println("<input type=\"submit\" value=\"Dump model\"/>");
 		out.println("</form>");

@@ -53,13 +53,6 @@
             id="description"></textarea></td>
     </tr>
     <tr>
-        <td><label for="creator_id">Creator ID</label></td>
-    </tr>
-    <tr>
-        <td><input class="editfield" name="creator_id"
-            id="creator_id" type="text" /></td>
-    </tr>
-    <tr>
         <td><input type="submit" value="Submit" /></td>
     </tr>
 

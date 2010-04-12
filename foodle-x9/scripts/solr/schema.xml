@@ -427,7 +427,7 @@
    -->
 
    <field name="id" type="string" indexed="true" stored="true" required="true" /> 
-
+   <field name="type" type="text" indexed="true" stored="true" required="true" />
 
    <!-- Common metadata fields, named specifically to match up with
      SolrCell metadata when parsing rich documents such as Word, PDF.
