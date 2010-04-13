@@ -27,7 +27,6 @@ public class EditController extends HttpServlet {
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String description = req.getParameter("description");
-		String creatorID = req.getParameter("creator_id");
 
 		String redirect = req.getParameter("redirect");
 

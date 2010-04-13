@@ -3,11 +3,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@page import="com.x9.foodle.util.QuickURLEncoder"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" charset="utf-8"
-    href="style/main.css" />
+    href="${pageContext.request.contextPath}/style/main.css" />
 <style>
 .loginfield {
 	width: 20em;
@@ -42,7 +45,7 @@
 
 <div id="content">
 
-<div id="error_div">
+<div id="error_div" class="content_block">
 <%
 	if (request.getParameter("error") != null) {
 		String error = request.getParameter("error");
@@ -61,7 +64,7 @@
  %> <br /><%=request.getCharacterEncoding()%></div>
 
 <div id="login_div">
-<form action="login" method="POST">
+<form action="${pageContext.request.contextPath}/login" method="POST">
 <h3 class="login_type_header">Login</h3>
 <table>
     <tr>
@@ -95,7 +98,7 @@
 <div id="vertical_separator"></div>
 
 <div id="register_div">
-<form action="register" method="POST">
+<form action="${pageContext.request.contextPath}/register" method="POST">
 <h3 class="login_type_header">Register</h3>
 <table>
     <tr>
@@ -139,8 +142,8 @@
     </tr>
 </table>
 </form>
+<br />
 </div>
-
 </div>
 
 </body>
