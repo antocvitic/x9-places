@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" charset="utf-8"
-    href="style/main.css" />
+    href="${pageContext.request.contextPath}/style/main.css" />
 <style>
 .my_header {
 	text-align: center;
@@ -22,9 +22,10 @@
 <div id="content">
 
 <h3 class="my_header">Add or edit venue</h3>
-<form action="edit" method="POST"><input name="redirect"
-    type="hidden" value="/venue/edit?ok" />
-<table>
+<form action="${pageContext.request.contextPath}/venue/edit"
+    method="POST"><input name="redirect" type="hidden"
+    value="${pageContext.request.contextPath}/venue/edit.jsp?ok" />
+<table class="content_block">
     <tr>
         <td><label for="id">ID</label></td>
     </tr>
