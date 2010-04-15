@@ -28,6 +28,12 @@ public class UserModel {
 	private String sessionToken;
 	private boolean isConnectedToFacebook;
 
+	/**
+	 * Returns a UserModel representing a user with id {@code userID}. blabla.
+	 * 
+	 * @param userID
+	 * @return
+	 */
 	public static UserModel getFromDbByID(int userID) {
 		Connection conn = null;
 		PreparedStatement stm = null;
@@ -130,6 +136,13 @@ public class UserModel {
 		return isConnectedToFacebook;
 	}
 
+	/**
+	 * Gets a {@link Builder} for updating this UserModel. Changes made to this
+	 * builder will not affect the UserModel until {@link Builder#apply()} as
+	 * been successfully called.
+	 * 
+	 * @return a mutable builder.
+	 */
 	public Builder getEditable() {
 		return new Builder(this);
 	}
@@ -189,7 +202,7 @@ public class UserModel {
 			return this;
 		}
 
-		/**
+/**
 		 * Will throw a subclass of {@link InvalidUserException} if any of the
 		 * parameters for this user is invalid.
 		 * 
@@ -211,8 +224,7 @@ public class UserModel {
 		 * inserts them as a user in the database. If the builder was created
 		 * using the default constructor, a new user is inserted. If it was
 		 * created using the {@link UserModel#getEditable()} method, that user
-		 * will be updated, and all references to that object will be
-		 * updated.
+		 * will be updated, and all references to that object will be updated.
 		 * 
 		 * Will throw subclasses of {@link InvalidUserException} if any
 		 * parameter is invalid.
