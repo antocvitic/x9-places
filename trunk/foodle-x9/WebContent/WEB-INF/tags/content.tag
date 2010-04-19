@@ -1,4 +1,3 @@
-<%@ tag body-content="tagdependent" %>
 <body>
 <div id="content"><jsp:doBody />
 <hr />

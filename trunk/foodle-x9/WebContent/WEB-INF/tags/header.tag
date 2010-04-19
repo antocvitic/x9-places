@@ -1,4 +1,3 @@
-<%@ tag body-content="tagdependent" %>
 <%@ attribute name="title" required="true"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
