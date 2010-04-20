@@ -8,7 +8,6 @@
     src="${pageContext.request.contextPath}/js/jquery-1.4.2.js"></script>
 <link rel="stylesheet" type="text/css" charset="utf-8"
     href="${pageContext.request.contextPath}/style/general.css" />
-</head>
 
 <jsp:doBody />
 </head>

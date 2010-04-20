@@ -3,6 +3,9 @@
 
 
 
+<!-- this file no longer needed, we set the headers using our own tags in WEB-INF/tags as header-tag and headercontent-tag 
+	this way each page can set the title, and if necessary change some stuff in headercontent also just add
+	the attribute  -->
 
 <body>
 <div id="all"> <!-- this div closed in /includes/footer.jsp -->
