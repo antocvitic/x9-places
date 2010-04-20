@@ -1,4 +1,10 @@
-<jsp:include page="/includes/header.jsp" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<h:header title="Foodle X9 - Your profile"></h:header>
+<h:headercontent />
 
 <div id="contentarea">
 

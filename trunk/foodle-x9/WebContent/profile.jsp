@@ -1,7 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
  
-<h:header title="Foodle X9 - Your profile"></h:header>
+<h:header>
+<jsp:attribute name="title">
+	<%@page import="com.x9.foodle.user.UserModel"%>
+	<%
+		UserModel user = UserModel.getFromDbByID(1);
+		if (user != null) {
+			out.println("Got a user by id: " + user.getUsername());
+		} else {
+			out.println("Got null user");
+		}
+	%>
+</jsp:attribute>
+</h:header>
 <h:headercontent />
 
 <%@page import="com.x9.foodle.util.DateUtils"%>
@@ -70,4 +82,4 @@ if (com.x9.foodle.user.UserUtils.getCurrentUser(request) != null) {
 %></p>
 
 </div>
-<jsp:include page="includes/footer.jsp" /> 
+<jsp:include page="/includes/footer.jsp" /> 

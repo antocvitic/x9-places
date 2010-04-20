@@ -76,8 +76,7 @@ public class UserModel {
 		try {
 			conn = DBUtils.openConnection();
 
-			stm = conn
-					.prepareStatement("select * from users where username = ?");
+			stm = conn.prepareStatement("select * from users where username = ?");
 			stm.setString(1, username);
 			boolean success = stm.execute();
 			if (!success) {
