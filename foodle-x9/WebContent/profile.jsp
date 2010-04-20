@@ -1,8 +1,12 @@
-<jsp:include page="/includes/header.jsp" />  
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
+ 
+<h:header title="Foodle X9 - Your profile"></h:header>
+<h:headercontent />
 
 <%@page import="com.x9.foodle.util.DateUtils"%>
 <%
+/*<jsp:include page="/includes/header.jsp" />*/ 
 	java.util.Date d = DateUtils.getNowUTC();
 %>
 

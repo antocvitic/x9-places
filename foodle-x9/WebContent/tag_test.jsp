@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
-<%@ taglib tagdir="/WEB-INF/tags/gmaps" prefix="gmaps"%>
+<%@ taglib tagdir="/WEB-INF/jsptags" prefix="h"%>
+<%@ taglib tagdir="/WEB-INF/jsptags/gmaps" prefix="gmaps"%>
 <h:html>
 <h:header title="This is the header">
     <style>
