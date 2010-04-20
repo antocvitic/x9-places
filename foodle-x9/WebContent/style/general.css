@@ -92,9 +92,8 @@ body
 #right
 {
 	color: #000;
-	float:left;
-	width: 28%;
-	padding-top:10px
+	float: right;
+	padding-top: 10px
 }
 #main
 {
@@ -139,8 +138,13 @@ div {
 	width: 200px;
 	height: 200px;
 	background-color: lightblue;
+}s
+#gmaps gmaps_view1 {
+	width:200px;
+	height:200px;
+	float:right;
+	border: 1px dotted #aaa;
 }
-
 a, a:link, a:visited, a:active {
 	color:#000080;
 	text-decoration:none;

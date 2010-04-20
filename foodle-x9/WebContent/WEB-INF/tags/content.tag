@@ -1,5 +1,6 @@
-<body>
-<div id="content"><jsp:doBody />
-<hr />
-Här är footern <!-- End of content div --></div>
-</body>
+
+<div id="contentarea">
+<jsp:doBody />
+
+<!-- End of content div -->
+</div>
