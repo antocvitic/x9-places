@@ -3,6 +3,7 @@ package com.x9.foodle.user;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,8 @@ public class LoginController extends HttpServlet {
 		String redirect = req.getParameter("redirect");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-
+		String givecookie = req.getParameter("givecookie");
+		
 		UserModel user = null;
 
 		if (username == null
@@ -43,8 +45,22 @@ public class LoginController extends HttpServlet {
 				.getUserID()));
 		session.setAttribute(LOGGED_IN_SESSION_SESSION_TOKEN, user
 				.getSessionToken());
-
-		resp.sendRedirect(redirect);
+		
+		if (givecookie != null) {
+			Cookie kaka = new Cookie(
+					session.getAttribute(LOGGED_IN_SESSION_USERID).toString(), 
+					session.getAttribute(LOGGED_IN_SESSION_SESSION_TOKEN).toString());
+			kaka.setMaxAge(7 * 24 * 60 * 60); // 7 days
+			//kaka.setSecure(true);
+			resp.addCookie(kaka);
+		}
+		
+		
+		if (redirect == null) {
+			resp.sendRedirect(req.getContextPath()+"/profile.jsp");
+		} else {
+			resp.sendRedirect(redirect);
+		}
 	}
 
 }

@@ -41,8 +41,11 @@ public class RegisterController extends HttpServlet {
 			builder.setName(name);
 
 			builder.apply();
-			resp.sendRedirect(redirect);
-
+			if (redirect == null) {
+				resp.sendRedirect(req.getContextPath()+"/profile.jsp");
+			} else {
+				resp.sendRedirect(redirect);
+			}
 		} catch (BadUsernameException e) {
 			// throw new RuntimeException(e);
 			resp.sendRedirect("login.jsp?error=badusername&reason="

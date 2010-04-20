@@ -9,5 +9,12 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SolrDist"/>
+	<classpathentry kind="lib" path="/home/anto/Vazne_Stvari/Fakulteti/kth_utveckling_j2ee/mysql-connector-java-5.1.12/mysql-connector-java-5.1.12-bin.jar"/>
+	<classpathentry kind="lib" path="/home/anto/Vazne_Stvari/Fakulteti/kth_utveckling_j2ee/jstl-api-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/anto/Vazne_Stvari/Fakulteti/kth_utveckling_j2ee/jstl-impl-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/anto/Vazne_Stvari/Fakulteti/kth_utveckling_j2ee/jakarta-taglibs-standard-1.0.6/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/home/anto/Vazne_Stvari/Fakulteti/kth_utveckling_j2ee/jakarta-taglibs-standard-1.0.6/lib/saxpath.jar"/>
+	<classpathentry kind="lib" path="/home/anto/Vazne_Stvari/Fakulteti/kth_utveckling_j2ee/jakarta-taglibs-standard-1.0.6/lib/standard.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

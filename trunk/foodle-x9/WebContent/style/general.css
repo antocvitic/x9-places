@@ -1,0 +1,201 @@
+@CHARSET "UTF-8";
+
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	background: #fff;
+	color: #000000;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 100.1%;
+	padding: 0px;
+	text-align: center;
+}
+#all
+{
+	background: #FFFFFF;
+	border: solid 0px #ccc;
+	color: #000000;
+	font-size: 0.8em;
+	margin: 0 auto;
+	max-width: 1024px;
+	padding: 0 3px 3px 3px;
+	text-align: left;
+}
+#header
+{
+	background: #fff;
+	color: #000000;
+	margin: 0;
+	position: relative;
+	text-align: right;
+	border-bottom: solid 20px #32456B;
+}
+#header h1
+{
+	text-align:left;
+	font-size:2em;
+	font-weight:normal;
+	text-transform:uppercase;
+}
+#logo
+{
+	font-size:1em !important;
+	font-weight:bold !important;
+	position:relative;
+	text-align:left;
+	text-transform:none !important;
+	z-index:0;
+	margin-top:1em;
+}
+#logo img
+{
+	display:block;
+}
+
+#logo span
+{
+	display:block;
+	margin:0px 20px 0px !important;
+	border-bottom:solid 0px #000;
+	float:right;
+	font-size: 1em;
+}
+
+#contentarea
+{
+	border: solid 0px #000;
+	margin: 0;
+	padding: 0px 0px 0px 0px;
+	position: relative;
+	overflow: hidden;
+}
+#wrapper {
+	margin: 0 0 0 14%;
+	border-left: solid 2px #FFFF00;
+	padding-left: 10px;
+}
+#left
+{
+	background: #FFFFFF;
+	border-right: solid 0px #EEEEEE;
+	float: left;
+	padding-left: 10px;
+	margin: 20px 0 0 0;
+	width: 14%;
+}
+
+#right
+{
+	color: #000;
+	float:left;
+	width: 28%;
+	padding-top:10px
+}
+#main
+{
+	background: #fff;
+	margin: 0 0px 0 0;
+	padding: 25px 0 20px;
+	position: relative;
+}
+
+
+h3 {
+	font-size:1.1em;
+	font-weight:normal;
+	margin:0px 0;
+}
+
+h4 {
+	border:solid 0;
+	color:#000;
+	font-size:1em;
+}
+div {
+    border: 1px dotted black;
+}
+#error_div {
+    color: red;
+    border: 1px solid;
+    width: 50%;
+}
+
+#footer {
+    display: block;
+    padding: 20px;
+    background-color: rgb(170, 185, 200);
+    text-align: center;
+}
+
+#gmaps {
+	display: block;
+	width: 200px;
+	height: 200px;
+	background-color: lightblue;
+}
+a:link,a:visited
+{
+	color:#000080;
+	text-decoration:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.pad {
+	padding:25px;
+	width: 38%;
+}
+
+.nodivborder {
+	border: 0px;	
+}
+.loginfield {
+	width: 9em;
+}
+
+.login_box_text {
+	text-align: right;
+	margin: 5px;
+	font-size: 0.9em;
+}
+
+#login_div {
+	float: right;
+}
+
+#vertical_separator {
+	float: right;
+	border-left: 2px solid gray;
+	height: 15em;
+	margin: 20px 0px 0px 0px;
+	padding: 3em;
+}
+
+#register_div {
+	margin: 0px;
+	padding: 25px;
+}
+
+
+
+.my_header {
+	text-align: center;
+}
+
+.editfield {
+	width: 20em;
+}
