@@ -1,0 +1,54 @@
+<project name="foodle-x9" default="dist" basedir=".">
+    <description>
+        Foodle X9 ant build
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+  </target>
+
+  <path id="compile.classpath">
+    <!-- Include all JAR files that will be included in /WEB-INF/lib -->
+    <!-- Include all elements that development serv Tomcat exposes to applications -->
+    <fileset dir="/home/anto/apache-tomcat-6.0.26/lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="/home/anto/apache-solr-1.4.0/lib/">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="/home/anto/apache-solr-1.4.0/dist/">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="/home/anto/apache-solr-1.4.0/dist/solrj-lib/">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <mkdir dir="WEB-INF/classes"/>
+    <javac srcdir="${src}" destdir="WEB-INF/classes">
+                <classpath refid="compile.classpath"/>
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the project-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/lib/foodle-x9-${DSTAMP}.jar" basedir="${build}"/>
+  </target>
+
+   <target name="clean"
+     description="clean up" >
+     <!-- Delete the ${build} and ${dist} directory trees -->
+     <delete dir="${build}"/>
+     <delete dir="${dist}"/>
+   </target>
+</project>

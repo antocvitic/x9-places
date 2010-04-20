@@ -1,52 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<jsp:include page="/includes/header.jsp" /> 
 
 <%@page import="com.x9.foodle.util.QuickURLEncoder"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" charset="utf-8"
-    href="${pageContext.request.contextPath}/style/main.css" />
-<style>
-.loginfield {
-	width: 20em;
-}
-
-.login_type_header {
-	text-align: center;
-}
-
-#login_div {
-	float: left;
-	height: 100%;
-	margin: 20px;
-}
-
-#vertical_separator {
-	float: left;
-	border-left: 1px solid gray;
-	height: 400px;
-	margin: 50px 20px 100px 0px;
-}
-
-#register_div {
-	height: 100%;
-	margin: 20px;
-}
-</style>
-
-<title>Login Page - Foodle-X9</title>
-</head>
-<body>
-
-<div id="content">
+<div id="contentarea">
 
 <div id="error_div" class="content_block">
-<%
+	<%
 	if (request.getParameter("error") != null) {
 		String error = request.getParameter("error");
 		String message = request.getParameter("reason");
@@ -54,48 +16,36 @@
 			message = "Unknown reason";
 		else
 			message = QuickURLEncoder.decodeLatin(message);
-%> <strong>Error:</strong> <%=error%><br />
-<strong>Reason:</strong> <%=message%> <%
+	%>
+	<strong>Error:</strong> <%=error%><br />
+	<strong>Reason:</strong> <%=message%>
+	<%
  	}
+ 	out.println("test" + QuickURLEncoder.decode(QuickURLEncoder.encode("åäö")));
+ 	out.println("a valuable message on coolnes in registering with a div cool not errordiv" + QuickURLEncoder.decode("ab%3Fba"));
+ 	%>
+ 	<br />
+ 	<%=request.getCharacterEncoding()%>
+ </div>
 
- 	out.println("hejsan"
- 			+ QuickURLEncoder.decode(QuickURLEncoder.encode("Ã¥Ã¤Ã¶")));
- 	out.println("nsajeh" + QuickURLEncoder.decode("ab%3Fba"));
- %> <br /><%=request.getCharacterEncoding()%></div>
-
-<div id="login_div">
-<form action="${pageContext.request.contextPath}/login" method="POST">
-<h3 class="login_type_header">Login</h3>
-<table>
-    <tr>
-        <td><label for="login_username">Username</label></td>
-    </tr>
-    <tr>
-        <td><input class="loginfield" id="login_username"
-            name="username" type="text" value="abel" /></td>
-    </tr>
-    <tr>
-        <td><label for="login_password">Password</label></td>
-    </tr>
-    <tr>
-        <td><input class="loginfield" id="login_password"
-            name="password" type="password" /></td>
-    </tr>
-    <tr>
-        <td><input type="submit" value="Log in" /></td>
-    </tr>
-</table>
-</form>
-
-<table>
-    <tr>
-        <td><input type="button" value="Connect using Facebook"
-            disabled="disabled" /></td>
-    </tr>
-</table>
+<div id="login_div" class="pad">
+	<form action="${pageContext.request.contextPath}/login" method="POST">
+		<h3 class="login_box_text" style="float:left;">
+			Keep me logged in. Forgot password?
+		</h3>
+		<br /><br />
+		<label for="login_username">Username</label>
+		<input class="loginfield" id="login_username" name="username" type="text" value="abel" /><br />
+		<label for="login_password">Password</label>
+		<input class="loginfield" id="login_password" name="password" type="password" />
+		<input type="submit" value="Log in" />
+	</form><br />
+	<h3 class="login_box_text" style="float:left;"> 
+		<input type="button" value="Connect using Facebook" disabled="disabled" />
+	</h3>
 </div>
 
-<div id="vertical_separator"></div>
+<div id="vertical_separator" class="nodivborder"></div>
 
 <div id="register_div">
 <form action="${pageContext.request.contextPath}/register" method="POST">
@@ -142,9 +92,8 @@
     </tr>
 </table>
 </form>
-<br />
-</div>
 </div>
 
-</body>
-</html>
+</div> <!--  content area div end -->
+
+<jsp:include page="includes/footer.jsp" /> 

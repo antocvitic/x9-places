@@ -25,7 +25,7 @@ public class UserModel {
 	private String email;
 	private String name;
 	private int reputationLevel;
-	private String sessionToken;
+	private String sessionToken = "oleoleoleole";
 	private boolean isConnectedToFacebook;
 
 	/**
