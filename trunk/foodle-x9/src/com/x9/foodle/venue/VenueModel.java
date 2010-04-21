@@ -28,7 +28,7 @@ public class VenueModel {
 
 	public static final String SOLR_TYPE = "venuemodel";
 
-	private String id;
+	private String id; //It is an "int" in the ADD
 	private String title;
 	private String address;
 	private String description;
@@ -60,7 +60,7 @@ public class VenueModel {
 
 			if (docs.size() > 1) {
 				throw new SolrRuntimeException(
-						"To many results in VenueModel.getFromSolr: "
+						"Too many results in VenueModel.getFromSolr: "
 								+ docs.size());
 			}
 
@@ -480,7 +480,6 @@ public class VenueModel {
 	/**
 	 * For debug purposes only.
 	 */
-	@Override
 	public String toString() {
 		return "VenueModel [id=" + id + ", title=" + title + ", address="
 				+ address + ", description=" + description + ", averageRating="
