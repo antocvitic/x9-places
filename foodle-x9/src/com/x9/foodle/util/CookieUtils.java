@@ -17,6 +17,9 @@ public class CookieUtils {
 	
 	public static String getUserid(HttpServletRequest req) {
 		Cookie[] cookies = req.getCookies();
+		if (cookies == null)
+			return null;
+		
         String UserValue = null;
         
         for(int i = 0; i < cookies.length; i++) {
