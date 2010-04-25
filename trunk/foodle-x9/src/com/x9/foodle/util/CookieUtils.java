@@ -21,7 +21,6 @@ public class CookieUtils {
 			return null;
 		
         String UserValue = null;
-        
         for(int i = 0; i < cookies.length; i++) {
             Cookie c = cookies[i];
             if (c.getName().equals(LoginController.LOGGED_IN_SESSION_USERID)) {
@@ -33,8 +32,10 @@ public class CookieUtils {
 	}
 	public static String getSessionToken(HttpServletRequest req) {
 		Cookie[] cookies = req.getCookies();
+		if (cookies == null)
+			return null;
+		
         String cSessionValue = null;
-        
         for(int i = 0; i < cookies.length; i++) {
             Cookie c = cookies[i];
             if (c.getName().equals(LoginController.LOGGED_IN_SESSION_SESSION_TOKEN)) {
