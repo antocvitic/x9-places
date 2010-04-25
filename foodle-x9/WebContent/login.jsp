@@ -79,5 +79,4 @@
 </div>
 
 </div> <!--  content area div end -->
-
-<jsp:include page="includes/footer.jsp" /> 
+<h:footer />

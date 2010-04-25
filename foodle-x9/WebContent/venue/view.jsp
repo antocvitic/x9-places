@@ -58,4 +58,4 @@
 
 </div>
 
-<jsp:include page="/includes/footer.jsp" /> 
+<h:footer />

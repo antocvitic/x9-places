@@ -32,7 +32,7 @@ public class ModelDumper extends HttpServlet {
 		if (type != null) {
 			if (type.equals("user")) {
 				if (id == null) {
-					model = UserUtils.getCurrentUser(req);
+					model = UserUtils.getCurrentUser(req, resp);
 					if (model != null)
 						id = ((UserModel) model).getUsername();
 				} else {

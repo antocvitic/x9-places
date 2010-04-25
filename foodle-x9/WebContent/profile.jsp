@@ -1,11 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
- 
+<%@ page import="com.x9.foodle.user.*"%>
+
+
+<%
+UserModel user = UserUtils.getCurrentUser(request, response);
+%>
+
 <h:header>
-<jsp:attribute name="title">
+    <jsp:attribute name="title">
 	<%@page import="com.x9.foodle.user.UserModel"%>
 	<%
-		UserModel user = UserModel.getFromDbByID(1);
 		if (user != null) {
 			out.println("Got a user by id: " + user.getUsername());
 		} else {
@@ -25,28 +31,20 @@
 <div id="contentarea">
 
 <p>Today's date is <%=DateUtils.dateToSolrDate(d)%> (UTC) and this
-jsp page worked!
-</p>
-<br /><br />
-<p>
-This is ey profile page,
-</p>
+jsp page worked!</p>
+<br />
+<br />
+<p>This is ey profile page,</p>
 
-<p>Your latest venues:
-	<a href="${pageContext.request.contextPath}/venue/edit.jsp">edit venue</a>
-</p>
+<p>Your latest venues: <a
+    href="${pageContext.request.contextPath}/venue/edit.jsp">edit
+venue</a></p>
 <hr />
-<p>
-Friends venues:
-</p>
+<p>Friends venues:</p>
 <hr />
-<p>
-New reviews:
-</p>
+<p>New reviews:</p>
 <hr />
-<p>
-Other stuff:
-</p>
+<p>Other stuff:</p>
 <hr />
 
 <p>Some links:<br />
@@ -59,10 +57,8 @@ Other stuff:
 jBCrypt</a> - <a href="${pageContext.request.contextPath}/dump-session">dump
 current session</a> - <a
     href="${pageContext.request.contextPath}/dump-model">dump model
-data</a>
-<br />
-Showing your cookies:
-<%
+data</a> <br />
+Showing your cookies: <%
 Cookie[] cookies = request.getCookies();
 for (int i=0; i<cookies.length; i++) {
 	out.println(cookies[i].getName()+":\t"+
@@ -75,11 +71,12 @@ out.print(session.getAttribute("logged_in_userid").toString() + "<br />");
 out.print(session.getAttribute("logged_in_session_token").toString() + "<br />");
 }
 
-if (com.x9.foodle.user.UserUtils.getCurrentUser(request) != null) {
+if (user != null) {
 	out.print("You're logged in as:<br />"); 
-	out.print(com.x9.foodle.user.UserUtils.getCurrentUser(request).getUsername());
+	out.print(user.getUsername());
 }
-%></p>
+%>
+</p>
 
 </div>
-<jsp:include page="/includes/footer.jsp" /> 
+<h:footer />
