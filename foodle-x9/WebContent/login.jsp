@@ -1,4 +1,7 @@
-<jsp:include page="/includes/header.jsp" /> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
+<h:header title="Foodle X9 - The most awesome venue search"></h:header>
+<h:headercontent />
 
 <%@page import="com.x9.foodle.util.QuickURLEncoder"%>
 
@@ -21,31 +24,12 @@
 	<strong>Reason:</strong> <%=message%>
 	<%
  	}
- 	out.println("test" + QuickURLEncoder.decode(QuickURLEncoder.encode("åäö")));
+ 	out.println("test" + QuickURLEncoder.decode(QuickURLEncoder.encode("Ã¥Ã¤Ã¶")));
  	out.println("a valuable message on coolnes in registering with a div cool not errordiv" + QuickURLEncoder.decode("ab%3Fba"));
  	%>
  	<br />
  	<%=request.getCharacterEncoding()%>
  </div>
-
-<div id="login_div" class="pad">
-	<form action="${pageContext.request.contextPath}/login" method="POST">
-		<h3 class="login_box_text" style="float:left;">
-			Keep me logged in. Forgot password?
-		</h3>
-		<br /><br />
-		<label for="login_username">Username</label>
-		<input class="loginfield" id="login_username" name="username" type="text" value="abel" /><br />
-		<label for="login_password">Password</label>
-		<input class="loginfield" id="login_password" name="password" type="password" />
-		<input type="submit" value="Log in" />
-	</form><br />
-	<h3 class="login_box_text" style="float:left;"> 
-		<input type="button" value="Connect using Facebook" disabled="disabled" />
-	</h3>
-</div>
-
-<div id="vertical_separator" class="nodivborder"></div>
 
 <div id="register_div">
 <form action="${pageContext.request.contextPath}/register" method="POST">
