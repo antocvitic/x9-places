@@ -11,6 +11,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 
+/**
+ * Bla bla
+ * @author tgwizard
+ *
+ */
 public class EmailUtils {
 	public static void sendEmail(ServletContext servletContext, String to,
 			String subject, String msg) {
