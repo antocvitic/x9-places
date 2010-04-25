@@ -32,8 +32,8 @@ body
 	color: #000000;
 	margin: 0;
 	position: relative;
-	text-align: right;
 	border-bottom: solid 20px #32456B;
+	display: block;
 }
 #header h1
 {
@@ -46,15 +46,15 @@ body
 {
 	font-size:1em !important;
 	font-weight:bold !important;
-	position:relative;
 	text-align:left;
 	text-transform:none !important;
 	z-index:0;
 	margin-top:1em;
 }
-#logo img
-{
-	display:block;
+
+#header_login_div {
+	text-align: right;
+    float: right;
 }
 
 #logo span
@@ -117,7 +117,11 @@ h4 {
 }
 
 div {
-    border: 1px dotted black;
+    border: 0px dotted black;
+}
+
+#login_div {
+    float: right;
 }
 
 #error_div {
@@ -181,10 +185,6 @@ a:hover {
 	text-align: right;
 	margin: 5px;
 	font-size: 0.9em;
-}
-
-#login_div {
-	float: right;
 }
 
 #vertical_separator {

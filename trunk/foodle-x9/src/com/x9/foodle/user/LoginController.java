@@ -23,8 +23,8 @@ public class LoginController extends HttpServlet {
 		String redirect = req.getParameter("redirect");
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		String givecookie = req.getParameter("givecookie");
-		
+		String rememberme = req.getParameter("rememberme");
+
 		UserModel user = null;
 
 		if (username == null
@@ -39,27 +39,35 @@ public class LoginController extends HttpServlet {
 			return;
 		}
 
+		doPostLoginStuff(user, req, resp, rememberme != null);
+
+		if (redirect == null) {
+			resp.sendRedirect(req.getContextPath() + "/profile.jsp");
+		} else {
+			resp.sendRedirect(redirect);
+		}
+	}
+
+	public static void doPostLoginStuff(UserModel user, HttpServletRequest req,
+			HttpServletResponse resp, boolean rememberme) {
 		HttpSession session = req.getSession();
 
 		session.setAttribute(LOGGED_IN_SESSION_USERID, new Integer(user
 				.getUserID()));
 		session.setAttribute(LOGGED_IN_SESSION_SESSION_TOKEN, user
 				.getSessionToken());
-		
-		if (givecookie != null) {
-			Cookie kaka = new Cookie(
-					session.getAttribute(LOGGED_IN_SESSION_USERID).toString(), 
-					session.getAttribute(LOGGED_IN_SESSION_SESSION_TOKEN).toString());
-			kaka.setMaxAge(7 * 24 * 60 * 60); // 7 days
-			//kaka.setSecure(true);
-			resp.addCookie(kaka);
-		}
-		
-		
-		if (redirect == null) {
-			resp.sendRedirect(req.getContextPath()+"/profile.jsp");
-		} else {
-			resp.sendRedirect(redirect);
+
+		if (rememberme) {
+			Cookie cuid = new Cookie(LOGGED_IN_SESSION_USERID, Integer
+					.toString(user.getUserID()));
+			cuid.setMaxAge(7 * 24 * 60 * 60); // 7 days
+			resp.addCookie(cuid);
+
+			Cookie ctoken = new Cookie(LOGGED_IN_SESSION_SESSION_TOKEN, user
+					.getSessionToken());
+			ctoken.setMaxAge(7 * 24 * 60 * 60);
+			resp.addCookie(ctoken);
+			// c.setSecure(true);
 		}
 	}
 
