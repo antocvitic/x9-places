@@ -12,6 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.x9.foodle.user.exceptions.BadEmailException;
 import com.x9.foodle.user.exceptions.BadPasswordException;
 import com.x9.foodle.user.exceptions.BadUsernameException;
+import com.x9.foodle.util.EmailUtils;
 
 @SuppressWarnings("serial")
 public class RegisterController extends HttpServlet {
@@ -41,8 +42,13 @@ public class RegisterController extends HttpServlet {
 			builder.setName(name);
 
 			builder.apply();
+
+			// EmailUtils.sendEmail(getServletContext(),
+			// "adam.renberg@gmail.com", "Testing emailing",
+			// "User: " + username + " has been registered");
+
 			if (redirect == null) {
-				resp.sendRedirect(req.getContextPath()+"/profile.jsp");
+				resp.sendRedirect(req.getContextPath() + "/profile.jsp");
 			} else {
 				resp.sendRedirect(redirect);
 			}

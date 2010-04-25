@@ -29,6 +29,11 @@
  	%>
  	<br />
  	<%=request.getCharacterEncoding()%>
+    
+    
+    <%=
+        this.getServletContext().getInitParameter("foodlex9password")
+     %>
  </div>
 
 <div id="register_div">
