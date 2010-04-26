@@ -45,7 +45,7 @@ public class TagModel {
 		copy(this, copyMe);
 	}
 
-	public TagModel getFromSolr(){
+	public TagModel getFromSolr(String venueID){
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
@@ -58,11 +58,11 @@ public class TagModel {
 				return null;
 			}
 
-			if (docs.size() > 1) {
+			/*if (docs.size() > 1) {
 				throw new SolrRuntimeException(
 						"Too many results in TagModel.getFromSolr: "
 						+ docs.size());
-			}
+			}*/
 
 			SolrDocument doc = docs.get(0);
 
