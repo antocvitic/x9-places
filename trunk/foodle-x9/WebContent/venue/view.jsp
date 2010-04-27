@@ -45,7 +45,7 @@
 	
 	<div id="right">Rightsidebar
 		<div id="gmaps">A map:
-		<gmaps:address id="gmaps_view1">
+		<gmaps:address id="gmaps_view1" css="gmaps_div">
 			<jsp:attribute name="address">
 				<% out.print(venue.getAddress()); %>
 			</jsp:attribute>

@@ -1,8 +1,12 @@
 <%@ attribute name="address" required="true"%>
 <%@ attribute name="id" required="true"%>
+<%@ attribute name="css" required="true"%>
 
-<div id="${id}" style="width: 500px; height: 500px">
+<div id="${id}" class="${css}">
 	<script type="text/javascript">
+		var mapid = "${id}";
 		addressMap("${id}", "${address}");
+		<jsp:doBody />
 	</script>
 </div>
+
