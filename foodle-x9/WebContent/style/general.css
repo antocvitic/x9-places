@@ -200,7 +200,10 @@ a:hover {
 	padding: 25px;
 }
 
-
+.gmaps_div {
+	height: 500px;
+	width: 500px;
+}
 
 .my_header {
 	text-align: center;
