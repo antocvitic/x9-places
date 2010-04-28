@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.x9.foodle.user.exceptions.BadEmailException;
-import com.x9.foodle.user.exceptions.BadPasswordException;
-import com.x9.foodle.user.exceptions.BadUsernameException;
-import com.x9.foodle.util.EmailUtils;
+import com.x9.foodle.model.exceptions.BadEmailException;
+import com.x9.foodle.model.exceptions.BadPasswordException;
+import com.x9.foodle.model.exceptions.BadUsernameException;
 
 @SuppressWarnings("serial")
 public class RegisterController extends HttpServlet {

@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.x9.foodle.datastore.SQLRuntimeException;
+import com.x9.foodle.model.exceptions.InvalidUserException;
 import com.x9.foodle.user.UserModel;
-import com.x9.foodle.user.exceptions.InvalidUserException;
 
 @SuppressWarnings("serial")
 public class AdamTest extends HttpServlet {

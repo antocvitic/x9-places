@@ -12,10 +12,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.x9.foodle.datastore.DBUtils;
 import com.x9.foodle.datastore.SQLRuntimeException;
-import com.x9.foodle.user.exceptions.BadEmailException;
-import com.x9.foodle.user.exceptions.BadPasswordException;
-import com.x9.foodle.user.exceptions.BadUsernameException;
-import com.x9.foodle.user.exceptions.InvalidUserException;
+import com.x9.foodle.model.exceptions.BadEmailException;
+import com.x9.foodle.model.exceptions.BadPasswordException;
+import com.x9.foodle.model.exceptions.BadUsernameException;
+import com.x9.foodle.model.exceptions.InvalidUserException;
 
 public class UserModel {
 

@@ -1,4 +1,4 @@
-package com.x9.foodle.user.exceptions;
+package com.x9.foodle.model.exceptions;
 
 import com.x9.foodle.util.QuickURLEncoder;
 
