@@ -437,8 +437,11 @@
    <field name="title" type="text" indexed="true" stored="true"/>
    <field name="address" type="text" indexed="true" stored="true"/>
    <field name="description" type="text" indexed="true" stored="true"/>
+   
+   
    <field name="numberOfRatings" type="tint" indexed="true" stored="true"/>
    <field name="averageRating" type="tfloat" indexed="true" stored="true"/>
+   <field name="ranking" type="tint" indexed="true" stored="true"/>
    
    <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
    
@@ -448,6 +451,8 @@
    
    <field name="timeAdded" type="date" indexed="true" stored="true"/>
    <field name="lastModified" type="date" indexed="true" stored="true"/>
+   
+   <field name="venueReference" type="string" indexed="true" stored="true"/> 
 
 
    <!-- catchall field, containing all other searchable text fields (implemented

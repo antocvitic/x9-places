@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.x9.foodle.datastore.SolrRuntimeException;
+import com.x9.foodle.model.exceptions.InvalidAddressException;
+import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
+import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
+import com.x9.foodle.model.exceptions.InvalidDescriptionException;
+import com.x9.foodle.model.exceptions.InvalidIDException;
+import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
+import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.venue.VenueModel;
-import com.x9.foodle.venue.exceptions.InvalidAddressException;
-import com.x9.foodle.venue.exceptions.InvalidAverageRatingException;
-import com.x9.foodle.venue.exceptions.InvalidCreatorIDException;
-import com.x9.foodle.venue.exceptions.InvalidDescriptionException;
-import com.x9.foodle.venue.exceptions.InvalidIDException;
-import com.x9.foodle.venue.exceptions.InvalidNumberOfRatingsException;
-import com.x9.foodle.venue.exceptions.InvalidTitleException;
 
 /**
  * This is a copy of venue.EditController.java in which I added

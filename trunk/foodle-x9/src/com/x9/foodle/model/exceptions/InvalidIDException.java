@@ -1,7 +1,7 @@
-package com.x9.foodle.venue.exceptions;
+package com.x9.foodle.model.exceptions;
 
 @SuppressWarnings("serial")
-public class InvalidIDException extends InvalidVenueException {
+public class InvalidIDException extends InvalidSolrModelException {
 
 	public InvalidIDException() {
 		super();

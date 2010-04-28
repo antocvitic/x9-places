@@ -14,18 +14,18 @@ import org.apache.solr.common.SolrInputDocument;
 
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
+import com.x9.foodle.model.exceptions.InvalidAddressException;
+import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
+import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
+import com.x9.foodle.model.exceptions.InvalidDescriptionException;
+import com.x9.foodle.model.exceptions.InvalidIDException;
+import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
+import com.x9.foodle.model.exceptions.InvalidTitleException;
+import com.x9.foodle.model.exceptions.InvalidSolrModelException;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 import com.x9.foodle.venue.VenueModel;
 import com.x9.foodle.venue.VenueModel.Validator;
-import com.x9.foodle.venue.exceptions.InvalidAddressException;
-import com.x9.foodle.venue.exceptions.InvalidAverageRatingException;
-import com.x9.foodle.venue.exceptions.InvalidCreatorIDException;
-import com.x9.foodle.venue.exceptions.InvalidDescriptionException;
-import com.x9.foodle.venue.exceptions.InvalidIDException;
-import com.x9.foodle.venue.exceptions.InvalidNumberOfRatingsException;
-import com.x9.foodle.venue.exceptions.InvalidTitleException;
-import com.x9.foodle.venue.exceptions.InvalidVenueException;
 
 public class TagModel {
 
