@@ -440,6 +440,8 @@
    <field name="numberOfRatings" type="tint" indexed="true" stored="true"/>
    <field name="averageRating" type="tfloat" indexed="true" stored="true"/>
    
+   <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
+   
    <field name="closed" type="boolean" indexed="true" stored="true"/>
    
    <field name="creator" type="int" indexed="true" stored="true"/>
