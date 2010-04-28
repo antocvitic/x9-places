@@ -19,7 +19,7 @@ if (venueID == null) {
 
 <h3 class="my_header">Add or edit review</h3>
 <form action="${pageContext.request.contextPath}/review/edit" method="POST">
-<input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/edit.jsp?ok" />
+<input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
 <input name="venueID" type="hidden" value="<%= venueID %>" />
 <table class="content_block">
     <tr>

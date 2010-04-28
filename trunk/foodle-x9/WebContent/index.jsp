@@ -9,15 +9,11 @@
 	java.util.Date d = DateUtils.getNowUTC();
 %>
 
-<div id="contentarea">
-
 <p>Today's date is <%=DateUtils.dateToSolrDate(d)%> (UTC) and this
 jsp page worked!</p>
 <br />
 <br />
 
-<p><a href="${pageContext.request.contextPath}/venue/edit.jsp">add
-venue</a></p>
 
 <hr />
 
@@ -30,5 +26,4 @@ Stuff
 
 <hr />
 
-</div>
 <h:footer />
