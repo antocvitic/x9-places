@@ -178,10 +178,6 @@ public class ReviewModel {
 			this.editMe = editMe;
 		}
 
-		public void setId(String id) {
-			review.id = id;
-		}
-
 		public void setTitle(String title) {
 			review.title = title;
 		}
@@ -198,8 +194,8 @@ public class ReviewModel {
 			review.venueID = venueID;
 		}
 
-		public void setCreatorID(int creatorID) {
-			review.creatorID = creatorID;
+		public void setCreator(UserModel user) {
+			review.creatorID = user.getUserID();
 		}
 
 		public void setRanking(int ranking) {
@@ -249,6 +245,8 @@ public class ReviewModel {
 				InvalidTitleException, InvalidTextException,
 				InvalidVenueReferenceException, InvalidCreatorIDException {
 			if (editMe == null) {
+				// we are creating a new review
+				review.id = SolrUtils.generateUniqueID();
 				review.timeAdded = DateUtils.getNowUTC();
 			}
 			review.lastUpdated = DateUtils.getNowUTC();
@@ -317,6 +315,7 @@ public class ReviewModel {
 			if (review.id == null) {
 				throw new InvalidIDException("review id is null");
 			}
+
 		}
 
 		/**

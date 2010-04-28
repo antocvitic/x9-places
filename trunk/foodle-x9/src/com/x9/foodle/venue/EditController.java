@@ -1,6 +1,8 @@
 package com.x9.foodle.venue;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,20 +29,39 @@ public class EditController extends HttpServlet {
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String description = req.getParameter("description");
+		String tags = req.getParameter("tags");
+
+		ArrayList<String> tagsList = new ArrayList<String>();
+		if (tags != null) {
+			Scanner scanny = new Scanner(tags);
+			while (scanny.hasNext()) {
+				tagsList.add(scanny.next());
+			}
+		}
 
 		String redirect = req.getParameter("redirect");
 
 		try {
-			VenueModel.Builder builder = new VenueModel.Builder();
+			VenueModel.Builder builder = null;
+			if (id != null && !id.isEmpty()) {
+				VenueModel tempVenue = VenueModel.getFromSolr(id);
+				if (tempVenue == null) {
+					throw new RuntimeException("no venue with id " + id
+							+ " to edit");
+				}
+				builder = tempVenue.getEditable();
+			} else {
+				builder = new VenueModel.Builder();
+			}
 
-			builder.setId(id);
 			builder.setTitle(title);
 			builder.setAddress(address);
 			builder.setDescription(description);
 			builder.setCreator(UserModel.getFromDbByID(1));
-			builder.apply();
+			builder.setTags(tagsList);
+			VenueModel venue = builder.apply();
 
-			resp.sendRedirect(redirect);
+			resp.sendRedirect(redirect + "?venueID=" + venue.getID());
 		} catch (InvalidIDException e) {
 			throw new RuntimeException(e);
 		} catch (InvalidTitleException e) {
