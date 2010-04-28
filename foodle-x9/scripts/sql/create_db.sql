@@ -37,6 +37,14 @@ create table users (
     Specified key was too long, utf8: http://bugs.mysql.com/bug.php?id=4541
 */
 
+/* table to manage unique ids for Solr */
+create table unique_id_table (
+    id long not null
+) Engine=InnoDB;
+
+/* insert starting id (this id won't be used, but the next one will */
+insert into unique_id_table (id) values (1000);
+
 /* create and grant privliges to x9user */
 grant all on x9db.* to 'x9user'@'localhost' identified by 'x9pwd';
 flush privileges;

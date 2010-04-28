@@ -25,7 +25,7 @@ Stuff
 
 <hr />
 <p>Some links:<br />
-<a href="http://localhost:7777/solr/admin/">http://localhost:7777/solr/admin/</a>
+<a href="http://localhost:8983/solr/admin">http://localhost:8983/solr</a>
 <a href="http://localhost:8888/">Tomcat</a></p>
 
 <hr />

@@ -32,6 +32,7 @@
 
 
     <!-- Servlet declarations -->
+
     <!-- User -->
     <servlet>
         <servlet-name>LoginController</servlet-name>
@@ -45,19 +46,27 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>com.x9.foodle.user.RegisterController</servlet-class>
     </servlet>
+
     <!-- Venue -->
     <servlet>
         <servlet-name>VenueEditController</servlet-name>
         <servlet-class>com.x9.foodle.venue.EditController</servlet-class>
     </servlet>
-	
-	<!-- Tag -->
-	<servlet>
+
+    <!-- Review -->
+    <servlet>
+        <servlet-name>ReviewEditController</servlet-name>
+        <servlet-class>com.x9.foodle.review.EditController</servlet-class>
+    </servlet>
+
+    <!-- Tag -->
+    <servlet>
         <servlet-name>TagEditController</servlet-name>
         <servlet-class>com.x9.foodle.tag.EditController</servlet-class>
     </servlet>
 
     <!-- Servlet mappings -->
+
     <!-- User -->
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -71,17 +80,25 @@
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+
     <!-- Venue -->
     <servlet-mapping>
         <servlet-name>VenueEditController</servlet-name>
         <url-pattern>/venue/edit</url-pattern>
     </servlet-mapping>
-	<!-- Tag -->
-	<servlet-mapping>
+
+    <!-- Venue -->
+    <servlet-mapping>
+        <servlet-name>ReviewEditController</servlet-name>
+        <url-pattern>/review/edit</url-pattern>
+    </servlet-mapping>
+
+    <!-- Tag -->
+    <servlet-mapping>
         <servlet-name>TagEditController</servlet-name>
         <url-pattern>/tag/edit</url-pattern>
     </servlet-mapping>
-	
+
 
     <!-- Testing stuff -->
     <servlet>

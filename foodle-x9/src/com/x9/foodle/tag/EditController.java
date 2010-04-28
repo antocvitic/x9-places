@@ -2,7 +2,7 @@ package com.x9.foodle.tag;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,14 +17,14 @@ import com.x9.foodle.model.exceptions.InvalidDescriptionException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
-import com.x9.foodle.user.UserModel;
 import com.x9.foodle.venue.VenueModel;
 
 /**
- * This is a copy of venue.EditController.java in which I added
- * some code lines to deal with tags entry
+ * This is a copy of venue.EditController.java in which I added some code lines
+ * to deal with tags entry
+ * 
  * @author Rémi
- *
+ * 
  */
 
 @SuppressWarnings("serial")
@@ -34,32 +34,37 @@ public class EditController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String id = req.getParameter("id");
-		String title = req.getParameter("title");
-		String address = req.getParameter("address");
-		String description = req.getParameter("description");
-		
-		//StringTokenizer that seperates the tags input fields into
-		//separate tags.
-		StringTokenizer tags = new StringTokenizer(req.getParameter("tags"));
+		String tags = req.getParameter("tags");
+
 		ArrayList<String> tagsList = new ArrayList<String>();
-		while(tags.hasMoreElements()){
-			tagsList.add(tags.nextToken());
+		if (tags != null) {
+			// Scanner that seperates the tags input fields into
+			// separate tags.
+			Scanner scanny = new Scanner(tags);
+			while (scanny.hasNext()) {
+				tagsList.add(scanny.next());
+			}
 		}
-		
+
 		String redirect = req.getParameter("redirect");
 
 		try {
-			VenueModel.Builder builder = new VenueModel.Builder();
+			VenueModel.Builder builder = null;
+			if (id != null && !id.isEmpty()) {
+				VenueModel tempVenue = VenueModel.getFromSolr(id);
+				if (tempVenue == null) {
+					throw new RuntimeException("no venue with id " + id
+							+ " to set tags for");
+				}
+				builder = tempVenue.getEditable();
+			} else {
+				builder = new VenueModel.Builder();
+			}
 
-			builder.setId(id);
-			builder.setTitle(title);
-			builder.setAddress(address);
-			builder.setDescription(description);
-			builder.setCreator(UserModel.getFromDbByID(1));
 			builder.setTags(tagsList);
-			builder.apply();
+			VenueModel venue = builder.apply();
 
-			resp.sendRedirect(redirect);
+			resp.sendRedirect(redirect + "?venueID=" + venue.getID());
 		} catch (InvalidIDException e) {
 			throw new RuntimeException(e);
 		} catch (InvalidTitleException e) {
@@ -78,5 +83,4 @@ public class EditController extends HttpServlet {
 			throw new RuntimeException(e);
 		}
 	}
-
 }

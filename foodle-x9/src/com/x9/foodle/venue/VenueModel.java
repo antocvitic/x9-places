@@ -2,6 +2,7 @@ package com.x9.foodle.venue;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -78,10 +79,6 @@ public class VenueModel {
 		}
 	}
 
-	public ArrayList<String> getTags() {
-		return this.tags;
-	}
-
 	public String getID() {
 		return id;
 	}
@@ -127,6 +124,14 @@ public class VenueModel {
 	}
 
 	/**
+	 * 
+	 * @return never null
+	 */
+	public ArrayList<String> getTags() {
+		return this.tags;
+	}
+
+	/**
 	 * @see ReviewModel#getFromSolrForVenue(VenueModel, int)
 	 * @param maxReturned
 	 * @return
@@ -151,14 +156,6 @@ public class VenueModel {
 		private Builder(VenueModel editMe) {
 			this.venue = new VenueModel(editMe);
 			this.editMe = editMe;
-		}
-
-		public void setTags(ArrayList<String> tags) {
-			venue.tags = tags;
-		}
-
-		public void setId(String id) {
-			venue.id = id;
 		}
 
 		public void setTitle(String title) {
@@ -187,6 +184,10 @@ public class VenueModel {
 
 		public void setCreator(UserModel user) {
 			venue.creatorID = user.getUserID();
+		}
+
+		public void setTags(ArrayList<String> tags) {
+			venue.tags = tags;
 		}
 
 		/**
@@ -236,6 +237,8 @@ public class VenueModel {
 				InvalidAverageRatingException, InvalidCreatorIDException,
 				SolrRuntimeException {
 			if (editMe == null) {
+				// we are creating a new venue
+				venue.id = SolrUtils.generateUniqueID();
 				venue.timeAdded = DateUtils.getNowUTC();
 			}
 			venue.lastUpdated = DateUtils.getNowUTC();
@@ -247,11 +250,15 @@ public class VenueModel {
 				SolrServer server = SolrUtils.getSolrServer();
 				SolrInputDocument doc = new SolrInputDocument();
 
-				if (venue.tags != null && venue.tags.size() != 0) {
-					doc.addField("tags", venue.tags.get(0));
-					for (int i = 1; i < venue.tags.size(); i++) {
-						doc.addField("tags", venue.tags.get(i));
-					}
+				// if (venue.tags != null && venue.tags.size() != 0) {
+				// doc.addField("tags", venue.tags.get(0));
+				// for (int i = 1; i < venue.tags.size(); i++) {
+				// doc.addField("tags", venue.tags.get(i));
+				// }
+				// }
+
+				for (String tag : venue.tags) {
+					doc.addField("tags", tag);
 				}
 
 				doc.addField("id", venue.id);
@@ -446,6 +453,8 @@ public class VenueModel {
 		this.creatorID = -1;
 
 		this.lastUpdated = null;
+
+		this.tags = new ArrayList<String>();
 	}
 
 	/**
@@ -483,6 +492,9 @@ public class VenueModel {
 		dest.creatorID = src.creatorID;
 
 		dest.lastUpdated = src.lastUpdated;
+
+		dest.tags = new ArrayList<String>();
+		dest.tags.addAll(src.tags);
 	}
 
 	private static VenueModel venueFromSolrDocument(SolrDocument doc) {
@@ -502,7 +514,19 @@ public class VenueModel {
 
 		venue.lastUpdated = (Date) doc.get("lastModified");
 
+		venue.tags = uglyAsHell(doc);
+
 		return venue;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static ArrayList<String> uglyAsHell(SolrDocument doc) {
+		ArrayList<String> tags = new ArrayList<String>();
+		Collection c = (Collection) doc.getFieldValues("tags");
+		if (c != null) {
+			tags.addAll(c);
+		}
+		return tags;
 	}
 
 	/**
