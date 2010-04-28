@@ -1,8 +1,8 @@
 package com.x9.foodle.tag;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,9 +41,9 @@ public class EditController extends HttpServlet {
 		//StringTokenizer that seperates the tags input fields into
 		//separate tags.
 		StringTokenizer tags = new StringTokenizer(req.getParameter("tags"));
-		Vector<String> tagsVector = new Vector<String>();
+		ArrayList<String> tagsList = new ArrayList<String>();
 		while(tags.hasMoreElements()){
-			tagsVector.add(tags.nextToken());
+			tagsList.add(tags.nextToken());
 		}
 		
 		String redirect = req.getParameter("redirect");
@@ -56,7 +56,7 @@ public class EditController extends HttpServlet {
 			builder.setAddress(address);
 			builder.setDescription(description);
 			builder.setCreator(UserModel.getFromDbByID(1));
-			builder.setTags(tagsVector);
+			builder.setTags(tagsList);
 			builder.apply();
 
 			resp.sendRedirect(redirect);
