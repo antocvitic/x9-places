@@ -50,6 +50,12 @@
         <servlet-name>VenueEditController</servlet-name>
         <servlet-class>com.x9.foodle.venue.EditController</servlet-class>
     </servlet>
+	
+	<!-- Tag -->
+	<servlet>
+        <servlet-name>TagEditController</servlet-name>
+        <servlet-class>com.x9.foodle.tag.EditController</servlet-class>
+    </servlet>
 
     <!-- Servlet mappings -->
     <!-- User -->
@@ -70,6 +76,12 @@
         <servlet-name>VenueEditController</servlet-name>
         <url-pattern>/venue/edit</url-pattern>
     </servlet-mapping>
+	<!-- Tag -->
+	<servlet-mapping>
+        <servlet-name>TagEditController</servlet-name>
+        <url-pattern>/tag/edit</url-pattern>
+    </servlet-mapping>
+	
 
     <!-- Testing stuff -->
     <servlet>
