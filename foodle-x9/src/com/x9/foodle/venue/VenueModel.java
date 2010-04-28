@@ -2,6 +2,7 @@ package com.x9.foodle.venue;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Vector;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -33,6 +34,7 @@ public class VenueModel {
 	private String address;
 	private String description;
 	// private List<String> photos;
+	private Vector<String> tags;
 
 	private int numberOfRatings;
 	private double averageRating;
@@ -61,7 +63,7 @@ public class VenueModel {
 			if (docs.size() > 1) {
 				throw new SolrRuntimeException(
 						"Too many results in VenueModel.getFromSolr: "
-								+ docs.size());
+						+ docs.size());
 			}
 
 			SolrDocument doc = docs.get(0);
@@ -72,6 +74,10 @@ public class VenueModel {
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException("Solr Server Exception", e);
 		}
+	}
+
+	public Vector<String> getTags(){
+		return this.tags;
 	}
 
 	public String getID() {
@@ -136,6 +142,10 @@ public class VenueModel {
 			this.editMe = editMe;
 		}
 
+		public void setTags(Vector<String> tags){
+			venue.tags = tags;
+		}
+
 		public void setId(String id) {
 			venue.id = id;
 		}
@@ -181,9 +191,9 @@ public class VenueModel {
 		 * @throws InvalidCreatorIDException
 		 */
 		public void validate() throws InvalidIDException,
-				InvalidTitleException, InvalidAddressException,
-				InvalidDescriptionException, InvalidNumberOfRatingsException,
-				InvalidAverageRatingException, InvalidCreatorIDException {
+		InvalidTitleException, InvalidAddressException,
+		InvalidDescriptionException, InvalidNumberOfRatingsException,
+		InvalidAverageRatingException, InvalidCreatorIDException {
 			Validator.validate(venue);
 		}
 
@@ -210,10 +220,10 @@ public class VenueModel {
 		 * @throws SolrRuntimeException
 		 */
 		public VenueModel apply() throws InvalidIDException,
-				InvalidTitleException, InvalidAddressException,
-				InvalidDescriptionException, InvalidNumberOfRatingsException,
-				InvalidAverageRatingException, InvalidCreatorIDException,
-				SolrRuntimeException {
+		InvalidTitleException, InvalidAddressException,
+		InvalidDescriptionException, InvalidNumberOfRatingsException,
+		InvalidAverageRatingException, InvalidCreatorIDException,
+		SolrRuntimeException {
 			if (editMe == null) {
 				venue.timeAdded = DateUtils.getNowUTC();
 			}
@@ -226,6 +236,13 @@ public class VenueModel {
 				SolrServer server = SolrUtils.getSolrServer();
 				SolrInputDocument doc = new SolrInputDocument();
 
+				if(venue.tags != null && venue.tags.size() != 0){
+					doc.addField("tags", venue.tags.get(0));
+					for(int i=1; i<venue.tags.size(); i++){
+						doc.addField("tags", venue.tags.get(i));
+					}
+				}
+				
 				doc.addField("id", venue.id);
 				doc.addField("type", SOLR_TYPE);
 				doc.addField("title", venue.title);
@@ -274,10 +291,10 @@ public class VenueModel {
 		 * @throws InvalidCreatorIDException
 		 */
 		public static void validate(VenueModel venue)
-				throws InvalidIDException, InvalidTitleException,
-				InvalidAddressException, InvalidDescriptionException,
-				InvalidNumberOfRatingsException, InvalidAverageRatingException,
-				InvalidCreatorIDException {
+		throws InvalidIDException, InvalidTitleException,
+		InvalidAddressException, InvalidDescriptionException,
+		InvalidNumberOfRatingsException, InvalidAverageRatingException,
+		InvalidCreatorIDException {
 			validateID(venue);
 			validateTitle(venue);
 			validateAddress(venue);
@@ -288,7 +305,7 @@ public class VenueModel {
 		}
 
 		public static void validateID(VenueModel venue)
-				throws InvalidIDException {
+		throws InvalidIDException {
 			if (venue.id == null) {
 				throw new InvalidIDException("venue id is null");
 			}
@@ -303,7 +320,7 @@ public class VenueModel {
 		 *             on invalid title
 		 */
 		public static void validateTitle(VenueModel venue)
-				throws InvalidTitleException {
+		throws InvalidTitleException {
 			if (venue.title == null) {
 				throw new InvalidTitleException("venue title is null");
 			}
@@ -322,7 +339,7 @@ public class VenueModel {
 		 *             on invalid address
 		 */
 		public static void validateAddress(VenueModel venue)
-				throws InvalidAddressException {
+		throws InvalidAddressException {
 			if (venue.address == null) {
 				throw new InvalidAddressException("venue address is null");
 			}
@@ -341,38 +358,38 @@ public class VenueModel {
 		 *             on invalid description
 		 */
 		public static void validateDescription(VenueModel venue)
-				throws InvalidDescriptionException {
+		throws InvalidDescriptionException {
 			if (venue.description == null) {
 				throw new InvalidDescriptionException(
-						"venue description is null");
+				"venue description is null");
 			}
 			venue.description = venue.description.trim();
 			if (venue.description.isEmpty()) {
 				throw new InvalidDescriptionException(
-						"venue description is empty");
+				"venue description is empty");
 			}
 		}
 
 		public static void validateNumberOfRatings(VenueModel venue)
-				throws InvalidNumberOfRatingsException {
+		throws InvalidNumberOfRatingsException {
 			if (venue.numberOfRatings < 0) {
 				throw new InvalidNumberOfRatingsException(
 						"venue number of ratings is negative: "
-								+ venue.numberOfRatings);
+						+ venue.numberOfRatings);
 			}
 			if (venue.averageRating != 0.0f && venue.numberOfRatings == 0) {
 				throw new InvalidNumberOfRatingsException(
 						"venue number of ratings zero while still having a average rating: "
-								+ venue.averageRating);
+						+ venue.averageRating);
 			}
 		}
 
 		public static void validateAverageRating(VenueModel venue)
-				throws InvalidAverageRatingException {
+		throws InvalidAverageRatingException {
 			if (venue.averageRating < 0.0f) {
 				throw new InvalidAverageRatingException(
 						"venue average rating is negative: "
-								+ venue.averageRating);
+						+ venue.averageRating);
 			}
 			if (venue.averageRating > 5.0f) {
 				throw new InvalidAverageRatingException(
@@ -390,11 +407,11 @@ public class VenueModel {
 		 *             on invalid creator id
 		 */
 		public static void validateCreatorID(VenueModel venue)
-				throws InvalidCreatorIDException {
+		throws InvalidCreatorIDException {
 			if (venue.creatorID <= 0) {
 				throw new InvalidCreatorIDException(
 						"venue creator id is negative or zero: "
-								+ venue.creatorID);
+						+ venue.creatorID);
 			}
 		}
 	}
@@ -482,11 +499,11 @@ public class VenueModel {
 	 */
 	public String toString() {
 		return "VenueModel [id=" + id + ", title=" + title + ", address="
-				+ address + ", description=" + description + ", averageRating="
-				+ averageRating + ", numberOfRatings=" + numberOfRatings
-				+ ", closed=" + closed + ", creatorID=" + creatorID
-				+ ", lastUpdated=" + DateUtils.dateToSolrDate(lastUpdated)
-				+ ", timeAdded=" + DateUtils.dateToSolrDate(timeAdded) + "]";
+		+ address + ", description=" + description + ", averageRating="
+		+ averageRating + ", numberOfRatings=" + numberOfRatings
+		+ ", closed=" + closed + ", creatorID=" + creatorID
+		+ ", lastUpdated=" + DateUtils.dateToSolrDate(lastUpdated)
+		+ ", timeAdded=" + DateUtils.dateToSolrDate(timeAdded) + "]";
 	}
 
 }
