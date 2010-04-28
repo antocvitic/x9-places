@@ -1,8 +1,8 @@
 package com.x9.foodle.venue;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Vector;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -34,7 +34,7 @@ public class VenueModel {
 	private String address;
 	private String description;
 	// private List<String> photos;
-	private Vector<String> tags;
+	private ArrayList<String> tags;
 
 	private int numberOfRatings;
 	private double averageRating;
@@ -76,7 +76,7 @@ public class VenueModel {
 		}
 	}
 
-	public Vector<String> getTags(){
+	public ArrayList<String> getTags(){
 		return this.tags;
 	}
 
@@ -142,7 +142,7 @@ public class VenueModel {
 			this.editMe = editMe;
 		}
 
-		public void setTags(Vector<String> tags){
+		public void setTags(ArrayList<String> tags){
 			venue.tags = tags;
 		}
 
