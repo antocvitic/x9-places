@@ -440,4 +440,15 @@ public class ReviewModel {
 		return review;
 	}
 
+	/**
+	 * For debug purposes only.
+	 */
+	@Override
+	public String toString() {
+		return "ReviewModel [id=" + id + ", title=" + title + ", text=" + text
+				+ ", venueID=" + venueID + ", creatorID=" + creatorID
+				+ ", timeAdded=" + timeAdded + ", lastUpdated=" + lastUpdated
+				+ ", ranking=" + ranking + "]";
+	}
+
 }

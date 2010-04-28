@@ -29,11 +29,10 @@ if (venueID != null && !venueID.isEmpty()) {
 <h:header title="Venue edit - Foodle X9"></h:header>
 <h:headercontent />
 
-<div id="contentarea">
-
 <h3 class="my_header">Add or edit venue</h3>
+<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=venueID %>">view this venue</a>
 <form action="${pageContext.request.contextPath}/venue/edit" method="POST">
-<input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/edit.jsp" />
+<input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
 <input name="id" type="hidden" value="<%= venueID %>" />
 <table class="content_block">
     <tr>
@@ -72,7 +71,6 @@ if (venueID != null && !venueID.isEmpty()) {
 
 </table>
 </form>
-</div>
 
 
 <h:footer />
