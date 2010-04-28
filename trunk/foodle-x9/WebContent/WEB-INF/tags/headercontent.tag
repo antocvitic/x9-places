@@ -2,10 +2,24 @@
 
 
 <body>
-<div id="all"> <!-- this div closed in /includes/footer.jsp -->
-
+<div id="all"> <!-- this div closed in /WEB-INF/tags/footer.jsp -->
+	
+<div id="main">  <!-- this div closed in /WEB-INF/tags/footer.jsp -->
+	<!-- shadows -->
+	<div id="left_gutter"></div>
+	<div id="top_left_gutter"></div>
+	<div id="top_gutter"></div> 
+	<div id="top_right_gutter"></div> 
 	<div id="header">
+		<!-- logo -->
+        <div id="logo">
+            <a href="${pageContext.request.contextPath}">
+                <img src="${pageContext.request.contextPath}/images/spot-logo-veni.png" border="0" alt="Foodle logo" height="100px"/>
+            </a>
+        </div>
+        <!-- search-field -->
         
+        <!-- login/logout -->
         <div id="header_login_div">
             <% 
             UserModel user = UserUtils.getCurrentUser(request, response);
@@ -33,13 +47,9 @@
                         <a href="${pageContext.request.contextPath}/logout">logout</a>
                     </p>
             <% } %>
-        </div>
-        <div id="logo">
-            <a href="${pageContext.request.contextPath}">
-                <img src="${pageContext.request.contextPath}/images/foodlelogo.png" border="0" alt="Foodle logo" height="100px"/>
-            </a>
-            <p>Veni Vidi, Review</p>
-        </div>
-	</div>
+        </div> <!-- end of header_login_div div -->
+        
+	</div> <!-- end of header div -->
 	
+	<div id="content_wrapper">  <!-- this div closed in /WEB-INF/tags/footer.jsp -->
 	<jsp:doBody />
