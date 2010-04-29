@@ -22,11 +22,23 @@ public class EditController extends HttpServlet {
 		String title = req.getParameter("title");
 		String text = req.getParameter("text");
 		String venueID = req.getParameter("venueID");
+		String reviewID = req.getParameter("reviewID");
 
 		String redirect = req.getParameter("redirect");
 
 		try {
-			ReviewModel.Builder builder = new ReviewModel.Builder();
+			ReviewModel.Builder builder = null;
+			if (reviewID != null && !reviewID.isEmpty()) {
+				// edit existing review
+				ReviewModel tempReview = ReviewModel.getFromSolr(reviewID);
+				if (tempReview == null) {
+					throw new RuntimeException("no review with id: " + reviewID);
+				}
+				builder = tempReview.getEditable();
+			} else {
+				// create new venue
+				builder = new ReviewModel.Builder();
+			}
 
 			builder.setTitle(title);
 			builder.setText(text);
@@ -34,7 +46,7 @@ public class EditController extends HttpServlet {
 			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.apply();
 
-			resp.sendRedirect(redirect);
+			resp.sendRedirect(redirect + "?venueID=" + venueID);
 		} catch (InvalidIDException e) {
 			throw new RuntimeException(e);
 		} catch (InvalidTitleException e) {

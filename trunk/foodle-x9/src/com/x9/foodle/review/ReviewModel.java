@@ -124,7 +124,7 @@ public class ReviewModel {
 		}
 	}
 
-	public String getId() {
+	public String getID() {
 		return id;
 	}
 
