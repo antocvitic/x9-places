@@ -56,18 +56,6 @@ a review for this venue</a>
 
 <hr />
 
-<%
-if (reviews.isEmpty()) {
-%>
-No reviews
-<% 
-} else {
-for (ReviewModel review : reviews) {
-%>
-<p><%= review.toString() %></p>
-<%
-}
-}
-%>
+<h:reviews reviews="<%=reviews %>" />
 
 <h:footer />

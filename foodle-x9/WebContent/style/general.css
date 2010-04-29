@@ -243,8 +243,11 @@ a:hover {
 	text-decoration:underline;
 }
 
-
-
+/* TODO: FIXME: */
+.review {
+    background-color: rgb(200, 220, 220);
+    border: 1px solid darkblue;
+}
 
 
 
