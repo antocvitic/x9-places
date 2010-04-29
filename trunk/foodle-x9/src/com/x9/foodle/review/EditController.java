@@ -12,7 +12,7 @@ import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidTextException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.model.exceptions.InvalidVenueReferenceException;
-import com.x9.foodle.user.UserModel;
+import com.x9.foodle.user.UserUtils;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -31,7 +31,7 @@ public class EditController extends HttpServlet {
 			builder.setTitle(title);
 			builder.setText(text);
 			builder.setVenueID(venueID);
-			builder.setCreator(UserModel.getFromDbByID(1));
+			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.apply();
 
 			resp.sendRedirect(redirect);

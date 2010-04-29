@@ -29,6 +29,14 @@
         <filter-name>SetCharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>RequireLoginFilter</filter-name>
+        <filter-class>com.x9.foodle.filters.RequireLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequireLoginFilter</filter-name>
+        <url-pattern>/venue/edit.jsp*</url-pattern>
+    </filter-mapping>
 
 
     <!-- Servlet declarations -->

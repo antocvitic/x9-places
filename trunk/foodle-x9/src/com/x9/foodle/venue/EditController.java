@@ -17,7 +17,7 @@ import com.x9.foodle.model.exceptions.InvalidDescriptionException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
-import com.x9.foodle.user.UserModel;
+import com.x9.foodle.user.UserUtils;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -57,7 +57,7 @@ public class EditController extends HttpServlet {
 			builder.setTitle(title);
 			builder.setAddress(address);
 			builder.setDescription(description);
-			builder.setCreator(UserModel.getFromDbByID(1));
+			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.setTags(tagsList);
 			VenueModel venue = builder.apply();
 
