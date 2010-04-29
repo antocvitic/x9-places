@@ -24,7 +24,7 @@
             <% 
             UserModel user = UserUtils.getCurrentUser(request, response);
             if (user == null) { %>
-                <form action="${pageContext.request.contextPath}/login" method="POST">
+                <form action="${pageContext.request.contextPath}/login" method="POST" name="login_form">
                     <div class="login_box_text">
                         <input id="rememberme" type="checkbox" name="rememberme" value="rememberme">
                         <label for="rememberme">Keep me logged in.</label>
@@ -32,9 +32,11 @@
                     </div>
                     <label for="login_username">Username:</label>
                     <input class="loginfield" id="login_username" name="username" type="text" 
-                    value="abel" />
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="abel" />
                     <label for="login_password">Password:</label>
-                    <input class="loginfield" id="login_password" name="password" type="password" />
+                    <input class="loginfield" id="login_password" name="password" type="password"
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"/>
+                    <script language="JavaScript">loadPlaceholders();</script>
                     <input type="submit" value="Log in" />
                 </form>
                 <p class="login_box_text">Login, <a href="${pageContext.request.contextPath}/login.jsp">register</a>
