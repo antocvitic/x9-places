@@ -8,14 +8,17 @@
 <%@ taglib tagdir="/WEB-INF/tags/gmaps" prefix="gmaps"%>
 
 <%@page import="java.util.*"%>
+<%@page import="com.x9.foodle.user.*"%>
 <%@page import="com.x9.foodle.venue.*"%>
 <%@page import="com.x9.foodle.review.*"%>
 <%@page import="com.x9.foodle.util.*"%>
 <%!
+UserModel user;
 VenueModel venue;
 List<ReviewModel> reviews;
 %>
 <%
+user = UserUtils.getCurrentUser(request, response);
 	String venueID = request.getParameter("venueID");
 
 	if (venueID != null && !venueID.isEmpty()) {
@@ -43,12 +46,17 @@ this venue</a>
 
 <p>Description: <%=venue.getDescription()%></p>
 
+<p>Average rating: <%=venue.getAverageRating()%> - Numberf of
+raters: <%= venue.getNumberOfRatings() %></p>
+
 <p>Address: <%=venue.getAddress()%></p>
 
 <p><gmaps:address address="<%=venue.getAddress()%>" id="gmaps_view1"
     css="gmaps_div" /></p>
 
 <p>Tags: <%=StringUtils.join(venue.getTags(), ", ")%></p>
+
+<h:venue_rater venue="<%= venue %>" />
 
 <a
     href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>">Write

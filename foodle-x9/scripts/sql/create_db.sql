@@ -45,6 +45,14 @@ create table unique_id_table (
 /* insert starting id (this id won't be used, but the next one will */
 insert into unique_id_table (id) values (1000);
 
+create table ratings (
+    userID int not null,
+    venueID varchar(64) character set latin1 not null, 
+    rating int not null,
+    primary key (userID, venueID)
+) Engine=InnoDB;
+
+
 /* create and grant privliges to x9user */
 grant all on x9db.* to 'x9user'@'localhost' identified by 'x9pwd';
 flush privileges;

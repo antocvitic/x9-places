@@ -1,5 +1,5 @@
-<%@tag import="com.x9.foodle.user.*"%>
-
+<%@ tag import="com.x9.foodle.user.*" %>
+<%@ tag import="com.x9.foodle.util.*" %>
 
 <body>
 <div id="all"> <!-- this div closed in /WEB-INF/tags/footer.jsp -->
@@ -25,6 +25,7 @@
             UserModel user = UserUtils.getCurrentUser(request, response);
             if (user == null) { %>
                 <form action="${pageContext.request.contextPath}/login" method="POST" name="login_form">
+                    <input type="hidden" name="redirect" value="<%= request.getRequestURL()+"?"+request.getQueryString() %>" />
                     <div class="login_box_text">
                         <input id="rememberme" type="checkbox" name="rememberme" value="rememberme">
                         <label for="rememberme">Keep me logged in.</label>
