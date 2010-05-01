@@ -19,6 +19,8 @@ import com.x9.foodle.model.exceptions.InvalidUserException;
 
 public class UserModel {
 
+	public static final int NO_RATING = -1;
+
 	private int userID;
 	private String username;
 	private String passwordHash;
@@ -76,7 +78,8 @@ public class UserModel {
 		try {
 			conn = DBUtils.openConnection();
 
-			stm = conn.prepareStatement("select * from users where username = ?");
+			stm = conn
+					.prepareStatement("select * from users where username = ?");
 			stm.setString(1, username);
 			boolean success = stm.execute();
 			if (!success) {
@@ -133,6 +136,42 @@ public class UserModel {
 
 	public boolean isConnectedToFacebook() {
 		return isConnectedToFacebook;
+	}
+
+	public int getRatingForVenue(String venueID) {
+		Connection conn = null;
+		PreparedStatement stm = null;
+		ResultSet result = null;
+		try {
+
+			// set the user specific rating in the db
+			conn = DBUtils.openConnection();
+
+			// get average rating and number of raters
+			stm = conn
+					.prepareStatement("select rating from ratings where userID = ? and venueID = ?");
+			stm.setInt(1, getID());
+			stm.setString(2, venueID);
+			boolean succ = stm.execute();
+
+			if (!succ) {
+				return NO_RATING;
+			}
+
+			result = stm.getResultSet();
+
+			if (result.next()) {
+				return result.getInt(result.findColumn("rating"));
+			}
+			return NO_RATING;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException("error getting rating for venue: "
+					+ venueID + " for user: " + userID);
+		} finally {
+			DBUtils.closeResultSet(result);
+			DBUtils.closeStatement(stm);
+			DBUtils.closeConnection(conn);
+		}
 	}
 
 	/**
