@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
-import com.x9.foodle.util.QuickURLEncoder;
+import com.x9.foodle.util.URLUtils;
 
 public class RequireLoginFilter implements Filter {
 
@@ -30,7 +30,7 @@ public class RequireLoginFilter implements Filter {
 
 		if (user == null) {
 			resp.sendRedirect(req.getContextPath() + "/login.jsp?redirect="
-					+ QuickURLEncoder.encode(req.getRequestURL()+"?"+req.getQueryString()));
+					+ URLUtils.encode(URLUtils.getCurrentURL(req)));
 			return;
 		}
 

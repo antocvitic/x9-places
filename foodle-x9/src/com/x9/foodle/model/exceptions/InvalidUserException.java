@@ -1,6 +1,6 @@
 package com.x9.foodle.model.exceptions;
 
-import com.x9.foodle.util.QuickURLEncoder;
+import com.x9.foodle.util.URLUtils;
 
 @SuppressWarnings("serial")
 public class InvalidUserException extends Exception {
@@ -21,7 +21,7 @@ public class InvalidUserException extends Exception {
 	}
 
 	public String getURLEncodedMessage() {
-		return QuickURLEncoder.encodeLatin(getMessage());
+		return URLUtils.encodeLatin(getMessage());
 	}
 
 }

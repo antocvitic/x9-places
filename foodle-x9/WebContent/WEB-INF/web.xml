@@ -36,7 +36,8 @@
     </filter>
     <filter-mapping>
         <filter-name>RequireLoginFilter</filter-name>
-        <url-pattern>/venue/edit.jsp*</url-pattern>
+        <url-pattern>/venue/edit.jsp</url-pattern>
+        <url-pattern>/review/edit.jsp</url-pattern>
         <servlet-name>VenueEditController</servlet-name>
         <servlet-name>VenueRatingController</servlet-name>
         <servlet-name>ReviewEditController</servlet-name>

@@ -6,7 +6,6 @@
  */
 function removePlaceholder(inputObject)
 {
-	
 	if (inputObject.name=="password") {
 		inputObject.type="password";
 	}
@@ -14,7 +13,6 @@ function removePlaceholder(inputObject)
 		inputObject.value='';
 		inputObject.style.color='black';
 	}
-	
 }
 
 /** Add placeholder
@@ -41,8 +39,8 @@ function addPlaceholder(inputObject)
  */
 function loadPlaceholders()
 {
-	document.login_form.username.focus();
-	document.login_form.username.blur();
-	document.login_form.password.focus();
-	document.login_form.password.blur();
+	$('.placeholder').each(function(i){this.focus(); this.blur();});
+	// TODO: add the onFocus / onBlur functions here instead of when declaring each object
 }
+
+$(document).ready(loadPlaceholders);

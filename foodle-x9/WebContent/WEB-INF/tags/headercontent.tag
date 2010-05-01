@@ -23,20 +23,26 @@
         <!-- login/logout -->
         <div id="header_login_div">
             <% 
+            String redirect = request.getParameter("redirect");
+            if (redirect != null) {
+            	redirect = URLUtils.decode(redirect);
+            } else {
+                redirect = URLUtils.getCurrentURL(request);   
+            }
             UserModel user = UserUtils.getCurrentUser(request, response);
             if (user == null) { %>
                 <form action="${pageContext.request.contextPath}/login" method="POST" name="login_form">
-                    <input type="hidden" name="redirect" value="<%= request.getRequestURL()+"?"+request.getQueryString() %>" />
+                    <input type="hidden" name="redirect" value="<%= redirect %>" />
                     <div class="login_box_text">
                         <input id="rememberme" type="checkbox" name="rememberme" value="rememberme">
                         <label for="rememberme">Keep me logged in.</label>
                         <a href="">Forgot password?</a>
                     </div>
                      <!-- <label for="login_username">Username:</label>-->
-                    <input class="loginfield" id="login_username" name="username" type="text" 
+                    <input class="loginfield placeholder" id="login_username" name="username" type="text" 
                     onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="" />
                      <!-- <label for="login_password">Password:</label>-->
-                    <input class="loginfield" id="login_password" name="password" type="password"
+                    <input class="loginfield placeholder" id="login_password" name="password" type="password"
                     onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"/>
                     <script language="JavaScript">loadPlaceholders();</script>
                     <input type="submit" value="Log in" />
