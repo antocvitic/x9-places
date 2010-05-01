@@ -45,7 +45,10 @@ user = UserUtils.getCurrentUser(request, response);
 			id="venue_edit">Edit</a>
 		</div>
 		<div id="venue_info_div">
-			<p>Average rating: <%=venue.getAverageRating()%> - Number of raters: <%= venue.getNumberOfRatings() %></p>
+			<p>
+                Average rating: <span id="venue_average_rating"><%= StringUtils.formatRating(venue.getAverageRating()) %></span>
+                - Number of ratings: <span id="venue_number_of_ratings"><%= venue.getNumberOfRatings() %></span>
+            </p>
 			<h:venue_rater venue="<%= venue %>" />
 			
 			<p id="address"><%=venue.getAddress()%></p>
@@ -60,7 +63,7 @@ user = UserUtils.getCurrentUser(request, response);
 			<!-- getTags() returns an ArrayList (1 May 2010) -->
 			<%
 			 ArrayList<String> tagsList = venue.getTags();
-			 Iterator tagsIterator = tagsList.iterator();
+			 Iterator<String> tagsIterator = tagsList.iterator();
 			 while (tagsIterator.hasNext()) {
 			 %>
 			<small id="venue_tag"><%= tagsIterator.next()%></small>

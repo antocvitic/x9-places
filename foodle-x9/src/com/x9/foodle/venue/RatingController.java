@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.x9.foodle.datastore.DBUtils;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.model.exceptions.InvalidAddressException;
@@ -23,6 +25,7 @@ import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
+import com.x9.foodle.util.StringUtils;
 
 @SuppressWarnings("serial")
 public class RatingController extends HttpServlet {
@@ -45,17 +48,35 @@ public class RatingController extends HttpServlet {
 		int intRating = Integer.parseInt(rating);
 
 		try {
-			setVenueRating(UserUtils.getCurrentUser(req, resp), venueID,
-					intRating);
-			out.print("ok");
+			Rating r = setVenueRating(UserUtils.getCurrentUser(req, resp),
+					venueID, intRating);
+
+			JSONObject json = new JSONObject();
+			json.put("status", "ok");
+			json.put("rating", StringUtils.formatRating(r.rating));
+			json.put("ratings", r.ratings);
+
+			out.print(json.toString());
 		} catch (Exception e) {
-			//out.print("error: " + e.getMessage());
+			// out.print("error: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
 
-	public static void setVenueRating(UserModel user, String venueID, int rating)
-			throws SQLException, InvalidIDException {
+	public static class Rating {
+		public double rating;
+		public int ratings;
+
+		public Rating(double rating, int ratings) {
+			super();
+			this.rating = rating;
+			this.ratings = ratings;
+		}
+
+	}
+
+	public static Rating setVenueRating(UserModel user, String venueID,
+			int rating) throws SQLException, InvalidIDException {
 		Connection conn = null;
 		PreparedStatement stm = null;
 		ResultSet result = null;
@@ -88,21 +109,26 @@ public class RatingController extends HttpServlet {
 					.prepareStatement("select count(*), avg(rating) from ratings where venueID = ?");
 			stm.setString(1, venueID);
 			stm.execute();
-			
+
 			result = stm.getResultSet();
-			
+
 			if (result == null) {
-				throw new SQLException("error getting average rating for a venue");
+				throw new SQLException(
+						"error getting average rating for a venue");
 			}
-			
+
 			result.next();
 			try {
 				VenueModel.Builder builder = venue.getEditable();
-				
-				builder.setNumberOfRatings(result.getInt(1));
-				builder.setAverageRating(result.getDouble(2));
+
+				Rating r = new Rating(result.getDouble(2), result.getInt(1));
+
+				builder.setNumberOfRatings(r.ratings);
+				builder.setAverageRating(r.rating);
 				builder.apply();
-				
+
+				return r;
+
 				// TODO: don't throw runtime exceptions
 			} catch (InvalidTitleException e) {
 				throw new RuntimeException(e);
