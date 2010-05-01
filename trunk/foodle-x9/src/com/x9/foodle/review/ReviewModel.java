@@ -195,7 +195,7 @@ public class ReviewModel {
 		}
 
 		public void setCreator(UserModel user) {
-			review.creatorID = user.getUserID();
+			review.creatorID = user.getID();
 		}
 
 		public void setRanking(int ranking) {

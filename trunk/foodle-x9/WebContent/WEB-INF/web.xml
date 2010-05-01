@@ -36,10 +36,12 @@
     </filter>
     <filter-mapping>
         <filter-name>RequireLoginFilter</filter-name>
+        <servlet-name>UserEditController</servlet-name>
+        <url-pattern>/user/preferences.jsp</url-pattern>
         <url-pattern>/venue/edit.jsp</url-pattern>
-        <url-pattern>/review/edit.jsp</url-pattern>
         <servlet-name>VenueEditController</servlet-name>
         <servlet-name>VenueRatingController</servlet-name>
+        <url-pattern>/review/edit.jsp</url-pattern>
         <servlet-name>ReviewEditController</servlet-name>
         <servlet-name>TagEditController</servlet-name>
     </filter-mapping>
@@ -59,6 +61,10 @@
     <servlet>
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>com.x9.foodle.user.RegisterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserEditController</servlet-name>
+        <servlet-class>com.x9.foodle.user.EditController</servlet-class>
     </servlet>
 
     <!-- Venue -->
@@ -97,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserEditController</servlet-name>
+        <url-pattern>/user/edit</url-pattern>
     </servlet-mapping>
 
     <!-- Venue -->

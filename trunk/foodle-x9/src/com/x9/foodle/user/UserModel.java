@@ -103,7 +103,7 @@ public class UserModel {
 		}
 	}
 
-	public int getUserID() {
+	public int getID() {
 		return userID;
 	}
 

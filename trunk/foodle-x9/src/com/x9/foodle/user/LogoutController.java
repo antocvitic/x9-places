@@ -23,7 +23,6 @@ public class LogoutController extends HttpServlet {
 			session.removeAttribute(LoginController.LOGGED_IN_SESSION_USERID);
 			session
 					.removeAttribute(LoginController.LOGGED_IN_SESSION_SESSION_TOKEN);
-			session.invalidate();
 
 			Cookie[] cookies = req.getCookies();
 			if (cookies != null) {
