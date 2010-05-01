@@ -14,9 +14,10 @@
         
         <!-- search-field -->
         <div id="search">
+        	<img src="${pageContext.request.contextPath}/images/small-search.png" id="search_icon"/>
         	<form name="search form">
-        		<input type="text"/>
-        		<input type="submit" value="search"/>
+        		<input type="text" class="searchfield"/>
+        		<input type="submit" value="search" id="search_button"/>
         	</form>
         </div>
         

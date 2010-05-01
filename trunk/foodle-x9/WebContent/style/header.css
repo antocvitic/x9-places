@@ -25,7 +25,7 @@
 	/* components inside will be relative to it's position */
 	position: relative;
 	
-	border-bottom: 1px ridge rgb(71, 105, 117);
+	border-bottom: 1px solid rgb(71, 105, 117);
 }
 .header a {
 	/* links are bold with a etched look */
@@ -62,9 +62,44 @@
 	position:absolute;
 	top:50%;
 	margin-top: -10px;
-	left:0px;
-	width: 100%;
-}	
+	left:40%;
+	padding: 2px;
+	
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+
+.header .searchfield {
+	/* position */
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	height: 20px;
+	
+	/* padding the text inside */
+	padding-left: 15px;
+	padding-right: 15px;
+	
+	/* looks */
+	border: 1px solid rgb(71, 105, 117);
+	-moz-box-shadow: 0px 1px 0px #FFF;/*, inset 0px 1px 3px #000;*/
+	-webkit-box-shadow: 0px 1px 0px #FFF;
+}
+
+.header .searchfield:focus {
+	/* give the search-field a highlighted look on focus*/
+	-moz-box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
+	-webkit-box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
+	
+	/* without the square outline */
+	outline: none;
+}
+
+.header #search_icon {
+	position:absolute;
+	top: 7px;
+	left: 8px;
+	opacity: 0.75;	
+}
 
 .header #header_login_div {
 	/* login div */
