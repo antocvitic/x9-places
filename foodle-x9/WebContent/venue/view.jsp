@@ -36,33 +36,51 @@ user = UserUtils.getCurrentUser(request, response);
 </h:header>
 <h:headercontent />
 
-<p><strong style="color: red">TODO:</strong></p>
+<!-- Text content -->
+<div class="venue">
+	<div id="venue_text">
+		<div id="venue_title_div">
+			<h1 id="venue_title"><%=venue.getTitle()%></h1>
+			<a href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>" 
+			id="venue_edit">Edit</a>
+		</div>
+		<div id="venue_info_div">
+			<p>Average rating: <%=venue.getAverageRating()%> - Number of raters: <%= venue.getNumberOfRatings() %></p>
+			<h:venue_rater venue="<%= venue %>" />
+			
+			<p id="address"><%=venue.getAddress()%></p>
+		</div>
+		
+		<div id="venue_description_div">
+			<p><%=venue.getDescription()%></p>
+		</div>
 
-<h1><%=venue.getTitle()%></h1>
-
-<a
-    href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>">edit
-this venue</a>
-
-<p>Description: <%=venue.getDescription()%></p>
-
-<p>Average rating: <%=venue.getAverageRating()%> - Numberf of
-raters: <%= venue.getNumberOfRatings() %></p>
-
-<p>Address: <%=venue.getAddress()%></p>
-
-<p><gmaps:address address="<%=venue.getAddress()%>" id="gmaps_view1"
-    css="gmaps_div" /></p>
-
-<p>Tags: <%=StringUtils.join(venue.getTags(), ", ")%></p>
-
-<h:venue_rater venue="<%= venue %>" />
-
-<a
-    href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>">Write
-a review for this venue</a>
-
-<hr />
+		<div id=venue_tags>
+			<p>
+			<!-- getTags() returns an ArrayList (1 May 2010) -->
+			<%
+			 ArrayList<String> tagsList = venue.getTags();
+			 Iterator tagsIterator = tagsList.iterator();
+			 while (tagsIterator.hasNext()) {
+			 %>
+			<small id="venue_tag"><%= tagsIterator.next()%></small>
+			<% 
+			 }%>	
+			 </p>
+		</div>
+		<a href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>" 
+		id="venue_review">Write a review</a>
+		
+	</div> <!-- end of venue_text -->
+	
+	<!-- map for the venue -->
+	<div id="venue_map">
+		<p><gmaps:address address="<%=venue.getAddress()%>" id="gmaps_view1" css="gmaps_div" /></p>
+	</div>
+	
+	
+	
+</div> <!-- end of venue -->
 
 <h:reviews reviews="<%=reviews %>" />
 

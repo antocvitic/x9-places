@@ -29,68 +29,11 @@ body
 	-moz-box-shadow: 0px 0px 20px #000;
 }
 
-/*#left_gutter
-{
-	background: url(../images/left-gutter.png) repeat-y right;
-	height: 100%;
-	width: 9px;
-	left:0px;
-	top: 0px;
-	position:absolute;
-	opacity:0.25; moz-opacity:.25; filter:alpha(opacity=25);
-}
-#right_gutter
-{
-	background: url(../images/right-gutter.png) repeat-y left;
-	height: 100%;
-	width: 9px;
-	left:1015px;
-	top: 0px;
-	position:absolute;
-	opacity:0.25; moz-opacity:.25; filter:alpha(opacity=25);
-}
-#top_gutter
-{
-	background: url(../images/top-gutter.png) repeat-x bottom;
-	width: 1005px;
-	height: 9px;
-	top: -10px;
-	position:absolute;
-	opacity:0.25; moz-opacity:.25; filter:alpha(opacity=25);
-}
-#top_left_gutter
-{
-	background: url(../images/top-left-gutter.png) no-repeat;
-	width: 9px;
-	height: 9px;
-	top: -9px;
-	left:0px;
-	position:absolute;
-	opacity:0.25; moz-opacity:.25; filter:alpha(opacity=25);
-}
-#top_right_gutter
-{
-	background: url(../images/top-right-gutter.png) no-repeat ;
-	width: 9px;
-	height: 9px;
-	top: -9px;
-	left: 1014px;
-	position:absolute;
-	opacity:0.25; moz-opacity:.25; filter:alpha(opacity=25);
-}
-
-#main
-{
-	margin-left:9px;
-	margin-right:9px;
-}*/
-
-
 #content_wrapper
 {
 	background: url(../images/white_85p_bg.png) repeat;
 	padding: 20px;
-	padding-top: 10px;
+	padding-top: 15px;
 	min-height: 500px;
 	
 	-webkit-border-bottom-left-radius: 6px;
@@ -105,17 +48,15 @@ body
 
 #contentarea
 {
-	/*border: solid 0px #000;
-	margin: 0;
-	padding: 0px 0px 0px 0px;
-	position: relative;
-	overflow: hidden;*/
+	
 }
+
 #wrapper {
 	margin: 0 0 0 14%;
 	border-left: solid 2px #FFFF00;
 	padding-left: 10px;
 }
+
 #left
 {
 	/*background: #FFFFFF;*/
@@ -132,14 +73,6 @@ body
 	float: right;
 	padding-top: 10px
 }
-/*#main
-{
-	background: #fff;
-	margin: 0 0px 0 0;
-	padding: 25px 0 20px;
-	position: relative;
-}*/
-
 
 h3 {
 	font-size:1.1em;
@@ -205,13 +138,6 @@ a, a:link, a:visited, a:active {
 a:hover {
 	text-decoration:underline;
 }
-
-/* TODO: FIXME: */
-.review {
-    background-color: rgb(200, 220, 220);
-    border: 1px solid darkblue;
-}
-
 
 
 
