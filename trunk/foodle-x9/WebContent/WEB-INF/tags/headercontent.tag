@@ -4,20 +4,21 @@
 <body>
 <div id="all"> <!-- this div closed in /WEB-INF/tags/footer.jsp -->
 	
-<div id="main">  <!-- this div closed in /WEB-INF/tags/footer.jsp -->
-	<!-- shadows -->
-	<div id="left_gutter"></div>
-	<div id="top_left_gutter"></div>
-	<div id="top_gutter"></div> 
-	<div id="top_right_gutter"></div> 
-	<div id="header">
+	<div class="header">
 		<!-- logo -->
         <div id="logo">
-            <a href="${pageContext.request.contextPath}">
-                <img src="${pageContext.request.contextPath}/images/spot-logo-veni.png" border="0" alt="Foodle logo" height="100px"/>
+            <a href="${pageContext.request.contextPath}" id="header-no-opacity">
+                <img src="${pageContext.request.contextPath}/images/spot-logo-veni.png" border="0" alt="spot logo" height="100px"/>
             </a>
         </div>
+        
         <!-- search-field -->
+        <div id="search">
+        	<form name="search form">
+        		<input type="text"/>
+        		<input type="submit" value="search"/>
+        	</form>
+        </div>
         
         <!-- login/logout -->
         <div id="header_login_div">
@@ -31,10 +32,10 @@
                         <label for="rememberme">Keep me logged in.</label>
                         <a href="">Forgot password?</a>
                     </div>
-                    <label for="login_username">Username:</label>
+                     <!-- <label for="login_username">Username:</label>-->
                     <input class="loginfield" id="login_username" name="username" type="text" 
-                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="abel" />
-                    <label for="login_password">Password:</label>
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="" />
+                     <!-- <label for="login_password">Password:</label>-->
                     <input class="loginfield" id="login_password" name="password" type="password"
                     onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"/>
                     <script language="JavaScript">loadPlaceholders();</script>

@@ -49,8 +49,6 @@ if (!sns.hasMoreElements()) {
     
 </div> <!-- this closes content from  /WEB-INF/tags/headercontent.jsp -->
 </div> <!-- this closes content_wrapper from  /WEB-INF/tags/headercontent.jsp -->
-<div id="right_gutter"></div>
-</div> <!-- this closes main from  /WEB-INF/tags/headercontent.jsp -->
 </div> <!-- this closes all from  /WEB-INF/tags/headercontent.jsp -->
 </body>
 </html>

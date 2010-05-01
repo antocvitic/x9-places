@@ -1,0 +1,77 @@
+@CHARSET "UTF-8";
+
+
+/** HEADER
+ * This is the style-sheat for the "header" inside the body (above the content)
+ *
+ * Everything is inside the "header" class.
+ */
+
+.header {
+	/* positioning */
+	padding: 5px;
+	padding-bottom: 2px;
+	height:  110px;
+	margin-top: 25px;
+	
+	background: url(../images/header-gradient.png) repeat-x;
+	
+	/* rounded on top */
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+	
+	/* components inside will be relative to it's position */
+	position: relative;
+	
+	border-bottom: 1px ridge rgb(71, 105, 117);
+}
+.header a {
+	/* links are bold with a etched look */
+	color: #000 !important;
+	opacity:0.8;
+	text-shadow: 0px 1px 0px #FFF;
+	font-weight: bold;
+	
+}
+.header a:hover {
+	/* adds a big background blur when moused over 
+	 * and makes the font-color darker.
+	 * Has no other decoration */
+	color: #000;
+	opacity:1;
+	text-shadow: 0px 1px 0px #FFF, 0px 0px 10px #FFF;
+	font-weight: bold;
+	
+	text-decoration: none !important;	
+}
+.header #header-no-opacity {
+	/* The image is a link to the start-page but should not be transparent */
+	opacity: 1.0 !important;
+}
+
+.header #logo {
+	/* positioning of the logo image */
+	text-align: left;
+	margin-top: 5px;
+}
+
+.header #search {
+	/* Search div */
+	position:absolute;
+	top:50%;
+	margin-top: -10px;
+	left:0px;
+	width: 100%;
+}	
+
+.header #header_login_div {
+	/* login div */
+	position: absolute;
+	text-align: right;
+    top:18px;
+    width: 350px;
+    left: 100%;
+    margin-left:-360px;
+}
