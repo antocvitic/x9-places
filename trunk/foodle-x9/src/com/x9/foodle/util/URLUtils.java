@@ -4,7 +4,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
-public class QuickURLEncoder {
+import javax.servlet.http.HttpServletRequest;
+
+public class URLUtils {
+
+	public static String getCurrentURL(HttpServletRequest request) {
+		String qs = request.getQueryString();
+		qs = qs == null ? "" : qs;
+		return request.getRequestURL() + "?" + qs;
+	}
+
 	/**
 	 * Returns {@code s} as a URL encoded string, using UTF-8 as the character
 	 * set.
@@ -22,7 +31,7 @@ public class QuickURLEncoder {
 					"UTF-8 is not supported by the URLEncoder!", e);
 		}
 	}
-	
+
 	public static String encodeLatin(String s) {
 		try {
 			return URLEncoder.encode(s, "ISO-8859-1");
@@ -48,7 +57,7 @@ public class QuickURLEncoder {
 					"UTF-8 is not supported by the URLDecoder!", e);
 		}
 	}
-	
+
 	public static String decodeLatin(String s) {
 		try {
 			return URLDecoder.decode(s, "ISO-8859-1");
@@ -57,5 +66,5 @@ public class QuickURLEncoder {
 					"ISO-8859-1 is not supported by the URLDecoder!", e);
 		}
 	}
-	
+
 }
