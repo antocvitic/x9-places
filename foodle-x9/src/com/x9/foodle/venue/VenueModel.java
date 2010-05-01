@@ -183,7 +183,7 @@ public class VenueModel {
 		}
 
 		public void setCreator(UserModel user) {
-			venue.creatorID = user.getUserID();
+			venue.creatorID = user.getID();
 		}
 
 		public void setTags(ArrayList<String> tags) {

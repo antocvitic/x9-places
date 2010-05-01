@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.x9.foodle.util.MessageDispatcher;
+
 @SuppressWarnings("serial")
 public class LoginController extends HttpServlet {
 
@@ -29,13 +31,13 @@ public class LoginController extends HttpServlet {
 
 		if (username == null
 				|| (user = UserModel.getFromDbByUsername(username)) == null) {
-			resp.sendRedirect("login.jsp?error=no_such_user:" + username);
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", "No such user:" + username);
 			return;
 		}
 
 		if (password == null
 				|| !BCrypt.checkpw(password, user.getPasswordHash())) {
-			resp.sendRedirect("login.jsp?error=bad_pwd:" + password);
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", "Wrong password");
 			return;
 		}
 
@@ -53,13 +55,13 @@ public class LoginController extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		session.setAttribute(LOGGED_IN_SESSION_USERID, new Integer(user
-				.getUserID()));
+				.getID()));
 		session.setAttribute(LOGGED_IN_SESSION_SESSION_TOKEN, user
 				.getSessionToken());
 
 		if (rememberme) {
 			Cookie cuid = new Cookie(LOGGED_IN_SESSION_USERID, Integer
-					.toString(user.getUserID()));
+					.toString(user.getID()));
 			cuid.setMaxAge(7 * 24 * 60 * 60); // 7 days
 			resp.addCookie(cuid);
 

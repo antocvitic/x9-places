@@ -39,8 +39,24 @@ function addPlaceholder(inputObject)
  */
 function loadPlaceholders()
 {
-	$('.placeholder').each(function(i){this.focus(); this.blur();});
+	$('.placeholder').each(function(i){
+		this.focus();
+		this.blur();
+	});
 	// TODO: add the onFocus / onBlur functions here instead of when declaring each object
 }
+
+/**
+ * This is to disable any placeholders before submitting a form
+ */
+$(document).ready(function() {
+	$("form").submit(function() {
+	    $("#" + this.id + " .placeholder").each(function(i) {
+			removePlaceholder(this);
+		});
+	    return true;
+	})
+});
+
 
 $(document).ready(loadPlaceholders);

@@ -115,6 +115,7 @@ div {
 
 #error_div {
     color: red;
+    background-color: rgb(255, 200, 200);
     border: 1px solid;
     padding: 15px;
     text-align: left;

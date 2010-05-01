@@ -15,5 +15,12 @@
     href="${pageContext.request.contextPath}/style/header.css" />
 <link rel="stylesheet" type="text/css" charset="utf-8"
     href="${pageContext.request.contextPath}/style/venue.css" />
+
+<!-- jQuery UI -->
+<link type="text/css"
+    href="${pageContext.request.contextPath}/style/jquery-ui/jquery-ui-1.8.1.custom.css"
+    rel="stylesheet" />
+<script type="text/javascript"
+    src="${pageContext.request.contextPath}/js/jquery-ui-1.8.1.custom.min.js"></script>
 <jsp:doBody />
 </head>

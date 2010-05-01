@@ -70,14 +70,14 @@ public class RatingController extends HttpServlet {
 			// delete any previous rating
 			stm = conn
 					.prepareStatement("delete from ratings where userID = ? and venueID = ?");
-			stm.setInt(1, user.getUserID());
+			stm.setInt(1, user.getID());
 			stm.setString(2, venueID);
 			stm.execute();
 			DBUtils.closeStatement(stm);
 			// set new rating
 			stm = conn
 					.prepareStatement("insert into ratings (userID, venueID, rating) values (?, ?, ?)");
-			stm.setInt(1, user.getUserID());
+			stm.setInt(1, user.getID());
 			stm.setString(2, venueID);
 			stm.setInt(3, rating);
 			stm.execute();

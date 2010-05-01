@@ -12,6 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.x9.foodle.model.exceptions.BadEmailException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
+import com.x9.foodle.util.MessageDispatcher;
 
 @SuppressWarnings("serial")
 public class RegisterController extends HttpServlet {
@@ -26,19 +27,20 @@ public class RegisterController extends HttpServlet {
 		String redirect = req.getParameter("redirect");
 
 		try {
-
-			// we need to validate password here, as UserModel only cares about
-			// the hash
-			UserModel.Validator.validatePassword(password);
+			UserModel.Builder builder = new UserModel.Builder();
 
 			String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-
-			UserModel.Builder builder = new UserModel.Builder();
 
 			builder.setUsername(username);
 			builder.setPasswordHash(passwordHash);
 			builder.setEmail(email);
 			builder.setName(name);
+
+			builder.validate();
+
+			// we need to validate password here, as UserModel only cares about
+			// the hash
+			UserModel.Validator.validatePassword(password);
 
 			builder.apply();
 
@@ -53,16 +55,16 @@ public class RegisterController extends HttpServlet {
 			}
 		} catch (BadUsernameException e) {
 			// throw new RuntimeException(e);
-			resp.sendRedirect("login.jsp?error=badusername&reason="
-					+ e.getURLEncodedMessage());
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
+					"Bad username:" + username + ", reason: " + e.getMessage());
 		} catch (BadPasswordException e) {
 			// throw new RuntimeException(e);
-			resp.sendRedirect("login.jsp?error=badpassword&reason="
-					+ e.getURLEncodedMessage());
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
+					"Bad password:, reason: " + e.getMessage());
 		} catch (BadEmailException e) {
 			// throw new RuntimeException(e);
-			resp.sendRedirect("login.jsp?error=bademail&reason="
-					+ e.getURLEncodedMessage());
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
+					"Bad email:" + email + ", reason: " + e.getMessage());
 		}
 	}
 

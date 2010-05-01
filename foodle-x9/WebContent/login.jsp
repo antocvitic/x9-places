@@ -14,15 +14,23 @@
  %>
 
 
-<h:header title="Foodle X9 - The most awesome venue search"></h:header>
+<h:header title="Login or register - Foodle X9">
+
+<script type="text/javascript">
+
+
+</script>
+
+
+</h:header>
 <h:headercontent />
 
 
 
-<h:error-msg parentRequest="<%= request %>" />
+<h:msg />
 
 <div id="register_div">
-<form action="${pageContext.request.contextPath}/register" method="POST">
+<form id="register" action="${pageContext.request.contextPath}/register" method="POST">
 <h3 class="login_type_header">Register</h3>
 <table>
     <tr>
@@ -69,7 +77,7 @@
 </div>
 
 <div id="login_div">
-<form action="${pageContext.request.contextPath}/login" method="POST">
+<form id="login" action="${pageContext.request.contextPath}/login" method="POST">
 <input type="hidden" name="redirect" value="<%= redirect %>" />
 <h3 class="login_type_header">Login</h3>
 <table>
