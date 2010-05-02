@@ -33,16 +33,20 @@ user = UserUtils.getCurrentUser(request, response);
 %>
 <h:header title="View venue - Foodle X9">
     <gmaps:include />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/venue.js"></script>
 </h:header>
 <h:headercontent />
+
+<h:msg />
 
 <!-- Text content -->
 <div class="venue">
 	<div id="venue_text">
 		<div id="venue_title_div">
 			<h1 id="venue_title"><%=venue.getTitle()%></h1>
-			<a href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>" 
-			id="venue_edit">Edit</a>
+            <% if (user != null) { %>
+    			<a href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>">Edit</a>
+            <% } %>
 		</div>
 		<div id="venue_info_div">
 			
@@ -68,8 +72,9 @@ user = UserUtils.getCurrentUser(request, response);
 			 }%>	
 			 </p>
 		</div>
-		<a href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>" 
-		id="venue_review">Write a review</a>
+        <% if (user != null) { %>
+    		<a href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>">Write a review</a>
+        <% } %>
 		
 	</div> <!-- end of venue_text -->
 	

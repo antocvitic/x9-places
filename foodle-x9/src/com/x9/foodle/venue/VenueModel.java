@@ -75,7 +75,7 @@ public class VenueModel {
 			return venue;
 
 		} catch (SolrServerException e) {
-			throw new SolrRuntimeException("Solr Server Exception", e);
+			throw new SolrRuntimeException("solr error in getFromSolr", e);
 		}
 	}
 
@@ -116,7 +116,11 @@ public class VenueModel {
 	}
 
 	public UserModel getCreator() {
-		return UserModel.getFromDbByID(creatorID);
+		UserModel user = UserModel.getFromDbByID(creatorID);
+		if (user == null) {
+			throw new RuntimeException("null creator for venue: " + id);
+		}
+		return user;
 	}
 
 	public Date getLastUpdated() {
@@ -497,7 +501,7 @@ public class VenueModel {
 		dest.tags.addAll(src.tags);
 	}
 
-	private static VenueModel venueFromSolrDocument(SolrDocument doc) {
+	public static VenueModel venueFromSolrDocument(SolrDocument doc) {
 		VenueModel venue = new VenueModel();
 		venue.id = (String) doc.get("id");
 		venue.title = (String) doc.get("title");

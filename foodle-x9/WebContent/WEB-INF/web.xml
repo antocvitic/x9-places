@@ -43,6 +43,7 @@
         <servlet-name>VenueRatingController</servlet-name>
         <url-pattern>/review/edit.jsp</url-pattern>
         <servlet-name>ReviewEditController</servlet-name>
+        <servlet-name>CommentEditController</servlet-name>
         <servlet-name>TagEditController</servlet-name>
     </filter-mapping>
 
@@ -81,6 +82,12 @@
     <servlet>
         <servlet-name>ReviewEditController</servlet-name>
         <servlet-class>com.x9.foodle.review.EditController</servlet-class>
+    </servlet>
+    
+    <!-- Comment -->
+    <servlet>
+        <servlet-name>CommentEditController</servlet-name>
+        <servlet-class>com.x9.foodle.comment.EditController</servlet-class>
     </servlet>
 
     <!-- Tag -->
@@ -123,6 +130,12 @@
     <servlet-mapping>
         <servlet-name>ReviewEditController</servlet-name>
         <url-pattern>/review/edit</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Comment -->
+    <servlet-mapping>
+        <servlet-name>CommentEditController</servlet-name>
+        <url-pattern>/comment/edit</url-pattern>
     </servlet-mapping>
 
     <!-- Tag -->

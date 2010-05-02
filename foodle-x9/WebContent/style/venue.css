@@ -143,7 +143,7 @@
 	-webkit-box-shadow: 0px 1px 3px rgb(71, 105, 117);
 }
 
-.review #review_title_div {
+.review .review_title_div {
 	position: relative;
 	height: 32px;
 	background: url(../images/venue-title-bg.png) repeat;
@@ -191,9 +191,72 @@
 	text-decoration: none !important;
 }
 
-.review #review_text {
+.review .review_text {
 	padding: 2px;
 	padding-left: 25px;
 	padding-right: 25px;
 	text-align: left;
+}
+
+.comment {
+    margin-left: 45px;
+    margin-right: 45px;
+    /*background-color: rgb(224, 229, 235);*/
+    /*border: 1px solid rgb(71, 105, 117);*/
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow: 0px 1px 3px rgb(71, 105, 117);
+    -webkit-box-shadow: 0px 1px 3px rgb(71, 105, 117);
+}
+
+.comment .comment_title_div {
+    position: relative;
+    height: 32px;
+    background: url(../images/venue-title-bg.png) repeat;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+}
+
+.comment p {
+    padding-top: 1px;
+    text-align: left;
+}
+
+.comment b {
+    color: #000 !important;
+    opacity: 1;
+    text-shadow: 0px 1px 0px #FFF;
+    font-size: large;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.comment a { /* links are bold with a etched look */
+    color: #000 !important;
+    opacity: 0.8;
+    text-shadow: 0px 1px 0px #FFF;
+    font-weight: bold;
+}
+
+.comment a:hover { /* adds a big background blur when moused over 
+     * and makes the font-color darker.
+     * Has no other decoration */
+    color: #000;
+    opacity: 1;
+    text-shadow: 0px 1px 0px #FFF, 0px 0px 10px #FFF;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+.comment .comment_text {
+    padding: 2px;
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: left;
+}
+
+.new_comment_div_hidden {
+    display: none;
 }
