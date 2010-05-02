@@ -11,8 +11,6 @@
     src="${pageContext.request.contextPath}/js/general.js"></script>  
 <script type="text/javascript"
     src="${pageContext.request.contextPath}/js/placeholders.js"></script>
-<script type="text/javascript"
-    src="${pageContext.request.contextPath}/js/venue.js"></script>
 <link rel="stylesheet" type="text/css" charset="utf-8"
     href="${pageContext.request.contextPath}/style/general.css" />
 <link rel="stylesheet" type="text/css" charset="utf-8"

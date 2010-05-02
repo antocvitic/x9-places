@@ -45,10 +45,7 @@ user = UserUtils.getCurrentUser(request, response);
 			id="venue_edit">Edit</a>
 		</div>
 		<div id="venue_info_div">
-			<p>
-                Average rating: <span id="venue_average_rating"><%= StringUtils.formatRating(venue.getAverageRating()) %></span>
-                - Number of ratings: <span id="venue_number_of_ratings"><%= venue.getNumberOfRatings() %></span>
-            </p>
+			
 			<h:venue_rater venue="<%= venue %>" />
 			
 			<p id="address"><%=venue.getAddress()%></p>
