@@ -1,25 +1,18 @@
 @CHARSET "UTF-8";
 
-
 /** VENUE
  * This is the style-sheat for viewing venues (and their reviews)
  *
  * Everything is inside the "venue" class.
  */
-
-.venue {
-	/* all things in the venue will postion relative to this. */
+.venue { /* all things in the venue will postion relative to this. */
 	position: relative;
-	
 	/* the height is at least the height of the map (400px)*/
 	min-height: 390px;
 }
 
-.venue #venue_text {
-	/* This is the div where the title, description 
-	 * and all other text-info go... */
-	
-	/* position */
+.venue #venue_text { /* This is the div where the title, description 
+	 * and all other text-info go... */ /* position */
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -30,9 +23,9 @@
 
 .venue h1 {
 	color: #000 !important;
-	opacity:1;
+	opacity: 1;
 	text-shadow: 0px 1px 0px #FFF;
-	font-weight: bold;	
+	font-weight: bold;
 }
 
 .venue #venue_title_div {
@@ -40,18 +33,19 @@
 	margin-bottom: 5px;
 	position: relative;
 	height: 36px;
-	
 	background: url(../images/venue-title-bg.png) repeat;
 	-moz-border-radius-topleft: 10px;
 	-moz-border-radius-bottomleft: 10px;
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-bottom-left-radius: 10px;
 }
+
 .venue #venue_title {
 	position: absolute;
 	top: 0px;
 	left: 5px;
 }
+
 .venue #venue_edit {
 	position: absolute;
 	top: 14px;
@@ -59,14 +53,14 @@
 	margin-left: -36px;
 }
 
-
 .venue #venue_info_div {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 10px;
-	position:relative;
+	position: relative;
 	text-align: left;
 }
+
 .venue #address {
 	position: absolute;
 	top: 0px;
@@ -76,8 +70,6 @@
 	text-align: right;
 }
 
-
-
 .venue #venue_description_div {
 	margin-top: 25px;
 	margin-bottom: 25px;
@@ -85,17 +77,12 @@
 	text-align: left;
 }
 
-
-
-.venue #venue_map {
-	/* position */
+.venue #venue_map { /* position */
 	position: absolute;
 	top: 0px;
 	left: 55%;
 	margin-left: 5px;
 }
-
-
 
 .venue #venue_tags {
 	margin-top: 5px;
@@ -103,73 +90,62 @@
 	margin-left: 10px;
 	text-align: left;
 }
+
 .venue #venue_tag {
 	background: rgb(214, 225, 220);
 	padding: 1px;
 	padding-left: 8px;
 	padding-right: 8px;
-	
 	margin: 2px;
-	
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-box-shadow: 0px -1px 1px #FFF, 0px 1px 1px rgb(71, 105, 117);
 	-webkit-box-shadow: 0px -1px 1px #FFF, 0px 1px 1px rgb(71, 105, 117);
 }
 
-
 .venue #venue_review {
 	margin: 5px;
 }
 
-
-.venue a {
-	/* links are bold with a etched look */
+.venue a { /* links are bold with a etched look */
 	color: #000 !important;
-	opacity:0.8;
+	opacity: 0.8;
 	text-shadow: 0px 1px 0px #FFF;
 	font-weight: bold;
 }
-.venue a:hover {
-	/* adds a big background blur when moused over 
+
+.venue a:hover { /* adds a big background blur when moused over 
 	 * and makes the font-color darker.
 	 * Has no other decoration */
 	color: #000;
-	opacity:1;
+	opacity: 1;
 	text-shadow: 0px 1px 0px #FFF, 0px 0px 10px #FFF;
 	font-weight: bold;
-	
-	text-decoration: none !important;	
+	text-decoration: none !important;
 }
 
 .venue .gmaps_div {
 	height: 370px;
 	width: 420px;
-	
 	-moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border: 1px solid rgb(71, 105, 117);
+	-webkit-border-radius: 3px;
+	border: 1px solid rgb(71, 105, 117);
 }
-
-
 
 .review {
 	margin-left: 45px;
 	margin-right: 45px;
-    /*background-color: rgb(224, 229, 235);*/
-    /*border: 1px solid rgb(71, 105, 117);*/
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    
-    -moz-box-shadow: 0px 1px 3px rgb(71, 105, 117);
-    -webkit-box-shadow: 0px 1px 3px rgb(71, 105, 117);
-    
+	/*background-color: rgb(224, 229, 235);*/
+	/*border: 1px solid rgb(71, 105, 117);*/
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-box-shadow: 0px 1px 3px rgb(71, 105, 117);
+	-webkit-box-shadow: 0px 1px 3px rgb(71, 105, 117);
 }
 
 .review #review_title_div {
 	position: relative;
 	height: 32px;
-	
 	background: url(../images/venue-title-bg.png) repeat;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-topright: 4px;
@@ -184,12 +160,13 @@
 
 .review b {
 	color: #000 !important;
-	opacity:1;
+	opacity: 1;
 	text-shadow: 0px 1px 0px #FFF;
 	font-size: x-large;
 	padding-left: 5px;
-	padding-right: 10px;	
+	padding-right: 10px;
 }
+
 .review #review_edit {
 	position: absolute;
 	top: 10px;
@@ -197,24 +174,21 @@
 	margin-left: -36px;
 }
 
-
-.review a {
-	/* links are bold with a etched look */
+.review a { /* links are bold with a etched look */
 	color: #000 !important;
-	opacity:0.8;
+	opacity: 0.8;
 	text-shadow: 0px 1px 0px #FFF;
 	font-weight: bold;
 }
-.review a:hover {
-	/* adds a big background blur when moused over 
+
+.review a:hover { /* adds a big background blur when moused over 
 	 * and makes the font-color darker.
 	 * Has no other decoration */
 	color: #000;
-	opacity:1;
+	opacity: 1;
 	text-shadow: 0px 1px 0px #FFF, 0px 0px 10px #FFF;
 	font-weight: bold;
-	
-	text-decoration: none !important;	
+	text-decoration: none !important;
 }
 
 .review #review_text {
