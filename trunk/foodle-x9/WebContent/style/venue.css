@@ -132,6 +132,21 @@
 	border: 1px solid rgb(71, 105, 117);
 }
 
+.venue_star_div {
+	position: relative;
+	display: inline;
+    width: 24px;
+    overflow: hidden;
+}
+
+.venue_star_div img {
+	display: inline;
+	width: 24px;
+	position: abolute;
+	left: 0px;
+	top: 0px;
+}
+
 .review {
 	margin-left: 45px;
 	margin-right: 45px;

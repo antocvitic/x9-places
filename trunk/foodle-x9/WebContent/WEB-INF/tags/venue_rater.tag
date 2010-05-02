@@ -24,12 +24,16 @@
 <div>
     <script type="text/javascript">
     $("#venue_rating_<%= venue.getID() %>").data("venueID", "<%= venue.getID() %>"); 
+    $("#venue_rating_<%= venue.getID() %>").data("postURL", "${pageContext.request.contextPath}/venue/rate"); 
     $(document).ready(function() {
     	fixStars("<%= venue.getID() %>");
     });
     </script>
     <% for (int i = 1; i <= maxRating; i++) { %>
-    <img id="venue_rating_star_<%= venue.getID() %>_<%=i%>" class="<%= imgClass %>" src="<%=starNone%>" width="24px" border="0" title="<%=i%>" /> 
+        <div id="venue_rating_star_<%= venue.getID() %>_<%=i%>" class="venue_star_div <%= imgClass %>"title="<%=i%>">
+            <img class="venue_star_actual"/>
+            <!--  <img class="venue_star_background" src="<%=starNone %>"/> -->
+        </div>
     <% } %>
 </div>
 <div>
