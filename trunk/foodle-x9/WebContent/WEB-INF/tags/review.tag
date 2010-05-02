@@ -1,17 +1,21 @@
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
+
 <%@ attribute name="review" type="com.x9.foodle.review.ReviewModel" required="true" %>
 <%@ tag import="com.x9.foodle.review.*" %>
-<div class="review">
-	<div id="review_title_div">
-		<p><b><%= review.getTitle() %></b> by <%= review.getCreatorID() %> (<%= review.getTimeAdded() %>)</p>
-		<a href="${pageContext.request.contextPath}/review/edit.jsp?reviewID=<%= review.getID() %>"
-		id="review_edit"">Edit</a>
+<%@ tag import="com.x9.foodle.user.*" %>
+<% UserModel user = UserUtils.getCurrentUser(request, response); %>
+<div id="review_<%= review.getID() %>" class="review">
+	<div class="review_title_div">
+		<p><b><%= review.getTitle() %></b> by <%= review.getCreator().getUsername() %> (<%= review.getTimeAdded() %>)</p>
 	</div>
 	
 	<div style="text-align: left;">
 	Ranking: <%= review.getRanking() %>
 	</div>
 	
-	<div id="review_text">
+	<div class="review_text">
 	<%= review.getText() %>
 	</div>
+    
+    <h:comments review="<%= review %>" comments="<%= review.getComments(5) %>" enableNewComments="<%= user == null ? \"false\" : \"true\" %>" />
 </div>

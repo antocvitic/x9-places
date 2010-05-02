@@ -13,6 +13,7 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import com.x9.foodle.comment.CommentModel;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
@@ -68,7 +69,7 @@ public class ReviewModel {
 			return review;
 
 		} catch (SolrServerException e) {
-			throw new SolrRuntimeException("Solr Server Exception", e);
+			throw new SolrRuntimeException("solr error in getFromSolr", e);
 		}
 	}
 
@@ -101,8 +102,7 @@ public class ReviewModel {
 			SolrQuery query = new SolrQuery();
 
 			// TODO: make the query safe
-			query.setQuery("venueReference:" + venueID + " AND type:"
-					+ SOLR_TYPE);
+			query.setQuery("reference:" + venueID + " AND type:" + SOLR_TYPE);
 			query.setRows(maxReturned); // TODO: ?
 			QueryResponse rsp = server.query(query);
 
@@ -120,7 +120,8 @@ public class ReviewModel {
 			return list;
 
 		} catch (SolrServerException e) {
-			throw new SolrRuntimeException("Solr Server Exception", e);
+			throw new SolrRuntimeException("solr error in getFromSolrForVenue",
+					e);
 		}
 	}
 
@@ -147,9 +148,13 @@ public class ReviewModel {
 	public int getCreatorID() {
 		return creatorID;
 	}
-
+	
 	public UserModel getCreator() {
-		return UserModel.getFromDbByID(creatorID);
+		UserModel user = UserModel.getFromDbByID(creatorID);
+		if (user == null) {
+			throw new RuntimeException("null creator for review: " + id);
+		}
+		return user;
 	}
 
 	public int getRanking() {
@@ -158,6 +163,15 @@ public class ReviewModel {
 
 	public Date getLastUpdated() {
 		return lastUpdated;
+	}
+
+	/**
+	 * @see CommentModel#getFromSolrForReview(ReviewModel, int)
+	 * @param maxReturned
+	 * @return
+	 */
+	public List<CommentModel> getComments(int maxReturned) {
+		return CommentModel.getFromSolrForReview(this, maxReturned);
 	}
 
 	public Builder getEditable() {
@@ -186,10 +200,6 @@ public class ReviewModel {
 			review.text = text;
 		}
 
-		public void setTimeAdded(Date timeAdded) {
-			review.timeAdded = timeAdded;
-		}
-
 		public void setVenueID(String venueID) {
 			review.venueID = venueID;
 		}
@@ -200,10 +210,6 @@ public class ReviewModel {
 
 		public void setRanking(int ranking) {
 			review.ranking = ranking;
-		}
-
-		public void setLastUpdated(Date lastUpdated) {
-			review.lastUpdated = lastUpdated;
 		}
 
 		/**
@@ -264,7 +270,7 @@ public class ReviewModel {
 				doc.addField("description", review.text);
 				doc.addField("timeAdded", DateUtils
 						.dateToSolrDate(review.timeAdded));
-				doc.addField("venueReference", review.venueID);
+				doc.addField("reference", review.venueID);
 				doc.addField("creator", review.creatorID);
 				doc.addField("ranking", review.ranking);
 				doc.addField("lastModified", DateUtils
@@ -427,13 +433,13 @@ public class ReviewModel {
 		dest.lastUpdated = src.lastUpdated;
 	}
 
-	private static ReviewModel reviewFromSolrDocument(SolrDocument doc) {
+	public static ReviewModel reviewFromSolrDocument(SolrDocument doc) {
 		ReviewModel review = new ReviewModel();
 		review.id = (String) doc.get("id");
 		review.title = (String) doc.get("title");
 		review.text = (String) doc.get("description");
 		review.timeAdded = (Date) doc.get("timeAdded");
-		review.venueID = (String) doc.get("venueReference");
+		review.venueID = (String) doc.get("reference");
 		review.creatorID = (Integer) doc.get("creator");
 		review.ranking = (Integer) doc.get("ranking");
 		review.lastUpdated = (Date) doc.get("lastModified");

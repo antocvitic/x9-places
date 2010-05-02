@@ -452,7 +452,7 @@
    <field name="timeAdded" type="date" indexed="true" stored="true"/>
    <field name="lastModified" type="date" indexed="true" stored="true"/>
    
-   <field name="venueReference" type="string" indexed="true" stored="true"/> 
+   <field name="reference" type="string" indexed="true" stored="true"/> 
 
 
    <!-- catchall field, containing all other searchable text fields (implemented

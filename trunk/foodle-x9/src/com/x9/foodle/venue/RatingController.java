@@ -55,6 +55,7 @@ public class RatingController extends HttpServlet {
 			json.put("status", "ok");
 			json.put("rating", StringUtils.formatRating(r.rating));
 			json.put("ratings", r.ratings);
+			json.put("userRating", intRating);
 
 			out.print(json.toString());
 		} catch (Exception e) {
