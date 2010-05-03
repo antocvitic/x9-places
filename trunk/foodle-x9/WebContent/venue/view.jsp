@@ -53,6 +53,8 @@ user = UserUtils.getCurrentUser(request, response);
 			<h:venue_rater venue="<%= venue %>" />
 			
 			<p id="address"><%=venue.getAddress()%></p>
+            <br/>
+            <h:share />
 		</div>
 		
 		<div id="venue_description_div">
