@@ -10,7 +10,7 @@
 	</div>
 	
 	<div style="text-align: left;">
-	Ranking: <%= review.getRanking() %>
+	Ranking: <h:review_ranker review="<%= review %>" />
 	</div>
 	
 	<div class="review_text">

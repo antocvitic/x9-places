@@ -73,7 +73,6 @@ public class RatingController extends HttpServlet {
 			this.rating = rating;
 			this.ratings = ratings;
 		}
-
 	}
 
 	public static Rating setVenueRating(UserModel user, String venueID,

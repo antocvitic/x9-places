@@ -52,6 +52,13 @@ create table ratings (
     primary key (userID, venueID)
 ) Engine=InnoDB;
 
+create table rankings (
+    userID int not null,
+    reviewID varchar(64) character set latin1 not null, 
+    ranking int not null,
+    primary key (userID, reviewID)
+) Engine=InnoDB;
+
 
 /* create and grant privliges to x9user */
 grant all on x9db.* to 'x9user'@'localhost' identified by 'x9pwd';
