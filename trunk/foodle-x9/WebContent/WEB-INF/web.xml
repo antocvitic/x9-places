@@ -83,6 +83,10 @@
         <servlet-name>ReviewEditController</servlet-name>
         <servlet-class>com.x9.foodle.review.EditController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReviewRankingController</servlet-name>
+        <servlet-class>com.x9.foodle.review.RankingController</servlet-class>
+    </servlet>
     
     <!-- Comment -->
     <servlet>
@@ -130,6 +134,10 @@
     <servlet-mapping>
         <servlet-name>ReviewEditController</servlet-name>
         <url-pattern>/review/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReviewRankingController</servlet-name>
+        <url-pattern>/review/rank</url-pattern>
     </servlet-mapping>
     
     <!-- Comment -->

@@ -20,6 +20,7 @@ import com.x9.foodle.model.exceptions.InvalidUserException;
 public class UserModel {
 
 	public static final int NO_RATING = -1;
+	public static final int NO_RANKING = 0;
 
 	private int userID;
 	private String username;
@@ -143,11 +144,7 @@ public class UserModel {
 		PreparedStatement stm = null;
 		ResultSet result = null;
 		try {
-
-			// set the user specific rating in the db
 			conn = DBUtils.openConnection();
-
-			// get average rating and number of raters
 			stm = conn
 					.prepareStatement("select rating from ratings where userID = ? and venueID = ?");
 			stm.setInt(1, getID());
@@ -167,6 +164,38 @@ public class UserModel {
 		} catch (SQLException e) {
 			throw new SQLRuntimeException("error getting rating for venue: "
 					+ venueID + " for user: " + userID);
+		} finally {
+			DBUtils.closeResultSet(result);
+			DBUtils.closeStatement(stm);
+			DBUtils.closeConnection(conn);
+		}
+	}
+	
+	public int getRankingForReview(String reviewID) {
+		Connection conn = null;
+		PreparedStatement stm = null;
+		ResultSet result = null;
+		try {
+			conn = DBUtils.openConnection();
+			stm = conn
+					.prepareStatement("select ranking from rankings where userID = ? and reviewID = ?");
+			stm.setInt(1, getID());
+			stm.setString(2, reviewID);
+			boolean succ = stm.execute();
+
+			if (!succ) {
+				return NO_RANKING;
+			}
+
+			result = stm.getResultSet();
+
+			if (result.next()) {
+				return result.getInt(result.findColumn("ranking"));
+			}
+			return NO_RANKING;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException("error getting ranking for review: "
+					+ reviewID + " for user: " + userID);
 		} finally {
 			DBUtils.closeResultSet(result);
 			DBUtils.closeStatement(stm);

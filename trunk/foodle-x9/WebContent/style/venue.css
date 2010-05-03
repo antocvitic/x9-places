@@ -213,6 +213,33 @@
 	text-align: left;
 }
 
+.review_ranker {
+	display: inline;
+}
+
+.review_ranker_button {
+	display: inline;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+
+/* TODO: show thumbs up / thumbs down via these classes */
+.review_rank_up_enabled {
+}
+
+.review_rank_up_disabled {
+	border: 1px solid black;
+}
+
+.review_rank_down_enabled {
+}
+
+.review_rank_down_disabled {
+    border: 1px solid black;
+}
+
 .comment {
     margin-left: 45px;
     margin-right: 45px;
