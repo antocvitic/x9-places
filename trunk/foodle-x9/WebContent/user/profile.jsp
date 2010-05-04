@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 <%@ page import="com.x9.foodle.user.*" %>
+<%@ page import="com.x9.foodle.venue.*" %>
 <%@ page import="com.x9.foodle.review.*" %>
+<%@ page import="com.x9.foodle.comment.*" %>
 <%@ page import="com.x9.foodle.datastore.*" %>
 <%
 UserModel user = UserUtils.getCurrentUser(request, response);
@@ -22,69 +24,34 @@ UserModel user = UserUtils.getCurrentUser(request, response);
 </h:header>
 <h:headercontent />
 
-<%@page import="com.x9.foodle.util.DateUtils"%>
+<h1>Profile</h1>
+
+Your venues: <br/>
 <%
-/*<jsp:include page="/includes/header.jsp" />*/ 
-	java.util.Date d = DateUtils.getNowUTC();
+ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, 0, 12, VenueModel.sf(VenueModel.SortableField.TITLE, SortField.Order.DESC));
 %>
-
-<div id="contentarea">
-
-<p>Today's date is <%=DateUtils.dateToSolrDate(d)%> (UTC) and this
-jsp page worked!</p>
-<br />
-<br />
-<p>This is ey profile page,</p>
-
-<p>Your latest venues: <a
-    href="${pageContext.request.contextPath}/venue/edit.jsp">edit
-venue</a></p>
-<hr />
-<p>Friends venues:</p>
-<hr />
-<p>New reviews:</p>
-<hr />
-<p>Other stuff:</p>
+Showing <%= venues.getResultsReturned() %> venues of <%= venues.getResultsFound() %>, starting at <%= venues.getOffset() %><br/>
+<% for (VenueModel venue : venues.getList()) { %>
+<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
+<% } %>
 <hr />
 
-<p>Some links:<br />
-<a href="http://localhost:7777/solr/admin/">http://localhost:7777/solr/admin/</a>
-<a href="http://localhost:8888/">Tomcat</a></p>
-
-Reviews:
+Your reviews:
 <%
-	ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, 0, 2, ReviewModel.sf(ReviewModel.SortableField.TIME_ADDED, SortField.Order.DESC));
-out.println(reviews.getOffset() + " _ " + reviews.getResultsFound());
+ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, 0, 12, ReviewModel.sf(ReviewModel.SortableField.VENUE_ID, SortField.Order.ASC));
 %>
-
+Showing <%= reviews.getResultsReturned() %> reviews of <%= reviews.getResultsFound() %>, starting at <%= reviews.getOffset() %>
 <h:reviews reviews="<%= reviews %>" />
-
 <hr />
-<p>Debug:<br />
-<a href="${pageContext.request.contextPath}/hasher">hash stuff with
-jBCrypt</a> - <a href="${pageContext.request.contextPath}/dump-session">dump
-current session</a> - <a
-    href="${pageContext.request.contextPath}/dump-model">dump model
-data</a> <br />
-Showing your cookies: <%
-Cookie[] cookies = request.getCookies();
-for (int i=0; i<cookies.length; i++) {
-	out.println(cookies[i].getName()+":\t"+
-	cookies[i].getValue()+"<br />");
-}
 
-if (session.getAttribute("logged_in_userid") != null) {
-out.print("<br /><p>Showing session data</p>");
-out.print(session.getAttribute("logged_in_userid").toString() + "<br />");
-out.print(session.getAttribute("logged_in_session_token").toString() + "<br />");
-}
-
-if (user != null) {
-	out.print("You're logged in as:<br />"); 
-	out.print(user.getUsername());
-}
+Your comments:
+<%
+ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, 0, 12, CommentModel.sf(CommentModel.SortableField.TIME_ADDED, SortField.Order.ASC));
 %>
-</p>
+Showing <%= comments.getResultsReturned() %> comments of <%= comments.getResultsFound() %>, starting at <%= comments.getOffset() %><br/>
+<h:comments review="<%= null %>" comments="<%= comments %>" enableNewComments="false"></h:comments>
+<hr />
 
-</div>
+
+
 <h:footer />

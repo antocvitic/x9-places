@@ -38,7 +38,7 @@
 </div>
 <div>
     <span id="venue_average_rating_<%= venue.getID() %>"><%=StringUtils.formatRating(avgRating)%></span> / <%=maxRating%>
-    - <span id="venue_number_of_ratings_<%= venue.getID() %>"><%=ratings%></span> rating
+    - <span id="venue_number_of_ratings_<%= venue.getID() %>"><%=ratings%></span> ratings
     <% if (user != null) { 
     	int userRating = user.getRatingForVenue(venue.getID());
         
