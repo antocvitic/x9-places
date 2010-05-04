@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
 	public static void doPostLoginStuff(UserModel user, HttpServletRequest req,
 			HttpServletResponse resp, boolean rememberme) {
 		HttpSession session = req.getSession();
-
+		
 		session.setAttribute(LOGGED_IN_SESSION_USERID, new Integer(user
 				.getID()));
 		session.setAttribute(LOGGED_IN_SESSION_SESSION_TOKEN, user
@@ -69,6 +69,10 @@ public class LoginController extends HttpServlet {
 					.getSessionToken());
 			ctoken.setMaxAge(7 * 24 * 60 * 60);
 			resp.addCookie(ctoken);
+			
+			Cookie cusername = new Cookie("username", user.getUsername());
+			ctoken.setMaxAge(7 * 24 * 60 * 60);
+			resp.addCookie(cusername);
 			// c.setSecure(true);
 		}
 	}
