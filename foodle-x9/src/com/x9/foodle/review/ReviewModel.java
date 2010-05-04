@@ -29,27 +29,23 @@ import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 import com.x9.foodle.venue.VenueModel;
 
-/*
- * TOOD: constructor and solr stuff 
- */
-
 public class ReviewModel {
 
 	public static final String SOLR_TYPE = "reviewmodel";
 
 	public static enum SortableField {
-		TITLE("title"), // doesn't work
-		TIME_ADDED("timeAdded"), // works
+		// uses solr field title_sortable because you can't sort on title
+		TITLE("title_sortable"), // 
+		TIME_ADDED("timeAdded"), // 
 		VENUE_ID("reference"), // 
-		RANKING("ranking"), // works
-		LAST_UPDATED("lastUpdated"); // works
+		RANKING("ranking"), // 
+		LAST_UPDATED("lastModified"); //
 
 		final String field;
 
 		private SortableField(String field) {
 			this.field = field;
 		}
-
 	}
 
 	public static SortField<SortableField> sf(SortableField field, Order order) {

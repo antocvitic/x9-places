@@ -41,13 +41,12 @@ public class CommentModel {
 		private SortableField(String field) {
 			this.field = field;
 		}
-
 	}
-	
+
 	public static SortField<SortableField> sf(SortableField field, Order order) {
 		return new SortField<SortableField>(field, order);
 	}
-	
+
 	private String id;
 	private String text;
 	private Date timeAdded;
@@ -85,7 +84,8 @@ public class CommentModel {
 	}
 
 	public static ModelList<CommentModel> getFromSolrForReview(
-			ReviewModel review, int offset, int maxReturned, SortField<SortableField> sort) {
+			ReviewModel review, int offset, int maxReturned,
+			SortField<SortableField> sort) {
 		return getFromSolrForReview(review.getID(), offset, maxReturned, sort);
 	}
 
@@ -119,6 +119,41 @@ public class CommentModel {
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
 					"solr error in getFromSolrForReview", e);
+		}
+	}
+
+	public static ModelList<CommentModel> getFromSolrCreatedBy(UserModel user,
+			int offset, int maxReturned, SortField<SortableField> sort) {
+		try {
+			SolrServer server = SolrUtils.getSolrServer();
+			SolrQuery query = new SolrQuery();
+
+			// TODO: make the query safe
+			query
+					.setQuery("type:" + SOLR_TYPE + " AND creator:"
+							+ user.getID());
+			query.setStart(offset);
+			query.setRows(maxReturned);
+			query.setSortField(sort.field.field, sort.order.order);
+			QueryResponse rsp = server.query(query);
+
+			SolrDocumentList results = rsp.getResults();
+			if (results.isEmpty()) {
+				// no venues found
+				return new ModelList<CommentModel>();
+			}
+
+			List<CommentModel> list = new ArrayList<CommentModel>();
+			for (SolrDocument doc : results) {
+				list.add(commentFromSolrDocument(doc));
+			}
+
+			return new ModelList<CommentModel>(list, results.getStart(), list
+					.size(), results.getNumFound());
+
+		} catch (SolrServerException e) {
+			throw new SolrRuntimeException(
+					"solr error in getFromSolrCreatedBy", e);
 		}
 	}
 
