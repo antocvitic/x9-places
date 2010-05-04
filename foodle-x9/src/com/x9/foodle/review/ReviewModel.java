@@ -14,8 +14,11 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import com.x9.foodle.comment.CommentModel;
+import com.x9.foodle.datastore.ModelList;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
+import com.x9.foodle.datastore.SortField;
+import com.x9.foodle.datastore.SortField.Order;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidSolrModelException;
@@ -33,6 +36,25 @@ import com.x9.foodle.venue.VenueModel;
 public class ReviewModel {
 
 	public static final String SOLR_TYPE = "reviewmodel";
+
+	public static enum SortableField {
+		TITLE("title"), // doesn't work
+		TIME_ADDED("timeAdded"), // works
+		VENUE_ID("reference"), // 
+		RANKING("ranking"), // works
+		LAST_UPDATED("lastUpdated"); // works
+
+		final String field;
+
+		private SortableField(String field) {
+			this.field = field;
+		}
+
+	}
+
+	public static SortField<SortableField> sf(SortableField field, Order order) {
+		return new SortField<SortableField>(field, order);
+	}
 
 	private String id;
 	private String title;
@@ -73,51 +95,72 @@ public class ReviewModel {
 		}
 	}
 
-	/**
-	 * @see ReviewModel#getFromSolrForVenue(String, int)
-	 * @param venue
-	 * @param maxReturned
-	 * @return
-	 */
-	public static List<ReviewModel> getFromSolrForVenue(VenueModel venue,
-			int maxReturned) {
-		return getFromSolrForVenue(venue.getID(), maxReturned);
+	public static ModelList<ReviewModel> getFromSolrCreatedBy(UserModel user,
+			int offset, int maxReturned, SortField<SortableField> sort) {
+		try {
+			SolrServer server = SolrUtils.getSolrServer();
+			SolrQuery query = new SolrQuery();
+
+			// TODO: make the query safe
+			query
+					.setQuery("type:" + SOLR_TYPE + " AND creator:"
+							+ user.getID());
+			query.setStart(offset);
+			query.setRows(maxReturned);
+			query.setSortField(sort.field.field, sort.order.order);
+			QueryResponse rsp = server.query(query);
+
+			SolrDocumentList results = rsp.getResults();
+			if (results.isEmpty()) {
+				// no reviews found
+				return new ModelList<ReviewModel>();
+			}
+
+			List<ReviewModel> list = new ArrayList<ReviewModel>();
+			for (SolrDocument doc : results) {
+				list.add(reviewFromSolrDocument(doc));
+			}
+
+			return new ModelList<ReviewModel>(list, results.getStart(), list
+					.size(), results.getNumFound());
+
+		} catch (SolrServerException e) {
+			throw new SolrRuntimeException(
+					"solr error in getFromSolrCreatedBy", e);
+		}
 	}
 
-	/**
-	 * Returns at most {@code maxReturned} {@code ReviewModels} that refer to
-	 * the venue with ID {@code venueID}. If no reviews are found, an empty list
-	 * is returned.
-	 * 
-	 * @param venueID
-	 *            the venue for which to return reviews
-	 * @param maxReturned
-	 *            the maximum number of reviews to be returned
-	 * @return the list of venues, never null (might be empty)
-	 */
-	public static List<ReviewModel> getFromSolrForVenue(String venueID,
-			int maxReturned) {
+	public static ModelList<ReviewModel> getFromSolrForVenue(VenueModel venue,
+			int offset, int maxReturned, SortField<SortableField> sort) {
+		return getFromSolrForVenue(venue.getID(), offset, maxReturned, sort);
+	}
+
+	public static ModelList<ReviewModel> getFromSolrForVenue(String venueID,
+			int offset, int maxReturned, SortField<SortableField> sort) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
 
 			// TODO: make the query safe
 			query.setQuery("reference:" + venueID + " AND type:" + SOLR_TYPE);
-			query.setRows(maxReturned); // TODO: ?
+			query.setStart(offset);
+			query.setRows(maxReturned);
+			query.setSortField(sort.field.field, sort.order.order);
 			QueryResponse rsp = server.query(query);
 
-			SolrDocumentList docs = rsp.getResults();
-			if (docs.isEmpty()) {
+			SolrDocumentList results = rsp.getResults();
+			if (results.isEmpty()) {
 				// no reviews found
-				return new ArrayList<ReviewModel>();
+				return new ModelList<ReviewModel>();
 			}
 
 			List<ReviewModel> list = new ArrayList<ReviewModel>();
-			for (SolrDocument doc : docs) {
+			for (SolrDocument doc : results) {
 				list.add(reviewFromSolrDocument(doc));
 			}
 
-			return list;
+			return new ModelList<ReviewModel>(list, results.getStart(), list
+					.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException("solr error in getFromSolrForVenue",
@@ -148,7 +191,7 @@ public class ReviewModel {
 	public int getCreatorID() {
 		return creatorID;
 	}
-	
+
 	public UserModel getCreator() {
 		UserModel user = UserModel.getFromDbByID(creatorID);
 		if (user == null) {
@@ -165,13 +208,10 @@ public class ReviewModel {
 		return lastUpdated;
 	}
 
-	/**
-	 * @see CommentModel#getFromSolrForReview(ReviewModel, int)
-	 * @param maxReturned
-	 * @return
-	 */
-	public List<CommentModel> getComments(int maxReturned) {
-		return CommentModel.getFromSolrForReview(this, maxReturned);
+	public ModelList<CommentModel> getComments(int offset, int maxReturned,
+			SortField<CommentModel.SortableField> sort) {
+		return CommentModel.getFromSolrForReview(this, offset, maxReturned,
+				sort);
 	}
 
 	public Builder getEditable() {

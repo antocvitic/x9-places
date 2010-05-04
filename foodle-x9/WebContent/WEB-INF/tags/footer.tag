@@ -8,7 +8,7 @@
     <a href="${pageContext.request.contextPath}/test.jsp">test.jsp</a> | 
     <a href="${pageContext.request.contextPath}/tag_test.jsp">tag_test.jsp</a> |
     <a href="${pageContext.request.contextPath}/10_venues.jsp">10_venues.jsp</a> |
-    <a href="${pageContext.request.contextPath}/profile.jsp">profile.jsp</a>
+    <a href="${pageContext.request.contextPath}/user/profile.jsp">profile.jsp</a>
     </p>
     <p>
     Debug:

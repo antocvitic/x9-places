@@ -13,8 +13,11 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import com.x9.foodle.datastore.ModelList;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
+import com.x9.foodle.datastore.SortField;
+import com.x9.foodle.datastore.SortField.Order;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidReviewReferenceException;
@@ -28,6 +31,23 @@ public class CommentModel {
 
 	public static final String SOLR_TYPE = "commentmodel";
 
+	public static enum SortableField {
+		TIME_ADDED("timeAdded"), // 
+		REVIEW_ID("reference"), // 
+		CREATOR_ID("creator"); // 
+
+		final String field;
+
+		private SortableField(String field) {
+			this.field = field;
+		}
+
+	}
+	
+	public static SortField<SortableField> sf(SortableField field, Order order) {
+		return new SortField<SortableField>(field, order);
+	}
+	
 	private String id;
 	private String text;
 	private Date timeAdded;
@@ -64,34 +84,37 @@ public class CommentModel {
 		}
 	}
 
-	public static List<CommentModel> getFromSolrForReview(ReviewModel review,
-			int maxReturned) {
-		return getFromSolrForReview(review.getID(), maxReturned);
+	public static ModelList<CommentModel> getFromSolrForReview(
+			ReviewModel review, int offset, int maxReturned, SortField<SortableField> sort) {
+		return getFromSolrForReview(review.getID(), offset, maxReturned, sort);
 	}
 
-	public static List<CommentModel> getFromSolrForReview(String reviewID,
-			int maxReturned) {
+	public static ModelList<CommentModel> getFromSolrForReview(String reviewID,
+			int offset, int maxReturned, SortField<SortableField> sort) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
 
 			// TODO: make the query safe
 			query.setQuery("reference:" + reviewID + " AND type:" + SOLR_TYPE);
-			query.setRows(maxReturned); // TODO: ?
+			query.setStart(offset);
+			query.setRows(maxReturned);
+			query.setSortField(sort.field.field, sort.order.order);
 			QueryResponse rsp = server.query(query);
 
-			SolrDocumentList docs = rsp.getResults();
-			if (docs.isEmpty()) {
+			SolrDocumentList results = rsp.getResults();
+			if (results.isEmpty()) {
 				// no comments found
-				return new ArrayList<CommentModel>();
+				return new ModelList<CommentModel>();
 			}
 
 			List<CommentModel> list = new ArrayList<CommentModel>();
-			for (SolrDocument doc : docs) {
+			for (SolrDocument doc : results) {
 				list.add(commentFromSolrDocument(doc));
 			}
 
-			return list;
+			return new ModelList<CommentModel>(list, results.getStart(), list
+					.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -118,7 +141,7 @@ public class CommentModel {
 	public int getCreatorID() {
 		return creatorID;
 	}
-	
+
 	public UserModel getCreator() {
 		UserModel user = UserModel.getFromDbByID(creatorID);
 		if (user == null) {

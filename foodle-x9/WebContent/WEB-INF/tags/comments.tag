@@ -4,22 +4,23 @@
 <%@ tag import="com.x9.foodle.util.*" %>
 <%@ tag import="com.x9.foodle.review.*" %>
 <%@ tag import="com.x9.foodle.comment.*" %>
+<%@ tag import="com.x9.foodle.datastore.*" %>
 
 <%@ attribute name="review" type="com.x9.foodle.review.ReviewModel" required="true"%>
-<%@ attribute name="comments" type="java.util.List" required="true"%>
+<%@ attribute name="comments" type="com.x9.foodle.datastore.ModelList" required="true"%>
 <%@ attribute name="enableNewComments" %>
 <%
 @SuppressWarnings("unchecked")
-    List<CommentModel> comments_typed = (List<CommentModel>) comments;
+    ModelList<CommentModel> mlist = (ModelList<CommentModel>) comments;
 %>
 <%
-if (comments_typed.isEmpty()) {
+if (mlist.isEmpty()) {
     %>
     No comments<br />
     <%
 } else {
-	%><%= comments_typed.size() %> comments<br /><%
-    for (CommentModel comment : comments_typed) {
+	%><%= mlist.getResultsReturned() %> of <%= mlist.getResultsFound() %> comments<br /><%
+    for (CommentModel comment : mlist.getList()) {
     %>
         
         <h:comment comment="<%= comment %>" />

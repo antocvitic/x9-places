@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
-<%@ page import="com.x9.foodle.user.*"%>
-
-
+<%@ page import="com.x9.foodle.user.*" %>
+<%@ page import="com.x9.foodle.review.*" %>
+<%@ page import="com.x9.foodle.datastore.*" %>
 <%
 UserModel user = UserUtils.getCurrentUser(request, response);
 %>
@@ -50,6 +50,14 @@ venue</a></p>
 <p>Some links:<br />
 <a href="http://localhost:7777/solr/admin/">http://localhost:7777/solr/admin/</a>
 <a href="http://localhost:8888/">Tomcat</a></p>
+
+Reviews:
+<%
+	ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, 0, 2, ReviewModel.sf(ReviewModel.SortableField.TIME_ADDED, SortField.Order.DESC));
+out.println(reviews.getOffset() + " _ " + reviews.getResultsFound());
+%>
+
+<h:reviews reviews="<%= reviews %>" />
 
 <hr />
 <p>Debug:<br />
