@@ -41,14 +41,14 @@
                     </div>
                      <!-- <label for="login_username">Username:</label>-->
                     <input class="loginfield placeholder" id="login_username" name="username" type="text" 
-                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="" />
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="${cookie.username.value}" />
                      <!-- <label for="login_password">Password:</label>-->
                     <input class="loginfield placeholder" id="login_password" name="password" type="password"
-                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"/>
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" />
                     <script language="JavaScript">loadPlaceholders();</script>
                     <input type="submit" value="Log in" />
                 </form>
-                <p class="login_box_text">Login, <a href="${pageContext.request.contextPath}/login.jsp">register</a>
+                <p class="login_box_text"><a href="${pageContext.request.contextPath}/login.jsp">Register</a>
                     or <input type="button" value="Connect using Facebook" disabled="disabled" />
                 </p>
             <% } else { %>
