@@ -34,7 +34,7 @@ body
 
 #content_wrapper
 {
-	/*background: url(../images/white_85p_bg.png) repeat;*/
+	background: url(../images/white_85p_bg.png) repeat;
 	background: rgba(255, 255, 255, 0.85);
 	padding: 20px;
 	padding-top: 15px;
