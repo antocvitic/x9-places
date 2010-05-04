@@ -331,7 +331,7 @@ public class UserModel {
 					// insert a new user
 					stm = conn
 							.prepareStatement(
-									"insert into users (username, passwordHash, email, name, repLevel, isFBConnected, sessionToken) "
+									"insert IGNORE into users (username, passwordHash, email, name, repLevel, isFBConnected, sessionToken) "
 											+ "values (?, ?, ?, ?, ?, ?, ?)",
 									Statement.RETURN_GENERATED_KEYS);
 
@@ -349,8 +349,10 @@ public class UserModel {
 				stm.setInt(5, user.reputationLevel);
 				stm.setBoolean(6, user.isConnectedToFacebook);
 
-				stm.execute();
-
+				if (stm.executeUpdate() == 0) {
+					throw new BadEmailException("Email or username already taken.");
+				}
+				
 				if (editMe != null) {
 					copy(editMe, user);
 					return editMe;
