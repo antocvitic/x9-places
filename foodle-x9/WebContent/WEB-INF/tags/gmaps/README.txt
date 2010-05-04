@@ -7,6 +7,9 @@ NOTE#1: See examples in the file /WebContent/tag_test.jsp
 NOTE#2: The argument "css" works the same as html attribute "class", use the defined style "gmaps_div"
 from the general.css file.
 
+<gmaps:map id="<unique id>" css="<classname>"></gmaps:map>
+This tag creates a "empty" map.
+
 <gmaps:coord lat="<float>" lng="<float> id="<unique id>" css="<classname>"></gmaps:coord>
 This tag creates a map and places a marker on the target coordinate. 
 

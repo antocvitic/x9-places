@@ -39,6 +39,26 @@
   }
 
   function centerMap(id, address) {
+    var myOptions = {
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById(id), myOptions);
+    map.getDiv().map = map;
+    map.getDiv().markers = new Array();
+    var geocoder = new google.maps.Geocoder();
+    if (geocoder) {
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+    }
+  }
+
+  function createMap(id) {
 	    var myOptions = {
 	      zoom: 15,
 	      mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -46,16 +66,6 @@
 	    var map = new google.maps.Map(document.getElementById(id), myOptions);
 	    map.getDiv().map = map;
 	    map.getDiv().markers = new Array();
-	    var geocoder = new google.maps.Geocoder();
-	    if (geocoder) {
-	      geocoder.geocode( { 'address': address}, function(results, status) {
-	        if (status == google.maps.GeocoderStatus.OK) {
-	          map.setCenter(results[0].geometry.location);
-	        } else {
-	          alert("Geocode was not successful for the following reason: " + status);
-	        }
-	      });
-	    }
 	  }
   
   function addInfoMarker(id, address, title, info) {

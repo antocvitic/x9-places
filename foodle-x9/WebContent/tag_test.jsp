@@ -31,7 +31,7 @@
 		</gmaps:mark>
 	</gmaps:center>
 	
-	<gmaps:center address="Ireland" id="gmaps_view4" css="gmaps_div">
+	<gmaps:map id="gmaps_view4" css="gmaps_div">
 		<!--	Test that map is centered correctly around marks-->
 		<gmaps:mark address="Kiruna" title="Kiruna">
 			foobar
@@ -39,7 +39,18 @@
 		<gmaps:mark address="Malmö" title="Malmö">
 			foobar
 		</gmaps:mark>
-	</gmaps:center>
+		<gmaps:mark address="Moskva" title="Moskva">
+			foobar
+		</gmaps:mark>
+	</gmaps:map>
+	
+	<gmaps:map id="gmaps_view5" css="gmaps_div">
+		<gmaps:mark address="Sydney" title="Sydney">
+			foobar
+		</gmaps:mark>
+	</gmaps:map>
+	
+	<gmaps:center address="Stockholm" css="gmaps_div" id="gmaps_view6"></gmaps:center>
 	
 </h:content>
 
