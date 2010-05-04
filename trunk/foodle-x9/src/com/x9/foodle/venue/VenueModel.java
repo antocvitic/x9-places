@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -14,17 +13,20 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
+import com.x9.foodle.datastore.ModelList;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
+import com.x9.foodle.datastore.SortField;
 import com.x9.foodle.model.exceptions.InvalidAddressException;
 import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
 import com.x9.foodle.model.exceptions.InvalidDescriptionException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
-import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.model.exceptions.InvalidSolrModelException;
+import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.review.ReviewModel;
+import com.x9.foodle.review.ReviewModel.SortableField;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 
@@ -135,13 +137,9 @@ public class VenueModel {
 		return this.tags;
 	}
 
-	/**
-	 * @see ReviewModel#getFromSolrForVenue(VenueModel, int)
-	 * @param maxReturned
-	 * @return
-	 */
-	public List<ReviewModel> getReviews(int maxReturned) {
-		return ReviewModel.getFromSolrForVenue(this, maxReturned);
+	public ModelList<ReviewModel> getReviews(int offset, int maxReturned,
+			SortField<SortableField> sort) {
+		return ReviewModel.getFromSolrForVenue(this, offset, maxReturned, sort);
 	}
 
 	public Builder getEditable() {

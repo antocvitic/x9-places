@@ -38,6 +38,7 @@
         <filter-name>RequireLoginFilter</filter-name>
         <servlet-name>UserEditController</servlet-name>
         <url-pattern>/user/preferences.jsp</url-pattern>
+        <url-pattern>/user/profile.jsp</url-pattern>
         <url-pattern>/venue/edit.jsp</url-pattern>
         <servlet-name>VenueEditController</servlet-name>
         <servlet-name>VenueRatingController</servlet-name>

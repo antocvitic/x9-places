@@ -12,11 +12,10 @@
 <%@page import="com.x9.foodle.venue.*"%>
 <%@page import="com.x9.foodle.review.*"%>
 <%@page import="com.x9.foodle.util.*"%>
-<%!
-UserModel user;
+<%@ page import="com.x9.foodle.datastore.*" %>
+<%!UserModel user;
 VenueModel venue;
-List<ReviewModel> reviews;
-%>
+ModelList<ReviewModel> reviews;%>
 <%
 user = UserUtils.getCurrentUser(request, response);
 	String venueID = request.getParameter("venueID");
@@ -26,7 +25,7 @@ user = UserUtils.getCurrentUser(request, response);
 		if (venue == null) {
 			throw new RuntimeException("no venue with id: " + venueID);
 		}
-        reviews = venue.getReviews(25);
+        reviews = venue.getReviews(0, 25, ReviewModel.sf(ReviewModel.SortableField.TIME_ADDED, SortField.Order.ASC));
 	} else {
 		throw new RuntimeException("null or empty venueID!");
 	}
