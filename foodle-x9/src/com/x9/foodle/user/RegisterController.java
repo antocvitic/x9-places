@@ -13,6 +13,7 @@ import com.x9.foodle.model.exceptions.BadEmailException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class RegisterController extends HttpServlet {
@@ -54,17 +55,16 @@ public class RegisterController extends HttpServlet {
 				resp.sendRedirect(redirect);
 			}
 		} catch (BadUsernameException e) {
-			// throw new RuntimeException(e);
 			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					"Bad username:" + username + ", reason: " + e.getMessage());
+					new ErrorMessage("Login failed: Bad username:" + username));
 		} catch (BadPasswordException e) {
 			// throw new RuntimeException(e);
 			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					"Bad password:, reason: " + e.getMessage());
+					new ErrorMessage("Login failed: Bad password"));
 		} catch (BadEmailException e) {
 			// throw new RuntimeException(e);
 			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					"Bad email:" + email + ", reason: " + e.getMessage());
+					new ErrorMessage("Login failed: Bad email:" + email));
 		}
 	}
 

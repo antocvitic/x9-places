@@ -8,12 +8,14 @@
 <script type="text/javascript"
     src="${pageContext.request.contextPath}/js/jquery-1.4.2.js"></script>
 <script type="text/javascript"
-    src="${pageContext.request.contextPath}/js/general.js"></script>  
+    src="${pageContext.request.contextPath}/js/general.js"></script>
+<script type="text/javascript"
+    src="${pageContext.request.contextPath}/js/messaging.js"></script>
 <script type="text/javascript"
     src="${pageContext.request.contextPath}/js/placeholders.js"></script>
 <script type="text/javascript"
     src="${pageContext.request.contextPath}/js/venue_rater.js"></script>
-    <script type="text/javascript"
+<script type="text/javascript"
     src="${pageContext.request.contextPath}/js/review_ranker.js"></script> 
 <link rel="stylesheet" type="text/css" charset="utf-8"
     href="${pageContext.request.contextPath}/style/general.css" />

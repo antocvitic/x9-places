@@ -22,6 +22,8 @@ import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.model.exceptions.InvalidVenueReferenceException;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
+import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
 @SuppressWarnings("serial")
 public class RankingController extends HttpServlet {
@@ -50,14 +52,15 @@ public class RankingController extends HttpServlet {
 			Ranking r = setReviewRanking(UserUtils.getCurrentUser(req, resp),
 					reviewID, intRanking);
 
-			JSONObject json = new JSONObject();
-			json.put("status", "ok");
+			JSONObject json = new JSONObject(new OkMessage("Review ranked.")
+					.toJSON());
 			json.put("ranking", r.ranking);
 			json.put("userRanking", intRanking);
 
 			out.print(json.toString());
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			// TODO: log exception
+			out.print(new ErrorMessage("Ranking failed").toJSON());
 		}
 	}
 

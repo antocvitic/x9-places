@@ -1,6 +1,8 @@
 <%@ tag import="com.x9.foodle.user.*" %>
 <%@ tag import="com.x9.foodle.util.*" %>
 
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
+
 <body>
 <div id="all"> <!-- this div closed in /WEB-INF/tags/footer.jsp -->
 	
@@ -63,4 +65,6 @@
 	</div> <!-- end of header div -->
 	
 	<div id="content_wrapper">  <!-- this div closed in /WEB-INF/tags/footer.jsp -->
+    
+    <h:msg />
 	<jsp:doBody />

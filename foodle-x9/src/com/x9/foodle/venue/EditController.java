@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.model.exceptions.InvalidAddressException;
 import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
@@ -18,6 +17,8 @@ import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserUtils;
+import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -25,7 +26,7 @@ public class EditController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String id = req.getParameter("id");
+		String venueID = req.getParameter("venueID");
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String description = req.getParameter("description");
@@ -40,18 +41,22 @@ public class EditController extends HttpServlet {
 		}
 
 		String redirect = req.getParameter("redirect");
+		
+		String what = "";
 
 		try {
 			VenueModel.Builder builder = null;
-			if (id != null && !id.isEmpty()) {
-				VenueModel tempVenue = VenueModel.getFromSolr(id);
+			if (venueID != null && !venueID.isEmpty()) {
+				VenueModel tempVenue = VenueModel.getFromSolr(venueID);
 				if (tempVenue == null) {
-					throw new RuntimeException("no venue with id " + id
+					throw new RuntimeException("no venue with id " + venueID
 							+ " to edit");
 				}
 				builder = tempVenue.getEditable();
+				what = "Edit venue";
 			} else {
 				builder = new VenueModel.Builder();
+				what = "Venue insertion";
 			}
 
 			builder.setTitle(title);
@@ -63,21 +68,39 @@ public class EditController extends HttpServlet {
 
 			resp.sendRedirect(redirect + "?venueID=" + venue.getID());
 		} catch (InvalidIDException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp, "/venue/edit.jsp?venueID=" + venueID,
+					new ErrorMessage(what + " failed: Internal error (invalid id)"));
+			// TODO: log error
 		} catch (InvalidTitleException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
+							+ " failed: Invalid title (" + title + ")"));
+			// TODO: log error
 		} catch (InvalidAddressException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
+							+ " failed: Invalid address (" + address + ")"));
+			// TODO: log error
 		} catch (InvalidDescriptionException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
+							+ " failed: Invalid description"));
+			// TODO: log error
 		} catch (InvalidNumberOfRatingsException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
+							+ " failed: Internal error (invalid number-of-ratings)"));
+			// TODO: log error
 		} catch (InvalidAverageRatingException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
+							+ " failed: Internal error (invalid average rating)"));
+			// TODO: log error
 		} catch (InvalidCreatorIDException e) {
-			throw new RuntimeException(e);
-		} catch (SolrRuntimeException e) {
-			throw new RuntimeException(e);
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
+							+ " failed: Internal error (invalid creator id)"));
+			// TODO: log error
 		}
 	}
 

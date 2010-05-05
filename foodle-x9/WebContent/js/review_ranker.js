@@ -28,10 +28,9 @@ $(document).ready(function() {
         var reviewID = $(this).parent().data("reviewID");
         var postURL = $(this).parent().data("postURL");
         $.post(postURL, { reviewID: reviewID, ranking: ranking }, function(data){
+        	showMessage(data);
             if (data.status == "ok") {
                 updateReviewRanking(reviewID, data);
-            } else {
-                alert(data.status);
             }
         }, "json");
         return false;
