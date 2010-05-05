@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 
 <%@ tag import="java.util.*" %>

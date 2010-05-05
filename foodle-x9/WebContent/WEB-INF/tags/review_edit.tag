@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <%@ attribute name="venueID"%>
 <%@ attribute name="reviewID" %>
 <%@ tag import="com.x9.foodle.review.*" %>

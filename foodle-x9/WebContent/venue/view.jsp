@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -7,28 +7,31 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 <%@ taglib tagdir="/WEB-INF/tags/gmaps" prefix="gmaps"%>
 
-<%@page import="java.util.*"%>
-<%@page import="com.x9.foodle.user.*"%>
-<%@page import="com.x9.foodle.venue.*"%>
-<%@page import="com.x9.foodle.review.*"%>
-<%@page import="com.x9.foodle.util.*"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.x9.foodle.user.*" %>
+<%@ page import="com.x9.foodle.venue.*" %>
+<%@ page import="com.x9.foodle.review.*" %>
 <%@ page import="com.x9.foodle.datastore.*" %>
-<%!UserModel user;
-VenueModel venue;
-ModelList<ReviewModel> reviews;%>
+<%@ page import="com.x9.foodle.util.*" %>
+<%@ page import="com.x9.foodle.util.MessageDispatcher.*" %>
 <%
-user = UserUtils.getCurrentUser(request, response);
-	String venueID = request.getParameter("venueID");
+VenueModel venue = null;
+ModelList<ReviewModel> reviews = null;
 
-	if (venueID != null && !venueID.isEmpty()) {
-		venue = VenueModel.getFromSolr(venueID);
-		if (venue == null) {
-			throw new RuntimeException("no venue with id: " + venueID);
-		}
-        reviews = venue.getReviews(0, 25, ReviewModel.sf(ReviewModel.SortableField.TIME_ADDED, SortField.Order.ASC));
+UserModel user = UserUtils.getCurrentUser(request, response);
+String venueID = request.getParameter("venueID");
+
+if (venueID != null && !venueID.isEmpty()) {
+	venue = VenueModel.getFromSolr(venueID);
+	if (venue != null) {
+		reviews = venue.getReviews(0, 25, ReviewModel.sf(ReviewModel.SortableField.TIME_ADDED, SortField.Order.ASC));
 	} else {
-		throw new RuntimeException("null or empty venueID!");
-	}
+		MessageDispatcher.pushMsg(request, new ErrorMessage("No venue with id: " + venueID));
+    }
+    
+} else {
+	MessageDispatcher.pushMsg(request, new ErrorMessage("No such venue"));
+}
 %>
 <h:header title="View venue - Foodle X9">
     <gmaps:include />
@@ -37,6 +40,7 @@ user = UserUtils.getCurrentUser(request, response);
 <h:headercontent />
 
 <!-- Text content -->
+<% if (venue != null) { %>
 <div class="venue">
 	<div id="venue_text">
 		<div id="venue_title_div">
@@ -87,5 +91,6 @@ user = UserUtils.getCurrentUser(request, response);
 </div> <!-- end of venue -->
 
 <h:reviews reviews="<%=reviews %>" />
+<% } %>
 
 <h:footer />

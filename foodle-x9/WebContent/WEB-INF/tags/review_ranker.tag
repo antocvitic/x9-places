@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <%@ attribute name="review" type="com.x9.foodle.review.ReviewModel" required="true" %>
 
 <%@ tag import="com.x9.foodle.review.*" %>

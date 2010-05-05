@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <%@ attribute name="venue" type="com.x9.foodle.venue.VenueModel"
     required="true"%>
 <%@ tag import="com.x9.foodle.user.*"%>

@@ -12,21 +12,13 @@
 
 /* TODO: log error */
 
-/*
-    To get to this page when an exception is thrown, add the following line to the jsp
-    <%@ page errorPage="../error.jsp" % >
-or something similar
-
-
-*/
-
 %>
 <h:header title="Venue edit - Foodle X9"></h:header>
 <h:headercontent />
 
-<h3 class="my_header">A server error occured</h3>
+<h3 class="my_header">404: Page not found</h3>
 <br/>
-${pageContext.errorData.throwable.cause}
-// TODO: show error somehow, explained here: http://java.sun.com/javaee/5/docs/tutorial/doc/bnahe.html#bnahi
+
+What should the user do now?
 
 <h:footer />
