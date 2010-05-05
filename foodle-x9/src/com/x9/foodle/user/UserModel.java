@@ -202,6 +202,29 @@ public class UserModel {
 			DBUtils.closeConnection(conn);
 		}
 	}
+	
+	public void applyReplevel(int repLevel) {
+		Connection conn = null;
+		PreparedStatement stm = null;
+		ResultSet result = null;
+		try {
+			conn = DBUtils.openConnection();
+			stm = conn
+					.prepareStatement("update users set repLevel = ? where userID = ?");
+			stm.setInt(1, repLevel);
+			stm.setInt(2, userID);
+			stm.execute();
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException("error setting reputation level "
+					+ repLevel + " for user: " + userID);
+		} finally {
+			DBUtils.closeResultSet(result);
+			DBUtils.closeStatement(stm);
+			DBUtils.closeConnection(conn);
+		}
+			
+	}
 
 	/**
 	 * Gets a {@link Builder} for updating this UserModel. Changes made to this

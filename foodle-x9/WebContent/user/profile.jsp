@@ -25,7 +25,11 @@ UserModel user = UserUtils.getCurrentUser(request, response);
 <h:headercontent />
 
 <h1>Profile</h1>
-
+Your reputation level:
+<%
+out.println(user.getReputationLevel());
+%>
+<br />
 Your venues: <br/>
 <%
 ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, 0, 12, VenueModel.sf(VenueModel.SortableField.TITLE, SortField.Order.DESC));

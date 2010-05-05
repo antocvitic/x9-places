@@ -30,7 +30,11 @@ public class EditController extends HttpServlet {
 		String address = req.getParameter("address");
 		String description = req.getParameter("description");
 		String tags = req.getParameter("tags");
+		
+		String redirect = req.getParameter("redirect");
 
+		String what = "";
+		
 		ArrayList<String> tagsList = new ArrayList<String>();
 		if (tags != null) {
 			Scanner scanny = new Scanner(tags);
@@ -39,13 +43,15 @@ public class EditController extends HttpServlet {
 			}
 		}
 
-		String redirect = req.getParameter("redirect");
-
-		String what = "";
-
 		try {
 			VenueModel.Builder builder = null;
 			if (venueID != null && !venueID.isEmpty()) {
+				//is user RepLevel enough to edit this?
+				if (UserUtils.getCurrentUser(req, resp).getReputationLevel() < UserUtils.rEdit) {
+					MessageDispatcher.sendMsgRedirect(req, resp,
+							"/venue/view.jsp?venueID=" + venueID, 
+							new MessageDispatcher.ErrorMessage("You do not have enough reputation points to edit this."));
+				} 		else {
 				VenueModel tempVenue = VenueModel.getFromSolr(venueID);
 				if (tempVenue == null) {
 					throw new RuntimeException("no venue with id " + venueID
@@ -53,6 +59,7 @@ public class EditController extends HttpServlet {
 				}
 				builder = tempVenue.getEditable();
 				what = "Edit venue failed: ";
+				}
 			} else {
 				builder = new VenueModel.Builder();
 				what = "Venue insertion failed: ";
@@ -96,5 +103,4 @@ public class EditController extends HttpServlet {
 			// TODO: log error
 		}
 	}
-
 }
