@@ -11,6 +11,8 @@ import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidReviewReferenceException;
 import com.x9.foodle.model.exceptions.InvalidTextException;
+import com.x9.foodle.review.ReviewModel;
+import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
@@ -40,7 +42,7 @@ public class EditController extends HttpServlet {
 				}
 				builder = tempReview.getEditable();
 			} else {
-				// create new venue
+				// create new comment
 				builder = new CommentModel.Builder();
 			}
 
@@ -48,6 +50,14 @@ public class EditController extends HttpServlet {
 			builder.setReviewID(reviewID);
 			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.apply();
+			
+			//Increase the Reviewers repLevel
+			ReviewModel rev = ReviewModel.getFromSolr(reviewID);
+			if (rev.getCreatorID() != UserUtils.getCurrentUser(req, resp).getID()) {
+				UserModel user = UserModel.getFromDbByID(rev.getCreatorID());
+				user.applyReplevel(user.getReputationLevel() + 5);
+			}
+			
 			MessageDispatcher.sendMsgRedirectAbsolute(req, resp, redirect,
 					new OkMessage("Comment inserted successfully."));
 			return;

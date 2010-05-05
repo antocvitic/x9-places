@@ -12,6 +12,7 @@ import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidTextException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.model.exceptions.InvalidVenueReferenceException;
+import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
 
@@ -40,7 +41,7 @@ public class EditController extends HttpServlet {
 				builder = tempReview.getEditable();
 				what = "Review edit failed: ";
 			} else {
-				// create new venue
+				// create new review
 				builder = new ReviewModel.Builder();
 				what = "Review insertion failed: ";
 			}
@@ -50,7 +51,11 @@ public class EditController extends HttpServlet {
 			builder.setVenueID(venueID);
 			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.apply();
-
+			
+			//increase RepLevel
+			UserModel user = UserUtils.getCurrentUser(req, resp);
+			user.applyReplevel(user.getReputationLevel() + 10);
+			
 			resp.sendRedirect(redirect + "?venueID=" + venueID);
 		} catch (InvalidIDException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
