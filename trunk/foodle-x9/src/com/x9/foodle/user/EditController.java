@@ -51,27 +51,31 @@ public class EditController extends HttpServlet {
 						"got bad password when editing general user info", e);
 			} catch (BadEmailException e) {
 				MessageDispatcher.sendMsgRedirect(req, resp,
-						"/user/preferences.jsp#general", new ErrorMessage("Preferences not updated: Bad email"));
+						"/user/preferences.jsp#general", e
+								.toMessage("Preferences not updated: "));
 				return;
 			} catch (SQLRuntimeException e) {
 				throw e;
 			}
 
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/user/preferences.jsp#general", new OkMessage("Preferences updated"));
+					"/user/preferences.jsp#general", new OkMessage(
+							"Preferences updated"));
 		} else if (editWhat.equals("password")) {
 			String current_password = req.getParameter("current_password");
 			String new_password = req.getParameter("new_password");
+			String new_password2 = req.getParameter("new_password2");
 
 			if (!BCrypt.checkpw(current_password, user.getPasswordHash())) {
 				MessageDispatcher.sendMsgRedirect(req, resp,
-						"/user/preferences.jsp#password",
-						new ErrorMessage("Preferences not updated: wrong password"));
+						"/user/preferences.jsp#password", new ErrorMessage(
+								"Password not updated: Wrong password"));
 				return;
 			}
 
 			try {
-				UserModel.Validator.validatePassword(new_password);
+				UserModel.Validator.validatePassword(new_password,
+						new_password2);
 				UserModel.Builder builder = user.getEditable();
 				builder.setPasswordHash(BCrypt.hashpw(new_password, BCrypt
 						.gensalt()));
@@ -81,7 +85,8 @@ public class EditController extends HttpServlet {
 						"got bad username when editing password", e);
 			} catch (BadPasswordException e) {
 				MessageDispatcher.sendMsgRedirect(req, resp,
-						"/user/preferences.jsp#password", new ErrorMessage("Password not updated: Bad new password"));
+						"/user/preferences.jsp#password", e
+								.toMessage("Preferences not updated: "));
 				return;
 			} catch (BadEmailException e) {
 				throw new RuntimeException(
@@ -91,7 +96,8 @@ public class EditController extends HttpServlet {
 			}
 
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/user/preferences.jsp#password", new OkMessage("Password updated"));
+					"/user/preferences.jsp#password", new OkMessage(
+							"Password updated"));
 		} else {
 			throw new RuntimeException("unknown editWhat: " + editWhat);
 		}

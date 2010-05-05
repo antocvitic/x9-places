@@ -18,7 +18,6 @@ import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
-import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -41,7 +40,7 @@ public class EditController extends HttpServlet {
 		}
 
 		String redirect = req.getParameter("redirect");
-		
+
 		String what = "";
 
 		try {
@@ -53,10 +52,10 @@ public class EditController extends HttpServlet {
 							+ " to edit");
 				}
 				builder = tempVenue.getEditable();
-				what = "Edit venue";
+				what = "Edit venue failed: ";
 			} else {
 				builder = new VenueModel.Builder();
-				what = "Venue insertion";
+				what = "Venue insertion failed: ";
 			}
 
 			builder.setTitle(title);
@@ -68,38 +67,32 @@ public class EditController extends HttpServlet {
 
 			resp.sendRedirect(redirect + "?venueID=" + venue.getID());
 		} catch (InvalidIDException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/venue/edit.jsp?venueID=" + venueID,
-					new ErrorMessage(what + " failed: Internal error (invalid id)"));
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidTitleException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Invalid title (" + title + ")"));
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidAddressException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Invalid address (" + address + ")"));
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidDescriptionException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Invalid description"));
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidNumberOfRatingsException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Internal error (invalid number-of-ratings)"));
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidAverageRatingException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Internal error (invalid average rating)"));
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidCreatorIDException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Internal error (invalid creator id)"));
+					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		}
 	}

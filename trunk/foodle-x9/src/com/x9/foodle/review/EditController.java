@@ -14,7 +14,6 @@ import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.model.exceptions.InvalidVenueReferenceException;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
-import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -39,11 +38,11 @@ public class EditController extends HttpServlet {
 					throw new RuntimeException("no review with id: " + reviewID);
 				}
 				builder = tempReview.getEditable();
-				what = "Review edit";
+				what = "Review edit failed: ";
 			} else {
 				// create new venue
 				builder = new ReviewModel.Builder();
-				what = "Review insertion";
+				what = "Review insertion failed: ";
 			}
 
 			builder.setTitle(title);
@@ -55,28 +54,23 @@ public class EditController extends HttpServlet {
 			resp.sendRedirect(redirect + "?venueID=" + venueID);
 		} catch (InvalidIDException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/review/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Internal error (invalid id)"));
+					"/review/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidTitleException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/review/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Invalid title (" + title + ")"));
+					"/review/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidTextException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/review/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Invalid review text"));
+					"/review/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidVenueReferenceException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/review/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Internal error (invalid venue id)"));
+					"/review/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		} catch (InvalidCreatorIDException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/review/edit.jsp?venueID=" + venueID, new ErrorMessage(what
-							+ " failed: Internal error (invalid creator id)"));
+					"/review/edit.jsp?venueID=" + venueID, e.toMessage(what));
 			// TODO: log error
 		}
 	}

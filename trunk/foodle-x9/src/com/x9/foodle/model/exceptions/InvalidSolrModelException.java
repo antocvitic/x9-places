@@ -1,5 +1,8 @@
 package com.x9.foodle.model.exceptions;
 
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
+import com.x9.foodle.util.MessageDispatcher.Message;
+
 @SuppressWarnings("serial")
 public class InvalidSolrModelException extends Exception {
 
@@ -19,4 +22,7 @@ public class InvalidSolrModelException extends Exception {
 		super(msg, cause);
 	}
 
+	public Message toMessage(String prefix) {
+		return new ErrorMessage(prefix + getMessage());
+	}
 }

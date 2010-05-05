@@ -286,14 +286,14 @@ public class CommentModel {
 				InvalidReviewReferenceException, InvalidCreatorIDException {
 			validateID(comment);
 			validateText(comment);
-			validateVenueReference(comment);
+			validateReviewReference(comment);
 			validateCreator(comment);
 		}
 
 		public static void validateID(CommentModel comment)
 				throws InvalidIDException {
 			if (comment.id == null || comment.id.isEmpty()) {
-				throw new InvalidIDException("comment id is null or empty");
+				throw new InvalidIDException("Internal error (empty id)");
 			}
 		}
 
@@ -308,19 +308,19 @@ public class CommentModel {
 		public static void validateText(CommentModel comment)
 				throws InvalidTextException {
 			if (comment.text == null) {
-				throw new InvalidTextException("comment text is null");
+				throw new InvalidTextException("Comment is empty");
 			}
 			comment.text = comment.text.trim();
 			if (comment.text.isEmpty()) {
-				throw new InvalidTextException("comment text is empty");
+				throw new InvalidTextException("Comment is empty");
 			}
 		}
 
-		public static void validateVenueReference(CommentModel comment)
+		public static void validateReviewReference(CommentModel comment)
 				throws InvalidReviewReferenceException {
 			if (comment.reviewID == null) {
 				throw new InvalidReviewReferenceException(
-						"review reference is null");
+						"Internal error (no review reference)");
 			}
 		}
 

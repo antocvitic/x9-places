@@ -14,7 +14,6 @@ import com.x9.foodle.model.exceptions.InvalidTextException;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
-import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -56,8 +55,8 @@ public class EditController extends HttpServlet {
 			throw new RuntimeException("comment with invalid id?", e);
 		} catch (InvalidTextException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/view.jsp?venueID=" + venueID, new ErrorMessage(
-							"Comment insertion failed: Invalid comment text."));
+					"/venue/view.jsp?venueID=" + venueID, e
+							.toMessage("Comment insertion failed: "));
 			return;
 		} catch (InvalidCreatorIDException e) {
 			throw new RuntimeException("comment with invalid creator?", e);

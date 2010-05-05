@@ -13,7 +13,6 @@ import com.x9.foodle.model.exceptions.BadEmailException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.util.MessageDispatcher;
-import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class RegisterController extends HttpServlet {
@@ -23,6 +22,7 @@ public class RegisterController extends HttpServlet {
 			throws ServletException, IOException {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		String password2 = req.getParameter("password2");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
 		String redirect = req.getParameter("redirect");
@@ -41,7 +41,7 @@ public class RegisterController extends HttpServlet {
 
 			// we need to validate password here, as UserModel only cares about
 			// the hash
-			UserModel.Validator.validatePassword(password);
+			UserModel.Validator.validatePassword(password, password2);
 
 			builder.apply();
 
@@ -55,16 +55,14 @@ public class RegisterController extends HttpServlet {
 				resp.sendRedirect(redirect);
 			}
 		} catch (BadUsernameException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					new ErrorMessage("Login failed: Bad username:" + username));
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+					.toMessage("Registration failed: "));
 		} catch (BadPasswordException e) {
-			// throw new RuntimeException(e);
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					new ErrorMessage("Login failed: Bad password"));
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+					.toMessage("Registration failed: "));
 		} catch (BadEmailException e) {
-			// throw new RuntimeException(e);
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					new ErrorMessage("Login failed: Bad email:" + email));
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+					.toMessage("Registration failed: "));
 		}
 	}
 
