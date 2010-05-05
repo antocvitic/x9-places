@@ -45,7 +45,7 @@
                     <input class="loginfield placeholder" id="login_username" name="username" type="text" 
                     onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="${cookie.username.value}" />
                      <!-- <label for="login_password">Password:</label>-->
-                    <input class="loginfield placeholder" id="login_password" name="password" type="password"
+                    <input class="loginfield placeholder password_placeholder" id="login_password" name="password" type="password"
                     onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" />
                     <script language="JavaScript">loadPlaceholders();</script>
                     <input type="submit" value="Log in" />
@@ -55,7 +55,7 @@
                 </p>
             <% } else { %>
                     <p class="login_box_text">
-                        <a href="${pageContext.request.contextPath}/user/profile.jsp"><%= user.getName() %>'s profile</a> |
+                        <a href="${pageContext.request.contextPath}/user/profile.jsp"><%= user.getUsername() %>'s profile</a> |
                         <a href="${pageContext.request.contextPath}/user/preferences.jsp">Preferences etc</a> |
                         <a href="${pageContext.request.contextPath}/logout">logout</a>
                     </p>

@@ -1,3 +1,8 @@
+
+function getPlaceholderText(inputObject) {
+	return inputObject.name.substr(0, 1).toUpperCase() + inputObject.name.substr(1).replace("_", " ")
+}
+
 /** Remove placeholder
  * Removes the placeholder when the object is selected (gets focus).
  * Changes passwords back to password-type.
@@ -6,10 +11,10 @@
  */
 function removePlaceholder(inputObject)
 {
-	if (inputObject.name=="password") {
+	if ($(inputObject).hasClass("password_placeholder")) {
 		inputObject.type="password";
 	}
-	if (inputObject.value==(inputObject.name.substr(0, 1).toUpperCase() + inputObject.name.substr(1))) {
+	if (inputObject.value==getPlaceholderText(inputObject)) {
 		inputObject.value='';
 		inputObject.style.color='black';
 	}
@@ -24,10 +29,10 @@ function removePlaceholder(inputObject)
 function addPlaceholder(inputObject)
 {
 	if (inputObject.value=='') {
-		inputObject.value=inputObject.name.substr(0, 1).toUpperCase() + inputObject.name.substr(1);
+		inputObject.value=getPlaceholderText(inputObject);
 		inputObject.style.color='gray';
 		
-		if (inputObject.name=="password") {
+		if ($(inputObject).hasClass("password_placeholder")) {
 			inputObject.type='text';
 		}
 	}
@@ -47,7 +52,8 @@ function loadPlaceholders()
 }
 
 /**
- * This is to disable any placeholders before submitting a form
+ * This is to disable any placeholders before submitting a form. Requires that the form has an
+ * id
  */
 $(document).ready(function() {
 	$("form").submit(function() {

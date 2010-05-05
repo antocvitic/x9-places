@@ -58,7 +58,7 @@
         <td><label for="password">Password</label></td>
     </tr>
     <tr>
-        <td><input class="loginfield placeholder" id="password" name="password" type="password"
+        <td><input class="loginfield placeholder password_placeholder" id="password" name="password" type="password"
             onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  /></td>
     </tr>
     <tr>
@@ -92,7 +92,7 @@
         <td><label for="password">Password</label></td>
     </tr>
     <tr>
-        <td><input class="loginfield placeholder" id="password" name="password" type="password"
+        <td><input class="loginfield placeholder password_placeholder" id="password" name="password" type="password"
         onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  /></td>
     </tr>
     <tr>

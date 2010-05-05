@@ -383,7 +383,7 @@ public class VenueModel {
 		public static void validateID(VenueModel venue)
 				throws InvalidIDException {
 			if (venue.id == null) {
-				throw new InvalidIDException("venue id is null");
+				throw new InvalidIDException("Internal error (no id)");
 			}
 		}
 
@@ -398,11 +398,11 @@ public class VenueModel {
 		public static void validateTitle(VenueModel venue)
 				throws InvalidTitleException {
 			if (venue.title == null) {
-				throw new InvalidTitleException("venue title is null");
+				throw new InvalidTitleException("Empty title");
 			}
 			venue.title = venue.title.trim();
 			if (venue.title.isEmpty()) {
-				throw new InvalidTitleException("venue title is empty");
+				throw new InvalidTitleException("Empty title");
 			}
 		}
 
@@ -417,11 +417,11 @@ public class VenueModel {
 		public static void validateAddress(VenueModel venue)
 				throws InvalidAddressException {
 			if (venue.address == null) {
-				throw new InvalidAddressException("venue address is null");
+				throw new InvalidAddressException("Empty address");
 			}
 			venue.address = venue.address.trim();
 			if (venue.address.isEmpty()) {
-				throw new InvalidAddressException("venue address is empty");
+				throw new InvalidAddressException("Empty address");
 			}
 		}
 
@@ -436,13 +436,11 @@ public class VenueModel {
 		public static void validateDescription(VenueModel venue)
 				throws InvalidDescriptionException {
 			if (venue.description == null) {
-				throw new InvalidDescriptionException(
-						"venue description is null");
+				throw new InvalidDescriptionException("Empty description");
 			}
 			venue.description = venue.description.trim();
 			if (venue.description.isEmpty()) {
-				throw new InvalidDescriptionException(
-						"venue description is empty");
+				throw new InvalidDescriptionException("Empty description");
 			}
 		}
 
@@ -450,13 +448,13 @@ public class VenueModel {
 				throws InvalidNumberOfRatingsException {
 			if (venue.numberOfRatings < 0) {
 				throw new InvalidNumberOfRatingsException(
-						"venue number of ratings is negative: "
-								+ venue.numberOfRatings);
+						"Internal error (venue number of ratings is negative: "
+								+ venue.numberOfRatings + ")");
 			}
 			if (venue.averageRating != 0.0f && venue.numberOfRatings == 0) {
 				throw new InvalidNumberOfRatingsException(
-						"venue number of ratings zero while still having a average rating: "
-								+ venue.averageRating);
+						"Internal error (venue number of ratings zero while still having a average rating: "
+								+ venue.averageRating + ")");
 			}
 		}
 
@@ -464,12 +462,13 @@ public class VenueModel {
 				throws InvalidAverageRatingException {
 			if (venue.averageRating < 0.0f) {
 				throw new InvalidAverageRatingException(
-						"venue average rating is negative: "
-								+ venue.averageRating);
+						"Internal error (venue average rating is negative: "
+								+ venue.averageRating + ")");
 			}
 			if (venue.averageRating > 5.0f) {
 				throw new InvalidAverageRatingException(
-						"venue average rating to large: " + venue.averageRating);
+						"Internal error (venue average rating to large: "
+								+ venue.averageRating + ")");
 			}
 		}
 
@@ -486,8 +485,8 @@ public class VenueModel {
 				throws InvalidCreatorIDException {
 			if (venue.creatorID <= 0) {
 				throw new InvalidCreatorIDException(
-						"venue creator id is negative or zero: "
-								+ venue.creatorID);
+						"Internal error (venue creator id is negative or zero: "
+								+ venue.creatorID + ")");
 			}
 		}
 	}

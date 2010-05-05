@@ -393,31 +393,42 @@ public class UserModel {
 		public static void validateUsername(UserModel user)
 				throws BadUsernameException {
 			if (user.username == null) {
-				throw new BadUsernameException("null username");
+				throw new BadUsernameException("Empty username");
 			}
-			if (user.username.length() < 4 || user.username.length() > 20) {
-				throw new BadUsernameException("username.length = "
-						+ user.username.length());
+			if (user.username.length() < 4) {
+				throw new BadUsernameException("Username too short (length was "
+						+ user.username.length() + ")");
+			}
+			if (user.username.length() > 20) {
+				throw new BadUsernameException("Username too long (length was "
+						+ user.username.length() + ")");
 			}
 
 			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
 			if (!p.matcher(user.username).matches()) {
 				throw new BadUsernameException(
-						"username contained invalid characters: "
+						"Username contained invalid characters: "
 								+ user.username);
 			}
 
 		}
 
-		public static void validatePassword(String password)
+		public static void validatePassword(String password, String password2)
 				throws BadPasswordException {
-			if (password == null) {
-				throw new BadPasswordException("no password");
+			if (password == null || password.isEmpty()) {
+				throw new BadPasswordException("Empty password");
+			}
+			
+			if (!password.equals(password2)) {
+				throw new BadPasswordException("The passwords don't match");
 			}
 
-			if (password.length() < 4 || password.length() > 40) {
-				throw new BadPasswordException("password.length = "
-						+ password.length());
+			if (password.length() < 4) {
+				throw new BadPasswordException("Password too short");
+			}
+			
+			if (password.length() > 40) {
+				throw new BadPasswordException("Password too long");
 			}
 
 			// TODO: check password strength?
@@ -426,7 +437,7 @@ public class UserModel {
 		public static void validatePasswordHash(UserModel user)
 				throws BadPasswordException {
 			if (user.passwordHash == null) {
-				throw new BadPasswordException("no password hash");
+				throw new BadPasswordException("Internal error (password hash)");
 			}
 
 		}
@@ -434,7 +445,7 @@ public class UserModel {
 		public static void validateEmail(UserModel user)
 				throws BadEmailException {
 			if (user.email == null) {
-				throw new BadEmailException("no email");
+				throw new BadEmailException("Empty email");
 			}
 			// regex copied from: http://www.regular-expressions.info/email.html
 			// with some modifications to allow for new TLDs
@@ -446,7 +457,7 @@ public class UserModel {
 			Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.(?:"
 					+ ccTLD + "|" + gTLD + ")$", Pattern.CASE_INSENSITIVE);
 			if (!p.matcher(user.email).matches()) {
-				throw new BadEmailException("invalid email: " + user.email);
+				throw new BadEmailException("Invalid email (" + user.email + ")");
 			}
 		}
 	}

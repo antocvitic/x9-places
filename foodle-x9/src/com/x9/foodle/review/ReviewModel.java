@@ -355,7 +355,7 @@ public class ReviewModel {
 		public static void validateID(ReviewModel review)
 				throws InvalidIDException {
 			if (review.id == null) {
-				throw new InvalidIDException("review id is null");
+				throw new InvalidIDException("Internal error (no id)");
 			}
 
 		}
@@ -371,11 +371,11 @@ public class ReviewModel {
 		public static void validateTitle(ReviewModel review)
 				throws InvalidTitleException {
 			if (review.title == null) {
-				throw new InvalidTitleException("review title is null");
+				throw new InvalidTitleException("Empty title");
 			}
 			review.title = review.title.trim();
 			if (review.title.isEmpty()) {
-				throw new InvalidTitleException("review title is empty");
+				throw new InvalidTitleException("Empty title");
 			}
 		}
 
@@ -390,11 +390,11 @@ public class ReviewModel {
 		public static void validateText(ReviewModel review)
 				throws InvalidTextException {
 			if (review.text == null) {
-				throw new InvalidTextException("review text is null");
+				throw new InvalidTextException("Empty text");
 			}
 			review.text = review.text.trim();
 			if (review.text.isEmpty()) {
-				throw new InvalidTextException("review text is empty");
+				throw new InvalidTextException("Empty text");
 			}
 		}
 
@@ -402,7 +402,7 @@ public class ReviewModel {
 				throws InvalidVenueReferenceException {
 			if (review.venueID == null) {
 				throw new InvalidVenueReferenceException(
-						"venue reference is null");
+						"Internal error (no venue reference)");
 			}
 		}
 
@@ -419,8 +419,7 @@ public class ReviewModel {
 				throws InvalidCreatorIDException {
 			if (review.creatorID <= 0) {
 				throw new InvalidCreatorIDException(
-						"review creator id is negative or zero: "
-								+ review.creatorID);
+						"Internal error (invalid creator)");
 			}
 		}
 	}

@@ -37,7 +37,7 @@
         <li><a href="#tab-4">Privacy...</a></li>
     </ul>
     <div id="general">
-        <form action="${pageContext.request.contextPath}/user/edit" method="POST">
+        <form id="generalt_edit_form" action="${pageContext.request.contextPath}/user/edit" method="POST">
         <input type="hidden" name="editWhat" value="general" />
         <table>
             <tr>
@@ -62,20 +62,22 @@
     </div>
     
     <div id="password">
-        <form action="${pageContext.request.contextPath}/user/edit" method="POST">
+        <form id="password_edit_form" action="${pageContext.request.contextPath}/user/edit" method="POST">
         <input type="hidden" name="editWhat" value="password" />
         <table>
             <tr>
                 <td><label for="current_password">Current password</label></td>
             </tr>
             <tr>
-                <td><input class="loginfield" id="current_password" name="current_password" type="password"/></td>
+                <td><input class="loginfield placeholder password_placeholder" id="current_password" name="current_password" 
+                type="password" onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" /></td>
             </tr>
             <tr>
                 <td><label for="new_password">New password</label></td>
             </tr>
             <tr>
-                <td><input class="loginfield" id="new_password" name="new_password" type="password" /></td>
+                <td><input class="loginfield placeholder password_placeholder" id="new_password" name="new_password"
+                type="password" onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" /></td>
             </tr>
             <tr>
                 <td><label for="new_password2">Retype new password</label></td>

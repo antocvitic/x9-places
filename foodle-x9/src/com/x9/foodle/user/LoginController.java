@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
 		if (username == null
 				|| (user = UserModel.getFromDbByUsername(username)) == null) {
 			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					new ErrorMessage("Login failed: No such user:" + username));
+					new ErrorMessage("Login failed: No such user (" + username + ")"));
 			return;
 		}
 
