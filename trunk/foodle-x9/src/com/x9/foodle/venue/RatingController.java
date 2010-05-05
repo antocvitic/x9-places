@@ -26,6 +26,8 @@ import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.StringUtils;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
+import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
 @SuppressWarnings("serial")
 public class RatingController extends HttpServlet {
@@ -51,16 +53,17 @@ public class RatingController extends HttpServlet {
 			Rating r = setVenueRating(UserUtils.getCurrentUser(req, resp),
 					venueID, intRating);
 
-			JSONObject json = new JSONObject();
-			json.put("status", "ok");
+			JSONObject json = new JSONObject(new OkMessage("Venue rated.")
+					.toJSON());
+
 			json.put("rating", StringUtils.formatRating(r.rating));
 			json.put("ratings", r.ratings);
 			json.put("userRating", intRating);
 
 			out.print(json.toString());
 		} catch (Exception e) {
-			// out.print("error: " + e.getMessage());
-			throw new RuntimeException(e);
+			// TODO: log exception
+			out.print(new ErrorMessage("Rating failed").toJSON());
 		}
 	}
 

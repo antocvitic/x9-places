@@ -1,12 +1,19 @@
 
 <%@tag import="com.x9.foodle.util.*"%>
-<%
-	String msg = MessageDispatcher.popMsg(request);
-	if (msg != null) {
-%>
-<div id="error_div" class="content_block"><strong>Message:</strong>
-<%=msg%></div>
+<%@tag import="com.x9.foodle.util.MessageDispatcher.*"%>
+<div id="msg" class="msg">
+<span class="msg_closer"><a href="javascript:closeMessageBox()">X</a></span>
+<span id="msg_content">
+</span>
+</div>
 <br />
 <%
-	}
+	Message msg = MessageDispatcher.popMsg(request);
+	if (msg != null) {
 %>
+<script type="text/javascript">
+$(document).ready(function() {
+    showMessage(<%= msg.toJSON() %>, true);
+});
+</script>
+<% } %>

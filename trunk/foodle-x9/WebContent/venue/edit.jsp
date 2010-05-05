@@ -13,8 +13,10 @@ String address = "";
 String description = "";
 String tags = "";
 
+VenueModel venue = null;
+
 if (venueID != null && !venueID.isEmpty()) {
-    VenueModel venue = VenueModel.getFromSolr(venueID);
+    venue = VenueModel.getFromSolr(venueID);
     if (venue == null) {
         throw new RuntimeException("no venue with id: " + venueID);   
     }
@@ -30,13 +32,15 @@ if (venueID != null && !venueID.isEmpty()) {
 <h:headercontent />
 
 <h3 class="my_header">Add or edit venue</h3>
+<% if (venue != null) { %>
 <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=venueID %>">view this venue</a>
+<% } %>
 <form action="${pageContext.request.contextPath}/venue/edit" method="POST">
 <input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
-<input name="id" type="hidden" value="<%= venueID %>" />
+<input name="venueID" type="hidden" value="<%= venueID %>" />
 <table class="content_block">
     <tr>
-        <td><label for="id">ID: <em><%= venueID.isEmpty() ? "new venue, or write an id in the URL" : venueID %></em></label></td>
+        <td>ID: <em><%= venueID.isEmpty() ? "new venue, or write an id in the URL" : venueID %></em></td>
     </tr>
     <tr>
         <td><label for="title">Title</label></td>

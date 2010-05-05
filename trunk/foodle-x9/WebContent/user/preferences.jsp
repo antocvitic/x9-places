@@ -29,8 +29,6 @@
 <h2>Change account settings and preferences</h2>
 <br/>
 
-<h:msg />
-
 <div id="tabs">
     <ul>
         <li><a href="#general">General</a></li>

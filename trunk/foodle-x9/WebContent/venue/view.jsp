@@ -36,8 +36,6 @@ user = UserUtils.getCurrentUser(request, response);
 </h:header>
 <h:headercontent />
 
-<h:msg />
-
 <!-- Text content -->
 <div class="venue">
 	<div id="venue_text">

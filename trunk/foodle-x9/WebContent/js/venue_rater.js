@@ -24,10 +24,9 @@ $(document).ready(function() {
         var venueID = $(this).parent().parent().data("venueID");
         var postURL = $(this).parent().parent().data("postURL");
         $.post(postURL, { venueID: venueID, rating: rating }, function(data){
+        	showMessage(data);
             if (data.status == "ok") {
                 updateVenueRating(venueID, data);
-            } else {
-                alert(data.status);
             }
         }, "json");
     });

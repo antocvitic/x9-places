@@ -13,6 +13,8 @@ import com.x9.foodle.model.exceptions.InvalidReviewReferenceException;
 import com.x9.foodle.model.exceptions.InvalidTextException;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.MessageDispatcher.OkMessage;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -47,14 +49,15 @@ public class EditController extends HttpServlet {
 			builder.setReviewID(reviewID);
 			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.apply();
-			MessageDispatcher.sendMsgRedirectAbsolute(req, resp,
-					redirect, "comment inserted");
+			MessageDispatcher.sendMsgRedirectAbsolute(req, resp, redirect,
+					new OkMessage("Comment inserted successfully."));
 			return;
 		} catch (InvalidIDException e) {
 			throw new RuntimeException("comment with invalid id?", e);
 		} catch (InvalidTextException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/view.jsp?venueID=" + venueID, "bad text");
+					"/venue/view.jsp?venueID=" + venueID, new ErrorMessage(
+							"Comment insertion failed: Invalid comment text."));
 			return;
 		} catch (InvalidCreatorIDException e) {
 			throw new RuntimeException("comment with invalid creator?", e);

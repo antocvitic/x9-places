@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class LoginController extends HttpServlet {
@@ -31,13 +32,15 @@ public class LoginController extends HttpServlet {
 
 		if (username == null
 				|| (user = UserModel.getFromDbByUsername(username)) == null) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", "No such user:" + username);
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
+					new ErrorMessage("Login failed: No such user:" + username));
 			return;
 		}
 
 		if (password == null
 				|| !BCrypt.checkpw(password, user.getPasswordHash())) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", "Wrong password");
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
+					new ErrorMessage("Login failed: Wrong password"));
 			return;
 		}
 
@@ -53,9 +56,9 @@ public class LoginController extends HttpServlet {
 	public static void doPostLoginStuff(UserModel user, HttpServletRequest req,
 			HttpServletResponse resp, boolean rememberme) {
 		HttpSession session = req.getSession();
-		
-		session.setAttribute(LOGGED_IN_SESSION_USERID, new Integer(user
-				.getID()));
+
+		session.setAttribute(LOGGED_IN_SESSION_USERID,
+				new Integer(user.getID()));
 		session.setAttribute(LOGGED_IN_SESSION_SESSION_TOKEN, user
 				.getSessionToken());
 
@@ -69,7 +72,7 @@ public class LoginController extends HttpServlet {
 					.getSessionToken());
 			ctoken.setMaxAge(7 * 24 * 60 * 60);
 			resp.addCookie(ctoken);
-			
+
 			Cookie cusername = new Cookie("username", user.getUsername());
 			ctoken.setMaxAge(7 * 24 * 60 * 60);
 			resp.addCookie(cusername);
