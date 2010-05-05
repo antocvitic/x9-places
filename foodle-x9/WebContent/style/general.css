@@ -38,6 +38,7 @@ body
 	background: rgba(255, 255, 255, 0.85);
 	padding: 20px;
 	padding-top: 15px;
+	padding-bottom: 130px;
 	min-height: 450px;
 	
 	-webkit-border-bottom-left-radius: 6px;
@@ -123,6 +124,7 @@ div {
 
 #footer {
     padding: 20px;
+    height: 90px;
     background-color: rgb(170, 185, 200);
     text-align: center;
     
