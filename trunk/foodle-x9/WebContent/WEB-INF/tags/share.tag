@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <!-- AddThis Button BEGIN -->
 <div class="addthis_toolbox addthis_default_style">
 <a href="http://www.addthis.com/bookmark.php?v=250&amp;username=foodlex9" class="addthis_button_compact">Share</a>

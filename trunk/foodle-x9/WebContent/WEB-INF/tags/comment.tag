@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <%@ attribute name="comment" type="com.x9.foodle.comment.CommentModel" required="true" %>
 <%@ tag import="com.x9.foodle.comment.*" %>
 <div id="comment_<%= comment.getID() %>" class="comment">

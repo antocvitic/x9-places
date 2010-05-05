@@ -1,3 +1,4 @@
+<%@ tag body-content="empty" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 
 <%@ attribute name="review" type="com.x9.foodle.review.ReviewModel" required="true" %>
