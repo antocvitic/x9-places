@@ -50,15 +50,17 @@
 	} else {
 %>
 
-<%!String search;
-	String choice;
-	SolrDocumentList res;
-	String temp, temp_bleh;
-	VenueModel venue;
-	
-	TreeMap<String, Integer> tagmap;
-	ArrayList<Integer> tagcount;
-	Integer most_freq_tag;%>
+<% 
+String search;
+String choice;
+SolrDocumentList res;
+String temp, temp_bleh;
+VenueModel venue;
+
+TreeMap<String, Integer> tagmap;
+ArrayList<Integer> tagcount;
+Integer most_freq_tag;
+%>
 <%
 	//TODO: FIX FOR Å, Ä, Ö
 

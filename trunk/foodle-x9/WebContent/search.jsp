@@ -22,14 +22,15 @@
 <%
 	} else {
 %>
-<%!String temp;
-	SolrDocumentList res;
-	VenueModel venue;
-	String temp_two;
-	
-	TreeMap<String, Integer> tagmap;
-	ArrayList<Integer> tagcount;
-	Integer most_freq_tag;
+<%
+String temp;
+SolrDocumentList res;
+VenueModel venue;
+String temp_two;
+
+TreeMap<String, Integer> tagmap;
+ArrayList<Integer> tagcount;
+Integer most_freq_tag;
 
 %>
 <%
