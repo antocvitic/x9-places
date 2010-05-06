@@ -20,7 +20,7 @@ if (mlist.isEmpty()) {
     No comments<br />
     <%
 } else {
-	%><%= mlist.getResultsReturned() %> of <%= mlist.getResultsFound() %> comments<br />
+	%>
     <h:pager_header mlist="<%= comments %>"/>
     <%
     for (CommentModel comment : mlist.getList()) {
@@ -28,8 +28,10 @@ if (mlist.isEmpty()) {
         
         <h:comment comment="<%= comment %>" />
         <br />
+    <% } %>
+    <h:pager_footer mlist="<%= comments %>"/>
+    
     <%
-    } 
 }
 
 if ("true".equals(enableNewComments)) {

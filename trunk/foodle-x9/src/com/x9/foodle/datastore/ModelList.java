@@ -66,17 +66,17 @@ public class ModelList<E extends SortableFieldsConstraints> {
 		return resultsFound > (offset + resultsReturned); // TODO: test me
 	}
 
-	public long numberOfPages() {
-		return resultsFound / pager.getMaxReturned();
+	public long getNumberOfPages() {
+		return (long) Math.ceil(resultsFound / (double) pager.getMaxReturned());
 	}
 
 	/**
-	 * Starts at 0.
+	 * Starts at 1.
 	 * 
 	 * @return
 	 */
 	public long getCurrentPage() {
-		return offset / pager.getMaxReturned();
+		return 1 + offset / pager.getMaxReturned();
 	}
 
 	public List<SortableFields> getApplicableSortableFields() {

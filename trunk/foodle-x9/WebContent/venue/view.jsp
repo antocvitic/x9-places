@@ -24,7 +24,7 @@ String venueID = request.getParameter("venueID");
 if (venueID != null && !venueID.isEmpty()) {
 	venue = VenueModel.getFromSolr(venueID);
 	if (venue != null) {
-		reviews = venue.getReviews(new Pager(request, "r"));
+		reviews = venue.getReviews(new Pager(request, "r" + venueID));
 	} else {
 		MessageDispatcher.pushMsg(request, new ErrorMessage("No venue with id: " + venueID));
     }

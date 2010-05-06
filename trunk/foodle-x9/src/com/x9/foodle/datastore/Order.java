@@ -7,8 +7,8 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 
 public enum Order {
-	ASC("asc", SolrQuery.ORDER.asc), //
-	DESC("desc", SolrQuery.ORDER.desc);
+	ASC("^", SolrQuery.ORDER.asc), //
+	DESC("v", SolrQuery.ORDER.desc);
 
 	public final String display;
 	public final SolrQuery.ORDER order;

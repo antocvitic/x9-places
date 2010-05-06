@@ -319,3 +319,26 @@
 .new_comment_div_hidden {
     display: none;
 }
+
+.pager {
+
+}
+
+.pager_header {
+}
+
+.pager_footer {
+}
+
+.pager_page_number {
+    font-family: Verdana;
+    font-size: 80%;
+}
+
+.pager_current_page_number {
+    font-weight: bold;
+}
+
+.pager_other_page_number {
+    text-decoration: underline;
+}

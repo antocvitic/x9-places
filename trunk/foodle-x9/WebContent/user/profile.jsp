@@ -45,7 +45,7 @@ Showing <%= venues.getResultsReturned() %> venues of <%= venues.getResultsFound(
 
 Your reviews:
 <%
-ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(new SortField(SortableFields.TITLE)));
+ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r"));
 %>
 Showing <%= reviews.getResultsReturned() %> reviews of <%= reviews.getResultsFound() %>, starting at <%= reviews.getOffset() %>
 <h:reviews reviews="<%= reviews %>" />
