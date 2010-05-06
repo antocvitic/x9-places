@@ -13,6 +13,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.x9.foodle.datastore.DBUtils;
 import com.x9.foodle.datastore.SQLRuntimeException;
 import com.x9.foodle.model.exceptions.BadEmailException;
+import com.x9.foodle.model.exceptions.BadLocationException;
+import com.x9.foodle.model.exceptions.BadNameException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.model.exceptions.InvalidUserException;
@@ -27,10 +29,12 @@ public class UserModel {
 	private String passwordHash;
 	private String email;
 	private String name;
+	private String location;
 	private int reputationLevel;
 	private String sessionToken = "oleoleoleole";
 	private boolean isConnectedToFacebook;
-
+	private boolean isDeleted;
+	
 	/**
 	 * Returns a UserModel representing a user with id {@code userID}. blabla.
 	 * 
@@ -126,7 +130,9 @@ public class UserModel {
 	public String getName() {
 		return name;
 	}
-
+	public String getLocation() {
+		return location;
+	}
 	public int getReputationLevel() {
 		return reputationLevel;
 	}
@@ -138,7 +144,10 @@ public class UserModel {
 	public boolean isConnectedToFacebook() {
 		return isConnectedToFacebook;
 	}
-
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	
 	public int getRatingForVenue(String venueID) {
 		Connection conn = null;
 		PreparedStatement stm = null;
@@ -276,7 +285,10 @@ public class UserModel {
 			user.name = name;
 			return this;
 		}
-
+		public Builder setLocation(String location) {
+			user.location = location;
+			return this;
+		}
 		public Builder setReputationLevel(int reputationLevel) {
 			user.reputationLevel = reputationLevel;
 			return this;
@@ -291,7 +303,11 @@ public class UserModel {
 			user.isConnectedToFacebook = isConnectedToFacebook;
 			return this;
 		}
-
+		
+		public Builder setDeleted(boolean isDeleted) {
+			user.isDeleted = isDeleted;
+			return this;
+		}
 /**
 		 * Will throw a subclass of {@link InvalidUserException} if any of the
 		 * parameters for this user is invalid.
@@ -304,8 +320,8 @@ public class UserModel {
 		 *             see {@link Validator#validateEmail(UserModel)
 		 * @see Validator#validate(UserModel)
 		 */
-		public void validate() throws BadUsernameException,
-				BadPasswordException, BadEmailException {
+		public void validate() throws BadUsernameException, BadNameException,
+				BadPasswordException, BadEmailException, BadLocationException {
 			Validator.validate(user);
 		}
 
@@ -332,7 +348,7 @@ public class UserModel {
 		 * @throws SQLRuntimeException
 		 *             if an sql error occurs.
 		 */
-		public UserModel apply() throws BadUsernameException,
+		public UserModel apply() throws BadUsernameException, BadLocationException, BadNameException, 
 				BadPasswordException, BadEmailException, SQLRuntimeException {
 			// throws on bad data
 			validate();
@@ -348,21 +364,21 @@ public class UserModel {
 					// edit an existing user
 					stm = conn
 							.prepareStatement("update users set username = ?, passwordHash = ?, "
-									+ "email = ?, name = ?, repLevel = ?, isFBConnected = ? where userID = ?");
-					stm.setInt(7, user.userID);
+									+ "email = ?, name = ?, repLevel = ?, isFBConnected = ?, location = ? where userID = ?");
+					stm.setInt(8, user.userID);
 				} else {
 					// insert a new user
 					stm = conn
 							.prepareStatement(
-									"insert IGNORE into users (username, passwordHash, email, name, repLevel, isFBConnected, sessionToken) "
-											+ "values (?, ?, ?, ?, ?, ?, ?)",
+									"insert IGNORE into users (username, passwordHash, email, name, repLevel, isFBConnected, location, sessionToken) "
+											+ "values (?, ?, ?, ?, ?, ?, ?, ?)",
 									Statement.RETURN_GENERATED_KEYS);
 
 					// generate new session token
 					Random random = new Random(System.currentTimeMillis());
 					String token = BCrypt.hashpw(Long.toString(random
 							.nextLong()), BCrypt.gensalt());
-					stm.setString(7, token);
+					stm.setString(8, token);
 				}
 
 				stm.setString(1, user.username);
@@ -371,7 +387,8 @@ public class UserModel {
 				stm.setString(4, user.name);
 				stm.setInt(5, user.reputationLevel);
 				stm.setBoolean(6, user.isConnectedToFacebook);
-
+				stm.setString(7, user.location);
+				
 				if (stm.executeUpdate() == 0) {
 					throw new BadEmailException("Email or username already taken.");
 				}
@@ -405,11 +422,13 @@ public class UserModel {
 
 		public static void validate(UserModel user)
 				throws BadUsernameException, BadPasswordException,
-				BadEmailException {
+				BadEmailException, BadNameException, BadLocationException {
 			validateUsername(user);
 			validatePasswordHash(user);
 			validateEmail(user);
-
+			validateName(user);
+			validateLocation(user);
+			
 			// TODO: if account is connected to facebook, what more do we need?
 		}
 
@@ -435,7 +454,27 @@ public class UserModel {
 			}
 
 		}
-
+		
+		public static void validateName(UserModel user)
+				throws BadNameException {
+			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
+			if (!p.matcher(user.name).matches()) {
+				throw new BadNameException(
+						"Name contained invalid characters: "
+						+ user.name);
+			}
+		}
+		
+		public static void validateLocation(UserModel user)
+				throws BadLocationException {
+			//TODO: Improve this pattern
+			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
+			if (!p.matcher(user.name).matches()) {
+				throw new BadLocationException(
+						"Location contained invalid characters: "
+						+ user.name);
+			}
+		}
 		public static void validatePassword(String password, String password2)
 				throws BadPasswordException {
 			if (password == null || password.isEmpty()) {
@@ -494,9 +533,11 @@ public class UserModel {
 		this.passwordHash = null;
 		this.email = null;
 		this.name = null;
+		this.location = null;
 		this.reputationLevel = 0;
 		this.sessionToken = null;
 		this.isConnectedToFacebook = false;
+		this.isDeleted = false;
 	}
 
 	/**
@@ -524,9 +565,11 @@ public class UserModel {
 		dest.passwordHash = src.passwordHash;
 		dest.email = src.email;
 		dest.name = src.name;
+		dest.location = src.location;
 		dest.reputationLevel = src.reputationLevel;
 		dest.sessionToken = src.sessionToken;
 		dest.isConnectedToFacebook = src.isConnectedToFacebook;
+		dest.isDeleted = src.isDeleted;
 	}
 
 	/**
@@ -547,10 +590,13 @@ public class UserModel {
 		user.passwordHash = result.getString(result.findColumn("passwordHash"));
 		user.email = result.getString(result.findColumn("email"));
 		user.name = result.getString(result.findColumn("name"));
+		user.location = result.getString(result.findColumn("location"));
 		user.reputationLevel = result.getInt(result.findColumn("repLevel"));
 		user.sessionToken = result.getString(result.findColumn("sessionToken"));
 		user.isConnectedToFacebook = result.getBoolean(result
 				.findColumn("isFBConnected"));
+		user.isDeleted = result.getBoolean(result
+				.findColumn("isDeleted"));
 		return user;
 	}
 
@@ -563,7 +609,8 @@ public class UserModel {
 				+ ", passwordHash=" + passwordHash + ", email=" + email
 				+ ", name=" + name + ", reputationLevel=" + reputationLevel
 				+ ", sessionToken=" + sessionToken + ", isConnectedToFacebook="
-				+ isConnectedToFacebook + "]";
+				+ isConnectedToFacebook + "location, " + location + "isDeleted, "
+				+ isDeleted + "]";
 	}
 
 }

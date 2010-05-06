@@ -26,6 +26,8 @@ create table users (
     repLevel int, 
     sessionToken varchar(1024) character set latin1 default null,
     isFBConnected boolean, 
+    location varchar(256),
+    isDeleted boolean,
     primary key (userID),
     unique (username),
     unique (email)
