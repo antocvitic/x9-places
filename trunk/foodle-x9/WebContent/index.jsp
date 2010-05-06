@@ -12,6 +12,8 @@
 <%@page import="org.apache.solr.common.SolrDocument" %>
 
 
-<H1>Välkommen till index.jsp</H1>
+<H1>Welcome to index.jsp</H1>
+<h2>Search function is up! (beta)</h2>
+<h5>Use upper searchbar or <a href="adv_search.jsp">Advanced Search (beta)</a></h5>
 
 <h:footer />

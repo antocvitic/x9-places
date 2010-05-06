@@ -49,6 +49,7 @@
 <%!String search;
 	String choice;
 	SolrDocumentList res;
+	String temp;
 	VenueModel venue;%>
 <%
 	//TODO: FIX FOR Å, Ä, Ö
@@ -69,11 +70,12 @@
 					SolrDocument doc = res.get(i);
 
 					venue = VenueModel.venueFromSolrDocument(doc);
+					temp = venue.getID();
 %>
 
 <h3>Title: <%=venue.getTitle()%></h3>
-<h4>ID: <%=venue.getID()%></h4>
-<h4>Address: <%=venue.getAddress()%></h4>
+<h4> <a href="/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h4>
+	<h4>Address: <%=venue.getAddress()%></h4>
 <BR>
 <%
 	} catch (Exception e) {

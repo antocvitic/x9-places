@@ -21,6 +21,7 @@
         		<input type="text" class="searchfield" name="searchfield" />
         		<input type="submit" value="search" id="search_button"/>
         	</form>
+        	
         </div>
         
         <!-- login/logout -->
