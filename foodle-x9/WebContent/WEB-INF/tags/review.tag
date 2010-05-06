@@ -21,7 +21,7 @@
 	</div>
     
     <%
-    ModelList<CommentModel> comments = review.getComments(new Pager(request, "c", new Pager(new SortField(SortableFields.TIME_ADDED))));
+    ModelList<CommentModel> comments = review.getComments(new Pager(request, "c" + review.getID(), new Pager(new SortField(SortableFields.TIME_ADDED))));
     %>
     
     <h:comments review="<%= review %>" comments="<%= comments %>" enableNewComments="<%= user == null ? \"false\" : \"true\" %>" />

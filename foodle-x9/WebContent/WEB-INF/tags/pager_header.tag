@@ -13,7 +13,7 @@ Pager pager = mlist.getPager();
 String queryString = pager.generateOtherQueryString(request) + "&";
 List<SortableFields> applicableFields = cmlist.getApplicableSortableFields();
 %>
-
+<div class="pager pager_header">
 <%
 for (SortableFields sf : applicableFields) {
     String sel = "";
@@ -41,4 +41,6 @@ for (int i : Pager.MAX_RETURNED_LIST) {
     <option value="<%= value %>" <%= selected %>><%= i %></option>
 <% } %>
 </select>
-items per page<br/>
+items per page
+</div>
+<br/>

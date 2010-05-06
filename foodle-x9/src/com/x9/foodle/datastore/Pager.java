@@ -12,7 +12,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 
 public class Pager {
 
-	public static final int[] MAX_RETURNED_LIST = new int[] { 1, 2, 3, 4, 10 };
+	public static final int[] MAX_RETURNED_LIST = new int[] { 1, 2, 3, 4, 5, 10, 20, 25 };
 	public static final int DEFAULT_MAX_RETURNED = 10;
 
 	public static String SORT_FIELDS_PARAM_NAME = "f";

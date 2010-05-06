@@ -4,7 +4,7 @@
 package com.x9.foodle.datastore;
 
 public enum SortableFields {
-	SCORE("score", "score", Order.DESC), // 
+	SCORE("*", "score", Order.DESC), // 
 	// uses solr field title_sortable because you can't sort on title
 	TITLE("title", "title_sortable", Order.ASC), // 
 	TIME_ADDED("time added", "timeAdded", Order.ASC), // 

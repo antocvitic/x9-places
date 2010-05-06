@@ -22,7 +22,6 @@ if (reviews.isEmpty()) {
     %>
         <h:review review="<%= review %>" />
         <br />
-    <%
-    } 
-}
-%>
+    <% } %>
+    <h:pager_footer mlist="<%= reviews%>"/>
+<% } %>
