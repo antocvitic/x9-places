@@ -31,6 +31,7 @@
 
 <div id="register_div">
 <form id="register" action="${pageContext.request.contextPath}/register" method="POST">
+<input type="hidden" name="redirect" value="<%= redirect %>" />
 <h3 class="login_type_header">Register</h3>
 <table>
     <tr>
@@ -52,6 +53,13 @@
     </tr>
     <tr>
         <td><input class="loginfield placeholder" id="name" name="name" type="text"
+            onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  /></td>
+    </tr>
+    <tr>
+        <td><label for="location">Location</label></td>
+    </tr>
+    <tr>
+        <td><input class="loginfield placeholder" id="location" name="location" type="text"
             onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  /></td>
     </tr>
     <tr>
