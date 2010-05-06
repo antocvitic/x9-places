@@ -1,7 +1,6 @@
 package com.x9.foodle.user;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,19 +15,10 @@ import com.x9.foodle.model.exceptions.BadLocationException;
 import com.x9.foodle.model.exceptions.BadNameException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
-import com.x9.foodle.model.exceptions.InvalidUserException;
-import com.x9.foodle.util.EmailUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
-import org.quartz.SimpleTrigger;
-import org.quartz.Trigger;
-import org.quartz.TriggerUtils;
-import org.quartz.JobDetail;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
