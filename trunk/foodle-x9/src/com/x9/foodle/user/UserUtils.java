@@ -15,8 +15,8 @@ public class UserUtils {
 	 *            req The input HTTP request
 	 * @return the currently logged in user, or null if not logged in
 	 */
-	public final static int rEdit = 20;
-	public final static int rClose = 200;
+	public final static int EDIT_LEVEL = 20;
+	public final static int MARKCLOSE_LEVEL = 200;
 	
 	public static UserModel getCurrentUser(HttpServletRequest req,
 			HttpServletResponse resp) {

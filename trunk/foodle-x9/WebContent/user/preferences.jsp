@@ -55,6 +55,13 @@
                     onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="<%= user.getName() %>" /></td>
             </tr>
             <tr>
+                <td><label for="location">Location</label></td>
+            </tr>
+            <tr>
+                <td><input class="loginfield placeholder" id="location" name="location" type="text"
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="<%= user.getLocation() %>" /></td>
+            </tr>
+            <tr>
                 <td><input type="submit" value="Save" /></td>
             </tr>
         </table>
@@ -98,8 +105,32 @@
         Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.
     </div>
     
-    <div id="tab-4">
-        Tempetetojasdfasfd
+    <div id="Delete">
+        If you wish to delete your user from this site, fill in your email and password below.<br />
+        You will recieve a confirmation only email after 12 hours have passed.
+        WARNING: All your user-data will be deleted, forever!
+        <form id="user_delete_form" action="${pageContext.request.contextPath}/user/edit" method="POST">
+        <input type="hidden" name="editWhat" value="deletion" />
+        <table>
+             <tr>
+                <td><label for="email">Email</label></td>
+            </tr>
+            <tr>
+                <td><input class="loginfield placeholder" id="email" name="email" type="text"
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="<%= user.getEmail() %>" /></td>
+            </tr>
+            <tr>
+                <td><label for="current_password">Current password</label></td>
+            </tr>
+            <tr>
+                <td><input class="loginfield placeholder password_placeholder" id="current_password" name="current_password" 
+                type="password" onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" /></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Delete this acount" /></td>
+            </tr>
+            </table>
+		</form>
     </div>
 
 
