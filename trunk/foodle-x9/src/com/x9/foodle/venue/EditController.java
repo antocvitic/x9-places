@@ -47,7 +47,7 @@ public class EditController extends HttpServlet {
 			VenueModel.Builder builder = null;
 			if (venueID != null && !venueID.isEmpty()) {
 				//is user RepLevel enough to edit this?
-				if (UserUtils.getCurrentUser(req, resp).getReputationLevel() < UserUtils.rEdit) {
+				if (UserUtils.getCurrentUser(req, resp).getReputationLevel() < UserUtils.EDIT_LEVEL) {
 					MessageDispatcher.sendMsgRedirect(req, resp,
 							"/venue/view.jsp?venueID=" + venueID, 
 							new MessageDispatcher.ErrorMessage("You do not have enough reputation points to edit this."));
