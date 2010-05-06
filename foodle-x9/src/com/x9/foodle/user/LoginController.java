@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
 		doPostLoginStuff(user, req, resp, rememberme != null);
 
 		if (redirect == null) {
-			resp.sendRedirect(req.getContextPath() + "/profile.jsp");
+			resp.sendRedirect(req.getContextPath() + "/user/profile.jsp");
 		} else {
 			resp.sendRedirect(redirect);
 		}

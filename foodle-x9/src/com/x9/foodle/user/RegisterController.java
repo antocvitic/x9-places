@@ -12,6 +12,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.x9.foodle.model.exceptions.BadEmailException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
+import com.x9.foodle.model.exceptions.BadNameException;
+import com.x9.foodle.model.exceptions.BadLocationException;
 import com.x9.foodle.util.MessageDispatcher;
 
 @SuppressWarnings("serial")
@@ -25,6 +27,7 @@ public class RegisterController extends HttpServlet {
 		String password2 = req.getParameter("password2");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
+		String location = req.getParameter("location");
 		String redirect = req.getParameter("redirect");
 
 		try {
@@ -36,7 +39,8 @@ public class RegisterController extends HttpServlet {
 			builder.setPasswordHash(passwordHash);
 			builder.setEmail(email);
 			builder.setName(name);
-
+			builder.setLocation(location);
+			
 			builder.validate();
 
 			// we need to validate password here, as UserModel only cares about
@@ -49,8 +53,11 @@ public class RegisterController extends HttpServlet {
 			// "adam.renberg@gmail.com", "Testing emailing",
 			// "User: " + username + " has been registered");
 
-			if (redirect == null) {
-				resp.sendRedirect(req.getContextPath() + "/profile.jsp");
+			//Auto-login user and send to profile
+			UserModel user = UserModel.getFromDbByUsername(username);
+			LoginController.doPostLoginStuff(user, req, resp, false);
+			if (redirect == null || redirect == "") {
+				resp.sendRedirect(req.getContextPath() + "/user/profile.jsp");
 			} else {
 				resp.sendRedirect(redirect);
 			}
@@ -63,6 +70,12 @@ public class RegisterController extends HttpServlet {
 		} catch (BadEmailException e) {
 			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
 					.toMessage("Registration failed: "));
+		} catch (BadNameException e) {
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+					.toMessage("Registration failed: "));	
+		} catch (BadLocationException e) {
+			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+					.toMessage("Registration failed: "));	
 		}
 	}
 
