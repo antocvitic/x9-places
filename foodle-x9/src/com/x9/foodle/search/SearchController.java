@@ -1,47 +1,56 @@
 package com.x9.foodle.search;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrInputDocument;
-
-import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
-import com.x9.foodle.model.exceptions.InvalidAddressException;
-import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
-import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
-import com.x9.foodle.model.exceptions.InvalidDescriptionException;
-import com.x9.foodle.model.exceptions.InvalidIDException;
-import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
-import com.x9.foodle.model.exceptions.InvalidTitleException;
-import com.x9.foodle.util.DateUtils;
-import com.x9.foodle.venue.VenueModel;
 
 public class SearchController {
 
 	public static final String SOLR_TYPE = "venuemodel";
 
-	public static SolrDocumentList query(String q)
+	public static SolrDocumentList query(String q, String choice)
 			throws MalformedURLException, SolrServerException {
 		SolrServer server = SolrUtils.getSolrServer();
 		SolrQuery query = new SolrQuery();
-
-		// TODO: Fixa B�TTRE och s�krare query!
-		query.setQuery("title:" + q + " OR address:" + q + " OR description:"
-				+ q + " OR tags:" + q);
-		// query.setQuery("title:" + q);
+		
+		if(choice.equals("all")) {
+			// TODO: FIX BETTER QUERY AND MAKE IT SAFER
+			query.setQuery("title:" + q + " OR address:" + q + " OR description:"
+					+ q + " OR tags:" + q);
+		}
+		else if(choice.equals("venue")) {
+			query.setQuery("title:" + q);
+		}
+		else if(choice.equals("street")) {
+			query.setQuery("address:" + q);
+		}
+		else if(choice.equals("review")) {
+			//TODO
+		}
+		else if(choice.equals("comment")) {
+			//TODO
+		}
+		else if(choice.equals("tags")) {
+			String[] tags = q.split(" ");
+			String tag_query = "";
+			for(int i = 0; tags.length-1 > i; i++) {
+				tag_query += "tags:" + tags[i] + " AND ";
+			}
+			tag_query += "tags:" + tags[tags.length-1];
+			query.setQuery(tag_query);
+		}
+		else {
+			return null;
+		}
+		
 		QueryResponse response = server.query(query);
 
 		SolrDocumentList docs = response.getResults();
 
-		// venueFromSolrDocument(doc);
 		if (docs.isEmpty()) {
 			return null;
 		} else {
@@ -49,5 +58,4 @@ public class SearchController {
 		}
 	}
 
-	
 }
