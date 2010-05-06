@@ -9,8 +9,8 @@
     <span class="review_ranker_value"><%= review.getRanking() %></span>
     <% 
     String actionClass = "";
-    String upClass = "";
-    String downClass = "";
+    String upClass = "review_rank_up_enabled";
+    String downClass = "review_rank_down_enabled";
     if (user != null) { 
         actionClass = "review_ranker_action";
         int userRanking = user.getRankingForReview(review.getID());
