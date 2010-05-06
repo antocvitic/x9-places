@@ -14,7 +14,7 @@
 
 
 <%
-	if (request.getParameter("searchfield") == null) {
+	if (request.getParameter("search_term") == null) {
 %>
 
 
@@ -27,7 +27,7 @@
 	String temp_two;%>
 <%
 	//TODO: FIX FOR Å, Ä, Ö
-		temp = request.getParameter("searchfield");
+		temp = request.getParameter("search_term");
 		res = SearchController.query(temp, "all");
 		if (res != null) {
 			for (int i = 0; res.size() > i; i++) {
