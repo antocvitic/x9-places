@@ -343,7 +343,7 @@ public class CommentModel implements SortableFieldsConstraints {
 		dest.creatorID = src.creatorID;
 	}
 
-	private static CommentModel commentFromSolrDocument(SolrDocument doc) {
+	public static CommentModel commentFromSolrDocument(SolrDocument doc) {
 		CommentModel comment = new CommentModel();
 		comment.id = (String) doc.get("id");
 		comment.text = (String) doc.get("description");

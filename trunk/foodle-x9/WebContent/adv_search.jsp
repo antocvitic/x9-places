@@ -7,6 +7,7 @@
 <%@page import="com.x9.foodle.util.DateUtils"%>
 <%@page import="com.x9.foodle.search.*"%>
 <%@page import="com.x9.foodle.venue.*"%>
+<%@page import="com.x9.foodle.review.*"%>
 <%@page import="org.apache.solr.common.SolrDocumentList"%>
 <%@page import="org.apache.solr.common.SolrDocument"%>
 
@@ -49,7 +50,7 @@
 <%!String search;
 	String choice;
 	SolrDocumentList res;
-	String temp;
+	String temp, temp_bleh;
 	VenueModel venue;%>
 <%
 	//TODO: FIX FOR Å, Ä, Ö
@@ -68,9 +69,24 @@
 			for (int i = 0; res.size() > i; i++) {
 				try {
 					SolrDocument doc = res.get(i);
+					
+					//added for specific search (review + comment)
+					//this is a bit ugly
+					if(choice.equalsIgnoreCase("review")){
+						temp = (String) doc.get("reference"); //our venueID
+						venue = VenueModel.getFromSolr(temp);
+					}
+					else if(choice.equalsIgnoreCase("comment")) {
+						temp_bleh = (String) doc.get("reference"); //our reviewID
+						temp = ReviewModel.getFromSolr(temp_bleh).getVenueID();
+						venue = VenueModel.getFromSolr(temp);
+					}
+					else {
+						venue = VenueModel.venueFromSolrDocument(doc);
+						temp = venue.getID();						
+					}
+					
 
-					venue = VenueModel.venueFromSolrDocument(doc);
-					temp = venue.getID();
 %>
 <h3>Title: <%=venue.getTitle()%></h3>
 <h4> <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h4>

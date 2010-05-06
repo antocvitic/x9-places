@@ -29,10 +29,10 @@ public class SearchController {
 			query.setQuery("address:" + q);
 		}
 		else if(choice.equals("review")) {
-			//TODO
+			query.setQuery("type:reviewmodel AND (title:" +q +" OR description:" +q +")");
 		}
 		else if(choice.equals("comment")) {
-			//TODO
+			query.setQuery("type:commentmodel AND description:" +q);
 		}
 		else if(choice.equals("tags")) {
 			String[] tags = q.split(" ");
