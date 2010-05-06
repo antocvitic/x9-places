@@ -17,7 +17,7 @@
         <!-- search-field -->
         <div id="search">
         	<img src="${pageContext.request.contextPath}/images/small-search.png" id="search_icon"/>
-        	<form name="search form" METHOD="GET" ACTION="">
+        	<form name="search form" METHOD="GET" ACTION="search.jsp">
         		<input type="text" class="searchfield" name="searchfield" />
         		<input type="submit" value="search" id="search_button"/>
         	</form>

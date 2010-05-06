@@ -5,25 +5,13 @@
 <h:headercontent />
 
 <%@page import="com.x9.foodle.util.DateUtils"%>
-<%
-	java.util.Date d = DateUtils.getNowUTC();
-%>
 
-<p>Today's date is <%=DateUtils.dateToSolrDate(d)%> (UTC) and this
-jsp page worked!</p>
-<br />
-<br />
+<%@page import="com.x9.foodle.search.*" %>
+<%@page import="com.x9.foodle.venue.*" %>
+<%@page import="org.apache.solr.common.SolrDocumentList" %>
+<%@page import="org.apache.solr.common.SolrDocument" %>
 
 
-<hr />
-
-Stuff
-
-<hr />
-<p>Some links:<br />
-<a href="http://localhost:8983/solr/admin">http://localhost:8983/solr</a>
-<a href="http://localhost:8888/">Tomcat</a></p>
-
-<hr />
+<H1>Välkommen till index.jsp</H1>
 
 <h:footer />
