@@ -23,9 +23,7 @@
 		SolrDocumentList res;
 		VenueModel venue; %>
 	<%
-		//SearchController.skapaTestfall();
-		//SearchController.skapaTestfall2();
-		//SearchController.createTest2();
+		//TODO: FIX FOR Å, Ä, Ö
 		temp = request.getParameter("searchfield");
 		res = SearchController.query(temp);
 		if( res != null )
