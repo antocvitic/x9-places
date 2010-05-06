@@ -72,9 +72,8 @@
 					venue = VenueModel.venueFromSolrDocument(doc);
 					temp = venue.getID();
 %>
-
 <h3>Title: <%=venue.getTitle()%></h3>
-<h4> <a href="/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h4>
+<h4> <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h4>
 	<h4>Address: <%=venue.getAddress()%></h4>
 <BR>
 <%
