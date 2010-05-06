@@ -29,11 +29,13 @@
 <h2>Change account settings and preferences</h2>
 <br/>
 
+<%= user.getName() %>
+
 <div id="tabs">
     <ul>
         <li><a href="#general">General</a></li>
         <li><a href="#password">Password</a></li>
-        <li><a href="#tab-3">Notifications...</a></li>
+        <li><a href="#delete">Delete account</a></li>
         <li><a href="#tab-4">Privacy...</a></li>
     </ul>
     <div id="general">
@@ -101,11 +103,7 @@
         </form>
     </div>
 
-    <div id="tab-3">
-        Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.
-    </div>
-    
-    <div id="Delete">
+    <div id="delete">
         If you wish to delete your user from this site, fill in your email and password below.<br />
         You will recieve a confirmation only email after 12 hours have passed.
         WARNING: All your user-data will be deleted, forever!
@@ -130,7 +128,7 @@
                 <td><input type="submit" value="Delete this acount" /></td>
             </tr>
             </table>
-		</form>
+        </form>
     </div>
 
 

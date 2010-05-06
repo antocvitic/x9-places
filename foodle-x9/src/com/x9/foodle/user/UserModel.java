@@ -34,7 +34,7 @@ public class UserModel {
 	private String sessionToken = "oleoleoleole";
 	private boolean isConnectedToFacebook;
 	private boolean isDeleted;
-	
+
 	/**
 	 * Returns a UserModel representing a user with id {@code userID}. blabla.
 	 * 
@@ -130,9 +130,11 @@ public class UserModel {
 	public String getName() {
 		return name;
 	}
+
 	public String getLocation() {
 		return location;
 	}
+
 	public int getReputationLevel() {
 		return reputationLevel;
 	}
@@ -144,10 +146,11 @@ public class UserModel {
 	public boolean isConnectedToFacebook() {
 		return isConnectedToFacebook;
 	}
+
 	public boolean isDeleted() {
 		return isDeleted;
 	}
-	
+
 	public int getRatingForVenue(String venueID) {
 		Connection conn = null;
 		PreparedStatement stm = null;
@@ -179,7 +182,7 @@ public class UserModel {
 			DBUtils.closeConnection(conn);
 		}
 	}
-	
+
 	public int getRankingForReview(String reviewID) {
 		Connection conn = null;
 		PreparedStatement stm = null;
@@ -211,7 +214,7 @@ public class UserModel {
 			DBUtils.closeConnection(conn);
 		}
 	}
-	
+
 	public void applyReplevel(int repLevel) {
 		Connection conn = null;
 		PreparedStatement stm = null;
@@ -232,7 +235,7 @@ public class UserModel {
 			DBUtils.closeStatement(stm);
 			DBUtils.closeConnection(conn);
 		}
-			
+
 	}
 
 	/**
@@ -285,10 +288,12 @@ public class UserModel {
 			user.name = name;
 			return this;
 		}
+
 		public Builder setLocation(String location) {
 			user.location = location;
 			return this;
 		}
+
 		public Builder setReputationLevel(int reputationLevel) {
 			user.reputationLevel = reputationLevel;
 			return this;
@@ -303,11 +308,12 @@ public class UserModel {
 			user.isConnectedToFacebook = isConnectedToFacebook;
 			return this;
 		}
-		
+
 		public Builder setDeleted(boolean isDeleted) {
 			user.isDeleted = isDeleted;
 			return this;
 		}
+
 /**
 		 * Will throw a subclass of {@link InvalidUserException} if any of the
 		 * parameters for this user is invalid.
@@ -348,8 +354,9 @@ public class UserModel {
 		 * @throws SQLRuntimeException
 		 *             if an sql error occurs.
 		 */
-		public UserModel apply() throws BadUsernameException, BadLocationException, BadNameException, 
-				BadPasswordException, BadEmailException, SQLRuntimeException {
+		public UserModel apply() throws BadUsernameException,
+				BadLocationException, BadNameException, BadPasswordException,
+				BadEmailException, SQLRuntimeException {
 			// throws on bad data
 			validate();
 
@@ -388,11 +395,12 @@ public class UserModel {
 				stm.setInt(5, user.reputationLevel);
 				stm.setBoolean(6, user.isConnectedToFacebook);
 				stm.setString(7, user.location);
-				
+
 				if (stm.executeUpdate() == 0) {
-					throw new BadEmailException("Email or username already taken.");
+					throw new BadEmailException(
+							"Email or username already taken.");
 				}
-				
+
 				if (editMe != null) {
 					copy(editMe, user);
 					return editMe;
@@ -428,7 +436,7 @@ public class UserModel {
 			validateEmail(user);
 			validateName(user);
 			validateLocation(user);
-			
+
 			// TODO: if account is connected to facebook, what more do we need?
 		}
 
@@ -438,8 +446,9 @@ public class UserModel {
 				throw new BadUsernameException("Empty username");
 			}
 			if (user.username.length() < 4) {
-				throw new BadUsernameException("Username too short (length was "
-						+ user.username.length() + ")");
+				throw new BadUsernameException(
+						"Username too short (length was "
+								+ user.username.length() + ")");
 			}
 			if (user.username.length() > 20) {
 				throw new BadUsernameException("Username too long (length was "
@@ -454,33 +463,32 @@ public class UserModel {
 			}
 
 		}
-		
-		public static void validateName(UserModel user)
-				throws BadNameException {
+
+		public static void validateName(UserModel user) throws BadNameException {
 			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
 			if (!p.matcher(user.name).matches()) {
 				throw new BadNameException(
-						"Name contained invalid characters: "
-						+ user.name);
+						"Name contained invalid characters: " + user.name);
 			}
 		}
-		
+
 		public static void validateLocation(UserModel user)
 				throws BadLocationException {
-			//TODO: Improve this pattern
+			// TODO: Improve this pattern
 			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
-			if (!p.matcher(user.name).matches()) {
+			if (!p.matcher(user.location).matches()) {
 				throw new BadLocationException(
 						"Location contained invalid characters: "
-						+ user.name);
+								+ user.location);
 			}
 		}
+
 		public static void validatePassword(String password, String password2)
 				throws BadPasswordException {
 			if (password == null || password.isEmpty()) {
 				throw new BadPasswordException("Empty password");
 			}
-			
+
 			if (!password.equals(password2)) {
 				throw new BadPasswordException("The passwords don't match");
 			}
@@ -488,7 +496,7 @@ public class UserModel {
 			if (password.length() < 4) {
 				throw new BadPasswordException("Password too short");
 			}
-			
+
 			if (password.length() > 40) {
 				throw new BadPasswordException("Password too long");
 			}
@@ -519,7 +527,8 @@ public class UserModel {
 			Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.(?:"
 					+ ccTLD + "|" + gTLD + ")$", Pattern.CASE_INSENSITIVE);
 			if (!p.matcher(user.email).matches()) {
-				throw new BadEmailException("Invalid email (" + user.email + ")");
+				throw new BadEmailException("Invalid email (" + user.email
+						+ ")");
 			}
 		}
 	}
@@ -595,8 +604,7 @@ public class UserModel {
 		user.sessionToken = result.getString(result.findColumn("sessionToken"));
 		user.isConnectedToFacebook = result.getBoolean(result
 				.findColumn("isFBConnected"));
-		user.isDeleted = result.getBoolean(result
-				.findColumn("isDeleted"));
+		user.isDeleted = result.getBoolean(result.findColumn("isDeleted"));
 		return user;
 	}
 
@@ -609,8 +617,8 @@ public class UserModel {
 				+ ", passwordHash=" + passwordHash + ", email=" + email
 				+ ", name=" + name + ", reputationLevel=" + reputationLevel
 				+ ", sessionToken=" + sessionToken + ", isConnectedToFacebook="
-				+ isConnectedToFacebook + "location, " + location + "isDeleted, "
-				+ isDeleted + "]";
+				+ isConnectedToFacebook + "location, " + location
+				+ "isDeleted, " + isDeleted + "]";
 	}
 
 }
