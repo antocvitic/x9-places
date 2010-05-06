@@ -19,7 +19,7 @@
 <FORM METHOD="GET" ACTION="adv_search.jsp">
 <table cellspacing="5" width="400" cellpadding="0" border="0">
 	<tr>
-		<td><B>Sök:</B></td>
+		<td><B>Search:</B></td>
 		<td><input type="text" name="search" size=15></td>
 	</tr>
 	<tr>
