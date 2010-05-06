@@ -358,6 +358,21 @@
       </analyzer>
     </fieldType>
     
+    <fieldType name="sortableString" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+      <analyzer>
+        <!-- KeywordTokenizer does no actual tokenizing, so the entire
+             input string is preserved as a single token
+          -->
+        <tokenizer class="solr.KeywordTokenizerFactory"/>
+        <!-- The LowerCase TokenFilter does what you expect, which can be
+             when you want your sorting to be case insensitive
+          -->
+        <filter class="solr.LowerCaseFilterFactory" />
+        <!-- The TrimFilter removes any leading or trailing whitespace -->
+        <filter class="solr.TrimFilterFactory" />
+      </analyzer>
+    </fieldType>
+    
     <fieldtype name="phonetic" stored="false" indexed="true" class="solr.TextField" >
       <analyzer>
         <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -436,7 +451,7 @@
    -->
    <field name="title" type="text" indexed="true" stored="true"/>
    <!-- can't use title to sort on, so use title_sortable for that -->
-   <field name="title_sortable" type="string" indexed="true" stored="false"/>
+   <field name="title_sortable" type="sortableString" indexed="true" stored="false"/>
    <field name="address" type="text" indexed="true" stored="true"/>
    <field name="description" type="text" indexed="true" stored="true"/>
    
