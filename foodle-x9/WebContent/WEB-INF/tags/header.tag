@@ -17,6 +17,8 @@
     src="${pageContext.request.contextPath}/js/venue_rater.js"></script>
 <script type="text/javascript"
     src="${pageContext.request.contextPath}/js/review_ranker.js"></script> 
+    <script type="text/javascript"
+    src="${pageContext.request.contextPath}/js/paging.js"></script>
 <link rel="stylesheet" type="text/css" charset="utf-8"
     href="${pageContext.request.contextPath}/style/general.css" />
 <link rel="stylesheet" type="text/css" charset="utf-8"

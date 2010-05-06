@@ -1,28 +1,42 @@
 package com.x9.foodle.datastore;
 
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrQuery.ORDER;
-
-public class SortField<E> {
-	public static enum Order {
-		ASC(SolrQuery.ORDER.asc), //
-		DESC(SolrQuery.ORDER.desc);
-
-		public SolrQuery.ORDER order;
-
-		private Order(ORDER order) {
-			this.order = order;
-		}
-
-	}
-
-	public final E field;
+public class SortField {
+	public final SortableFields field;
 	public final Order order;
 
-	public SortField(E field, Order order) {
+	public SortField(SortableFields field, Order order) {
 		super();
 		this.field = field;
 		this.order = order;
+	}
+
+	/**
+	 * Same as {@code SortField(filed, Order.ASC)}.
+	 * 
+	 * @see SortField#SortField(SortableFields, Order)
+	 * @param field
+	 */
+	public SortField(SortableFields field) {
+		this(field, field.defaultOrder);
+	}
+
+	public SortField(String paramString) {
+		String[] split = paramString.split(":");
+		if (split.length != 2) {
+			throw new IllegalArgumentException("invalid sortfield parameter: "
+					+ paramString);
+		}
+		this.field = SortableFields.valueOf(split[0]);
+		this.order = Order.valueOf(split[1]);
+	}
+
+	public String toParamString() {
+		return field.name() + ":" + order.name();
+	}
+
+	@Override
+	public String toString() {
+		return "SortField [field=" + field + ", order=" + order + "]";
 	}
 
 }

@@ -20,5 +20,9 @@
 	<%= review.getText() %>
 	</div>
     
-    <h:comments review="<%= review %>" comments="<%= review.getComments(0, 25, CommentModel.sf(CommentModel.SortableField.TIME_ADDED, SortField.Order.ASC)) %>" enableNewComments="<%= user == null ? \"false\" : \"true\" %>" />
+    <%
+    ModelList<CommentModel> comments = review.getComments(new Pager(request, "c", new Pager(new SortField(SortableFields.TIME_ADDED))));
+    %>
+    
+    <h:comments review="<%= review %>" comments="<%= comments %>" enableNewComments="<%= user == null ? \"false\" : \"true\" %>" />
 </div>

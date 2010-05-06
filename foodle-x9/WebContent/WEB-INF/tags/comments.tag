@@ -20,7 +20,9 @@ if (mlist.isEmpty()) {
     No comments<br />
     <%
 } else {
-	%><%= mlist.getResultsReturned() %> of <%= mlist.getResultsFound() %> comments<br /><%
+	%><%= mlist.getResultsReturned() %> of <%= mlist.getResultsFound() %> comments<br />
+    <h:pager_header mlist="<%= comments %>"/>
+    <%
     for (CommentModel comment : mlist.getList()) {
     %>
         

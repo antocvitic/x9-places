@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -15,10 +16,11 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import com.x9.foodle.datastore.ModelList;
+import com.x9.foodle.datastore.Pager;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
-import com.x9.foodle.datastore.SortField;
-import com.x9.foodle.datastore.SortField.Order;
+import com.x9.foodle.datastore.SortableFields;
+import com.x9.foodle.datastore.SortableFieldsConstraints;
 import com.x9.foodle.model.exceptions.InvalidAddressException;
 import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
@@ -31,29 +33,9 @@ import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 
-public class VenueModel {
+public class VenueModel implements SortableFieldsConstraints {
 
 	public static final String SOLR_TYPE = "venuemodel";
-
-	public static enum SortableField {
-		// uses solr field title_sortable because you can't sort on title
-		TITLE("title_sortable"), // 
-		TIME_ADDED("timeAdded"), // 
-		AVERAGE_RATING("averageRating"), //
-		NUMBER_OF_RATINGS("numberOfRatings"), //
-		CREATOR_ID("creator"), //
-		LAST_UPDATED("lastModified"); //
-
-		final String field;
-
-		private SortableField(String field) {
-			this.field = field;
-		}
-	}
-
-	public static SortField<SortableField> sf(SortableField field, Order order) {
-		return new SortField<SortableField>(field, order);
-	}
 
 	private String id;
 	private String title;
@@ -103,7 +85,7 @@ public class VenueModel {
 	}
 
 	public static ModelList<VenueModel> getFromSolrCreatedBy(UserModel user,
-			int offset, int maxReturned, SortField<SortableField> sort) {
+			Pager pager) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
@@ -112,9 +94,7 @@ public class VenueModel {
 			query
 					.setQuery("type:" + SOLR_TYPE + " AND creator:"
 							+ user.getID());
-			query.setStart(offset);
-			query.setRows(maxReturned);
-			query.setSortField(sort.field.field, sort.order.order);
+			pager.apply(query);
 			QueryResponse rsp = server.query(query);
 
 			SolrDocumentList results = rsp.getResults();
@@ -128,8 +108,8 @@ public class VenueModel {
 				list.add(venueFromSolrDocument(doc));
 			}
 
-			return new ModelList<VenueModel>(list, results.getStart(), list
-					.size(), results.getNumFound());
+			return new ModelList<VenueModel>(pager, list, results.getStart(),
+					list.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -193,9 +173,8 @@ public class VenueModel {
 		return this.tags;
 	}
 
-	public ModelList<ReviewModel> getReviews(int offset, int maxReturned,
-			SortField<ReviewModel.SortableField> sort) {
-		return ReviewModel.getFromSolrForVenue(this, offset, maxReturned, sort);
+	public ModelList<ReviewModel> getReviews(Pager pager) {
+		return ReviewModel.getFromSolrForVenue(this, pager);
 	}
 
 	public Builder getEditable() {
@@ -584,6 +563,21 @@ public class VenueModel {
 			tags.addAll(c);
 		}
 		return tags;
+	}
+
+	private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
+
+	static {
+		sortableFields.add(SortableFields.SCORE);
+		sortableFields.add(SortableFields.TITLE);
+		sortableFields.add(SortableFields.TIME_ADDED);
+		sortableFields.add(SortableFields.AVERAGE_RATING);
+		sortableFields.add(SortableFields.NUMBER_OF_RATINGS);
+		sortableFields.add(SortableFields.LAST_UPDATED);
+	}
+
+	public static List<SortableFields> getApplicableSortableFields() {
+		return sortableFields;
 	}
 
 	/**

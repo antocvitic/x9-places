@@ -24,6 +24,7 @@ UserModel user = UserUtils.getCurrentUser(request, response);
 </h:header>
 <h:headercontent />
 
+
 <h1>Profile</h1>
 Your reputation level:
 <%
@@ -32,8 +33,10 @@ out.println(user.getReputationLevel());
 <br />
 Your venues: <br/>
 <%
-ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, 0, 12, VenueModel.sf(VenueModel.SortableField.TITLE, SortField.Order.DESC));
+ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v"));
 %>
+<h:pager_header mlist="<%= venues %>"/><br/>
+<%= venues.getPager().toString() %><br/>
 Showing <%= venues.getResultsReturned() %> venues of <%= venues.getResultsFound() %>, starting at <%= venues.getOffset() %><br/>
 <% for (VenueModel venue : venues.getList()) { %>
 <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
@@ -42,7 +45,7 @@ Showing <%= venues.getResultsReturned() %> venues of <%= venues.getResultsFound(
 
 Your reviews:
 <%
-ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, 0, 12, ReviewModel.sf(ReviewModel.SortableField.VENUE_ID, SortField.Order.ASC));
+ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(new SortField(SortableFields.TITLE)));
 %>
 Showing <%= reviews.getResultsReturned() %> reviews of <%= reviews.getResultsFound() %>, starting at <%= reviews.getOffset() %>
 <h:reviews reviews="<%= reviews %>" />
@@ -50,7 +53,7 @@ Showing <%= reviews.getResultsReturned() %> reviews of <%= reviews.getResultsFou
 
 Your comments:
 <%
-ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, 0, 12, CommentModel.sf(CommentModel.SortableField.TIME_ADDED, SortField.Order.ASC));
+ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(new SortField(SortableFields.TITLE)));
 %>
 Showing <%= comments.getResultsReturned() %> comments of <%= comments.getResultsFound() %>, starting at <%= comments.getOffset() %><br/>
 <h:comments review="<%= null %>" comments="<%= comments %>" enableNewComments="false"></h:comments>
