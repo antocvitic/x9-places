@@ -55,19 +55,20 @@
 					
 				}
 			}
-		} %>
+		%>
 
 <div id="tagcloud" class="msg_msg">
 <h3> Tag cloud </h3>
 <%
-	// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-	tagcount = new ArrayList<Integer>(tagmap.values());
-	Collections.sort(tagcount);
-	most_freq_tag = tagcount.get(tagcount.size()-1);
-	
-	for (String tag : tagmap.navigableKeySet()) { %>
-		<a href="${pageContext.request.contextPath}/adv_search.jsp?search=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
-	<% 
+		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
+		tagcount = new ArrayList<Integer>(tagmap.values());
+		Collections.sort(tagcount);
+		most_freq_tag = tagcount.get(tagcount.size()-1);
+		
+		for (String tag : tagmap.navigableKeySet()) { %>
+			<a href="${pageContext.request.contextPath}/adv_search.jsp?search=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
+		<% 
+		}
 	}
 %>
 </div>
