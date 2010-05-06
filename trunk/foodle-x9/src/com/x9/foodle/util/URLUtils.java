@@ -10,8 +10,8 @@ public class URLUtils {
 
 	public static String getCurrentURL(HttpServletRequest request) {
 		String qs = request.getQueryString();
-		qs = qs == null ? "" : qs;
-		return request.getRequestURL() + "?" + qs;
+		qs = qs == null ? "" : "?" + qs;
+		return request.getRequestURL() + qs;
 	}
 
 	/**

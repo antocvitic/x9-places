@@ -3,6 +3,7 @@ package com.x9.foodle.comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -14,10 +15,11 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
 import com.x9.foodle.datastore.ModelList;
+import com.x9.foodle.datastore.Pager;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
-import com.x9.foodle.datastore.SortField;
-import com.x9.foodle.datastore.SortField.Order;
+import com.x9.foodle.datastore.SortableFields;
+import com.x9.foodle.datastore.SortableFieldsConstraints;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidReviewReferenceException;
@@ -27,25 +29,9 @@ import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 
-public class CommentModel {
+public class CommentModel implements SortableFieldsConstraints {
 
 	public static final String SOLR_TYPE = "commentmodel";
-
-	public static enum SortableField {
-		TIME_ADDED("timeAdded"), // 
-		REVIEW_ID("reference"), // 
-		CREATOR_ID("creator"); // 
-
-		final String field;
-
-		private SortableField(String field) {
-			this.field = field;
-		}
-	}
-
-	public static SortField<SortableField> sf(SortableField field, Order order) {
-		return new SortField<SortableField>(field, order);
-	}
 
 	private String id;
 	private String text;
@@ -84,22 +70,19 @@ public class CommentModel {
 	}
 
 	public static ModelList<CommentModel> getFromSolrForReview(
-			ReviewModel review, int offset, int maxReturned,
-			SortField<SortableField> sort) {
-		return getFromSolrForReview(review.getID(), offset, maxReturned, sort);
+			ReviewModel review, Pager pager) {
+		return getFromSolrForReview(review.getID(), pager);
 	}
 
 	public static ModelList<CommentModel> getFromSolrForReview(String reviewID,
-			int offset, int maxReturned, SortField<SortableField> sort) {
+			Pager pager) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
 
 			// TODO: make the query safe
 			query.setQuery("reference:" + reviewID + " AND type:" + SOLR_TYPE);
-			query.setStart(offset);
-			query.setRows(maxReturned);
-			query.setSortField(sort.field.field, sort.order.order);
+			pager.apply(query);
 			QueryResponse rsp = server.query(query);
 
 			SolrDocumentList results = rsp.getResults();
@@ -113,8 +96,8 @@ public class CommentModel {
 				list.add(commentFromSolrDocument(doc));
 			}
 
-			return new ModelList<CommentModel>(list, results.getStart(), list
-					.size(), results.getNumFound());
+			return new ModelList<CommentModel>(pager, list, results.getStart(),
+					list.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -123,7 +106,7 @@ public class CommentModel {
 	}
 
 	public static ModelList<CommentModel> getFromSolrCreatedBy(UserModel user,
-			int offset, int maxReturned, SortField<SortableField> sort) {
+			Pager pager) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
@@ -132,9 +115,7 @@ public class CommentModel {
 			query
 					.setQuery("type:" + SOLR_TYPE + " AND creator:"
 							+ user.getID());
-			query.setStart(offset);
-			query.setRows(maxReturned);
-			query.setSortField(sort.field.field, sort.order.order);
+			pager.apply(query);
 			QueryResponse rsp = server.query(query);
 
 			SolrDocumentList results = rsp.getResults();
@@ -148,8 +129,8 @@ public class CommentModel {
 				list.add(commentFromSolrDocument(doc));
 			}
 
-			return new ModelList<CommentModel>(list, results.getStart(), list
-					.size(), results.getNumFound());
+			return new ModelList<CommentModel>(pager, list, results.getStart(),
+					list.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -370,6 +351,17 @@ public class CommentModel {
 		comment.reviewID = (String) doc.get("reference");
 		comment.creatorID = (Integer) doc.get("creator");
 		return comment;
+	}
+
+	private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
+
+	static {
+		sortableFields.add(SortableFields.SCORE);
+		sortableFields.add(SortableFields.TIME_ADDED);
+	}
+
+	public static List<SortableFields> getApplicableSortableFields() {
+		return sortableFields;
 	}
 
 	/**

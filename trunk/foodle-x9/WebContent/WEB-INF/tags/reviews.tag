@@ -15,11 +15,14 @@ if (reviews.isEmpty()) {
     No reviews
     <%
 } else {
+    %>
+    <h:pager_header mlist="<%= reviews%>"/>
+    <% 
     for (ReviewModel review : mlist.getList()) {
     %>
         <h:review review="<%= review %>" />
         <br />
     <%
-	} 
+    } 
 }
 %>

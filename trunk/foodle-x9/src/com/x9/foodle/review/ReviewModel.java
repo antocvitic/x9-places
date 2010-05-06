@@ -3,6 +3,7 @@ package com.x9.foodle.review;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -15,10 +16,12 @@ import org.apache.solr.common.SolrInputDocument;
 
 import com.x9.foodle.comment.CommentModel;
 import com.x9.foodle.datastore.ModelList;
+import com.x9.foodle.datastore.Pager;
 import com.x9.foodle.datastore.SolrRuntimeException;
 import com.x9.foodle.datastore.SolrUtils;
 import com.x9.foodle.datastore.SortField;
-import com.x9.foodle.datastore.SortField.Order;
+import com.x9.foodle.datastore.SortableFields;
+import com.x9.foodle.datastore.SortableFieldsConstraints;
 import com.x9.foodle.model.exceptions.InvalidCreatorIDException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidSolrModelException;
@@ -29,28 +32,9 @@ import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 import com.x9.foodle.venue.VenueModel;
 
-public class ReviewModel {
+public class ReviewModel implements SortableFieldsConstraints {
 
 	public static final String SOLR_TYPE = "reviewmodel";
-
-	public static enum SortableField {
-		// uses solr field title_sortable because you can't sort on title
-		TITLE("title_sortable"), // 
-		TIME_ADDED("timeAdded"), // 
-		VENUE_ID("reference"), // 
-		RANKING("ranking"), // 
-		LAST_UPDATED("lastModified"); //
-
-		final String field;
-
-		private SortableField(String field) {
-			this.field = field;
-		}
-	}
-
-	public static SortField<SortableField> sf(SortableField field, Order order) {
-		return new SortField<SortableField>(field, order);
-	}
 
 	private String id;
 	private String title;
@@ -92,7 +76,7 @@ public class ReviewModel {
 	}
 
 	public static ModelList<ReviewModel> getFromSolrCreatedBy(UserModel user,
-			int offset, int maxReturned, SortField<SortableField> sort) {
+			Pager pager) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
@@ -101,9 +85,7 @@ public class ReviewModel {
 			query
 					.setQuery("type:" + SOLR_TYPE + " AND creator:"
 							+ user.getID());
-			query.setStart(offset);
-			query.setRows(maxReturned);
-			query.setSortField(sort.field.field, sort.order.order);
+			pager.apply(query);
 			QueryResponse rsp = server.query(query);
 
 			SolrDocumentList results = rsp.getResults();
@@ -117,8 +99,8 @@ public class ReviewModel {
 				list.add(reviewFromSolrDocument(doc));
 			}
 
-			return new ModelList<ReviewModel>(list, results.getStart(), list
-					.size(), results.getNumFound());
+			return new ModelList<ReviewModel>(pager, list, results.getStart(),
+					list.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -127,21 +109,19 @@ public class ReviewModel {
 	}
 
 	public static ModelList<ReviewModel> getFromSolrForVenue(VenueModel venue,
-			int offset, int maxReturned, SortField<SortableField> sort) {
-		return getFromSolrForVenue(venue.getID(), offset, maxReturned, sort);
+			Pager pager) {
+		return getFromSolrForVenue(venue.getID(), pager);
 	}
 
 	public static ModelList<ReviewModel> getFromSolrForVenue(String venueID,
-			int offset, int maxReturned, SortField<SortableField> sort) {
+			Pager pager) {
 		try {
 			SolrServer server = SolrUtils.getSolrServer();
 			SolrQuery query = new SolrQuery();
 
 			// TODO: make the query safe
 			query.setQuery("reference:" + venueID + " AND type:" + SOLR_TYPE);
-			query.setStart(offset);
-			query.setRows(maxReturned);
-			query.setSortField(sort.field.field, sort.order.order);
+			pager.apply(query);
 			QueryResponse rsp = server.query(query);
 
 			SolrDocumentList results = rsp.getResults();
@@ -155,8 +135,8 @@ public class ReviewModel {
 				list.add(reviewFromSolrDocument(doc));
 			}
 
-			return new ModelList<ReviewModel>(list, results.getStart(), list
-					.size(), results.getNumFound());
+			return new ModelList<ReviewModel>(pager, list, results.getStart(),
+					list.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException("solr error in getFromSolrForVenue",
@@ -204,10 +184,13 @@ public class ReviewModel {
 		return lastUpdated;
 	}
 
-	public ModelList<CommentModel> getComments(int offset, int maxReturned,
-			SortField<CommentModel.SortableField> sort) {
-		return CommentModel.getFromSolrForReview(this, offset, maxReturned,
-				sort);
+	public ModelList<CommentModel> getComments() {
+		return CommentModel.getFromSolrForReview(this, new Pager(new SortField(
+				SortableFields.TIME_ADDED)));
+	}
+
+	public ModelList<CommentModel> getComments(Pager pager) {
+		return CommentModel.getFromSolrForReview(this, pager);
 	}
 
 	public Builder getEditable() {
@@ -479,6 +462,20 @@ public class ReviewModel {
 		review.ranking = (Integer) doc.get("ranking");
 		review.lastUpdated = (Date) doc.get("lastModified");
 		return review;
+	}
+
+	private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
+
+	static {
+		sortableFields.add(SortableFields.SCORE);
+		sortableFields.add(SortableFields.TITLE);
+		sortableFields.add(SortableFields.TIME_ADDED);
+		sortableFields.add(SortableFields.RANKING);
+		sortableFields.add(SortableFields.LAST_UPDATED);
+	}
+
+	public static List<SortableFields> getApplicableSortableFields() {
+		return sortableFields;
 	}
 
 	/**
