@@ -70,7 +70,9 @@ public class UserUtils {
 			return null;
 
 		UserModel user = UserModel.getFromDbByID(uid);
-
+		if (user == null)
+			return null;
+		
 		if (!user.getSessionToken().equals(sessionToken)) {
 			return null;
 		}

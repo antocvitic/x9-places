@@ -105,7 +105,8 @@
 
     <div id="delete">
         If you wish to delete your user from this site, fill in your email and password below.<br />
-        You will recieve a confirmation only email after 12 hours have passed.
+        You will recieve a confirmation email only after 12 hours have passed. This is for your security,
+        if you account has been compromised, you can cancel the delete request in 12 hours.
         WARNING: All your user-data will be deleted, forever!
         <form id="user_delete_form" action="${pageContext.request.contextPath}/user/edit" method="POST">
         <input type="hidden" name="editWhat" value="deletion" />

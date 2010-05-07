@@ -100,7 +100,7 @@ public class VenueModel {
 			SolrDocumentList results = rsp.getResults();
 			if (results.isEmpty()) {
 				// no venues found
-				return new ModelList<VenueModel>();
+				return null;
 			}
 
 			List<VenueModel> list = new ArrayList<VenueModel>();

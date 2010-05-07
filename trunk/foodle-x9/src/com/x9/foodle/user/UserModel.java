@@ -474,7 +474,7 @@ public class UserModel {
 
 		public static void validateLocation(UserModel user)
 				throws BadLocationException {
-			// TODO: Improve this pattern
+			// TODO: Improve this pattern, spaces , . : is ok
 			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
 			if (!p.matcher(user.location).matches()) {
 				throw new BadLocationException(
