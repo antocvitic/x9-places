@@ -35,30 +35,40 @@ Your venues: <br/>
 <%
 ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v"));
 %>
+<%
+if (venues != null) {
+%>
 <h:pager_header mlist="<%= venues %>"/><br/>
+
 <%= venues.getPager().toString() %><br/>
 Showing <%= venues.getResultsReturned() %> venues of <%= venues.getResultsFound() %>, starting at <%= venues.getOffset() %><br/>
-<% for (VenueModel venue : venues.getList()) { %>
-<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
-<% } %>
+	<% for (VenueModel venue : venues.getList()) { %>
+	<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
+	<% } %>
 <hr />
-
+<% } %> <!-- if venues != null -->
 Your reviews:
 <%
 ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r"));
 %>
+<%
+if (reviews != null ) {
+%>
 Showing <%= reviews.getResultsReturned() %> reviews of <%= reviews.getResultsFound() %>, starting at <%= reviews.getOffset() %>
 <h:reviews reviews="<%= reviews %>" />
 <hr />
-
+<% } %> <!-- if reviews != null -->
 Your comments:
 <%
 ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(new SortField(SortableFields.TITLE)));
 %>
+<%
+if (comments != null ) {
+%>
 Showing <%= comments.getResultsReturned() %> comments of <%= comments.getResultsFound() %>, starting at <%= comments.getOffset() %><br/>
 <h:comments review="<%= null %>" comments="<%= comments %>" enableNewComments="false"></h:comments>
 <hr />
-
+<% } %> <!-- if comments != null -->
 
 
 <h:footer />
