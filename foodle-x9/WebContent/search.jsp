@@ -7,6 +7,7 @@
 <%@page import="com.x9.foodle.util.DateUtils"%>
 <%@page import="com.x9.foodle.search.*"%>
 <%@page import="com.x9.foodle.venue.*"%>
+<%@page import="com.x9.foodle.review.*"%>
 <%@page import="org.apache.solr.common.SolrDocumentList"%>
 <%@page import="org.apache.solr.common.SolrDocument"%>
 <%@page import="java.util.TreeMap"%>
@@ -48,8 +49,19 @@ Integer most_freq_tag;
 		if (res != null) {
 			for (int i = 0; res.size() > i; i++) {
 				try {
-
-					venue = VenueModel.venueFromSolrDocument(res.get(i));
+					//Determine type of the search result.
+					SolrDocument doc = res.get(i);
+					
+					
+					if(((String)doc.get("type")).equals("reviewmodel")){
+						venue = VenueModel.getFromSolr((String) doc.get("reference"));
+					}
+					else if(((String)doc.get("type")).equals("commentmodel")) {
+						venue = VenueModel.getFromSolr(ReviewModel.getFromSolr((String) doc.get("reference")).getVenueID());
+					} 
+					else {
+						venue = VenueModel.venueFromSolrDocument(doc);
+					}
 					
 					for(String tag : venue.getTags()){
 						if(tagmap.containsKey(tag))
@@ -66,14 +78,17 @@ Integer most_freq_tag;
 <div id="tagcloud" class="msg_msg">
 <h3>Tag cloud</h3>
 <%
+			
 		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
 		tagcount = new ArrayList<Integer>(tagmap.values());
-		Collections.sort(tagcount);
-		most_freq_tag = tagcount.get(tagcount.size()-1);
+		if(tagcount.size() > 0){
+			Collections.sort(tagcount);
+			most_freq_tag = tagcount.get(tagcount.size()-1);
 		
-		for (String tag : tagmap.navigableKeySet()) { %>
-			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
-		<% 
+			for (String tag : tagmap.navigableKeySet()) { %>
+				<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
+			<% 
+			}
 		}
 	}
 %>
