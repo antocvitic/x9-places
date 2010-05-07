@@ -32,7 +32,7 @@ import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 import com.x9.foodle.venue.VenueModel;
 
-public class ReviewModel implements SortableFieldsConstraints {
+public class ReviewModel {
 
 	public static final String SOLR_TYPE = "reviewmodel";
 
@@ -99,8 +99,9 @@ public class ReviewModel implements SortableFieldsConstraints {
 				list.add(reviewFromSolrDocument(doc));
 			}
 
-			return new ModelList<ReviewModel>(pager, list, results.getStart(),
-					list.size(), results.getNumFound());
+			return new ModelList<ReviewModel>(pager,
+					new ReviewSortableFields(), list, results.getStart(), list
+							.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -135,8 +136,9 @@ public class ReviewModel implements SortableFieldsConstraints {
 				list.add(reviewFromSolrDocument(doc));
 			}
 
-			return new ModelList<ReviewModel>(pager, list, results.getStart(),
-					list.size(), results.getNumFound());
+			return new ModelList<ReviewModel>(pager,
+					new ReviewSortableFields(), list, results.getStart(), list
+							.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException("solr error in getFromSolrForVenue",
@@ -464,18 +466,23 @@ public class ReviewModel implements SortableFieldsConstraints {
 		return review;
 	}
 
-	private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
+	public static class ReviewSortableFields implements
+			SortableFieldsConstraints {
+		private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
 
-	static {
-		sortableFields.add(SortableFields.SCORE);
-		sortableFields.add(SortableFields.TITLE);
-		sortableFields.add(SortableFields.TIME_ADDED);
-		sortableFields.add(SortableFields.RANKING);
-		sortableFields.add(SortableFields.LAST_UPDATED);
-	}
+		static {
+			sortableFields.add(SortableFields.SCORE);
+			sortableFields.add(SortableFields.TITLE);
+			sortableFields.add(SortableFields.TIME_ADDED);
+			sortableFields.add(SortableFields.RANKING);
+			sortableFields.add(SortableFields.LAST_UPDATED);
+		}
 
-	public static List<SortableFields> getApplicableSortableFields() {
-		return sortableFields;
+		@Override
+		public List<SortableFields> getApplicableSortableFields() {
+			return sortableFields;
+		}
+
 	}
 
 	/**

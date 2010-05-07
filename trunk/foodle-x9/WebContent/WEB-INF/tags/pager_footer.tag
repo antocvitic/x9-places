@@ -31,12 +31,12 @@ Pages:
 <%
 Pager pagePager = new Pager(pager);
 pagePager.setOffset(0);
-for (int page = 1; page <= mlist.getNumberOfPages(); page++) {
+for (int page = 1; page <= cmlist.getNumberOfPages(); page++) {
     pagePager.setOffset((page-1)*pagePager.getMaxReturned());
     String link = request.getRequestURL() + "?" + queryString + pagePager.getAsParams();
 %>
 <%
-if (page == mlist.getCurrentPage()) {
+if (page == cmlist.getCurrentPage()) {
 %>
 <span class="pager_page_number pager_current_page_number">
     <%= page %>

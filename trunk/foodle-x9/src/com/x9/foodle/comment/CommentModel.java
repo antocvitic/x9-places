@@ -29,7 +29,7 @@ import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 
-public class CommentModel implements SortableFieldsConstraints {
+public class CommentModel {
 
 	public static final String SOLR_TYPE = "commentmodel";
 
@@ -96,8 +96,9 @@ public class CommentModel implements SortableFieldsConstraints {
 				list.add(commentFromSolrDocument(doc));
 			}
 
-			return new ModelList<CommentModel>(pager, list, results.getStart(),
-					list.size(), results.getNumFound());
+			return new ModelList<CommentModel>(pager,
+					new CommentSortableFields(), list, results.getStart(), list
+							.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -129,8 +130,9 @@ public class CommentModel implements SortableFieldsConstraints {
 				list.add(commentFromSolrDocument(doc));
 			}
 
-			return new ModelList<CommentModel>(pager, list, results.getStart(),
-					list.size(), results.getNumFound());
+			return new ModelList<CommentModel>(pager,
+					new CommentSortableFields(), list, results.getStart(), list
+							.size(), results.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -353,15 +355,19 @@ public class CommentModel implements SortableFieldsConstraints {
 		return comment;
 	}
 
-	private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
+	public static class CommentSortableFields implements
+			SortableFieldsConstraints {
+		private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
 
-	static {
-		sortableFields.add(SortableFields.SCORE);
-		sortableFields.add(SortableFields.TIME_ADDED);
-	}
+		static {
+			sortableFields.add(SortableFields.SCORE);
+			sortableFields.add(SortableFields.TIME_ADDED);
+		}
 
-	public static List<SortableFields> getApplicableSortableFields() {
-		return sortableFields;
+		@Override
+		public List<SortableFields> getApplicableSortableFields() {
+			return sortableFields;
+		}
 	}
 
 	/**

@@ -33,7 +33,7 @@ import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
 
-public class VenueModel implements SortableFieldsConstraints {
+public class VenueModel {
 
 	public static final String SOLR_TYPE = "venuemodel";
 
@@ -108,8 +108,9 @@ public class VenueModel implements SortableFieldsConstraints {
 				list.add(venueFromSolrDocument(doc));
 			}
 
-			return new ModelList<VenueModel>(pager, list, results.getStart(),
-					list.size(), results.getNumFound());
+			return new ModelList<VenueModel>(pager, new VenueSortableFields(),
+					list, results.getStart(), list.size(), results
+							.getNumFound());
 
 		} catch (SolrServerException e) {
 			throw new SolrRuntimeException(
@@ -565,19 +566,23 @@ public class VenueModel implements SortableFieldsConstraints {
 		return tags;
 	}
 
-	private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
+	public static class VenueSortableFields implements
+			SortableFieldsConstraints {
+		private final static List<SortableFields> sortableFields = new LinkedList<SortableFields>();
 
-	static {
-		sortableFields.add(SortableFields.SCORE);
-		sortableFields.add(SortableFields.TITLE);
-		sortableFields.add(SortableFields.TIME_ADDED);
-		sortableFields.add(SortableFields.AVERAGE_RATING);
-		sortableFields.add(SortableFields.NUMBER_OF_RATINGS);
-		sortableFields.add(SortableFields.LAST_UPDATED);
-	}
+		static {
+			sortableFields.add(SortableFields.SCORE);
+			sortableFields.add(SortableFields.TITLE);
+			sortableFields.add(SortableFields.TIME_ADDED);
+			sortableFields.add(SortableFields.AVERAGE_RATING);
+			sortableFields.add(SortableFields.NUMBER_OF_RATINGS);
+			sortableFields.add(SortableFields.LAST_UPDATED);
+		}
 
-	public static List<SortableFields> getApplicableSortableFields() {
-		return sortableFields;
+		@Override
+		public List<SortableFields> getApplicableSortableFields() {
+			return sortableFields;
+		}
 	}
 
 	/**
