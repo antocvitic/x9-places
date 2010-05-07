@@ -52,7 +52,6 @@ public class SearchController {
 			String temper = query.getQuery();
 			temper += " AND averageRating:[4 TO *]";
 			query.setQuery(temper);
-			System.out.println("query is: " +query.getQuery());
 		}
 		QueryResponse response = server.query(query);
 
