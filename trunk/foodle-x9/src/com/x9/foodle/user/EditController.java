@@ -1,6 +1,10 @@
 package com.x9.foodle.user;
 
 import java.io.IOException;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +22,6 @@ import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
-
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -120,75 +123,6 @@ public class EditController extends HttpServlet {
 			MessageDispatcher.sendMsgRedirect(req, resp,
 					"/user/preferences.jsp#password", new OkMessage(
 							"Password updated"));
-		} else if (editWhat.equals("deletion")) {
-		
-			String email = req.getParameter("email");
-			email = email == null ? "" : email;
-			String password = req.getParameter("password");
-			password = password == null ? "" : password;
-			
-			if (!BCrypt.checkpw(password, user.getPasswordHash()) 
-					&& email.equals(user.getEmail())) {
-				MessageDispatcher.sendMsgRedirect(req, resp,
-						"/user/preferences.jsp#delete", new ErrorMessage(
-								"Deletion request denied: Wrong password or email"));
-				return;
-			}
-			
-			//Send an email in 12 hours with a token
-			/*SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
-			try {
-			Scheduler sched = schedFact.getScheduler();
-			
-			
-			JobDetail jobDetail = new JobDetail("job", null, EmailUtils.class);
-
-			Trigger trigger = new SimpleTrigger("trigger1", "group1", new Date()); // fire now
-			trigger.setStartTime(TriggerUtils.getEvenHourDate(new Date()));  // start on the next even hour
-			//trigger.setName("trigger");
-
-			
-				sched.scheduleJob(jobDetail, trigger);
-				sched.start();
-			} catch (SchedulerException e) {
-				// TODO Auto-generated catch block
-				MessageDispatcher.sendMsgRedirect(req, resp,
-						"/user/preferences.jsp#delete", 
-						new MessageDispatcher.ErrorMessage("Scheduling error, contact administrators: "));
-			}*/
-			
-			
-			UserModel.Builder builder = user.getEditable();
-			builder.setDeleted(true);
-
-			try {
-				builder.apply();
-			} catch (BadUsernameException e) {
-				throw new RuntimeException(
-						"got bad username when editing user info", e);
-			} catch (BadPasswordException e) {
-				throw new RuntimeException(
-						"got bad password when editing user info", e);
-			} catch (BadEmailException e) {
-				MessageDispatcher.sendMsgRedirect(req, resp,
-						"/user/preferences.jsp#delete", e
-								.toMessage("Preferences not updated: "));
-				return;
-			} catch (BadNameException e) {
-				MessageDispatcher.sendMsgRedirect(req, resp,
-					"/user/preferences.jsp#delete", e
-							.toMessage("Preferences not updated: "));
-			} catch (BadLocationException e) {
-				MessageDispatcher.sendMsgRedirect(req, resp,
-					"/user/preferences.jsp#delete", e
-							.toMessage("Preferences not updated: "));
-			} catch (SQLRuntimeException e) {
-				throw e;
-			}
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/user/preferences.jsp#delete", new OkMessage(
-							"Deletion email has been sent"));
-
 		}
 		else {
 			throw new RuntimeException("unknown editWhat: " + editWhat);
