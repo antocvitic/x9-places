@@ -150,8 +150,8 @@ public class Deleter extends HttpServlet{
 			}
 
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/logout", new OkMessage(
-							"A email has been sent to you for confirmation."));
+					"/", new OkMessage(
+							"Account has been deleted."));
 		} 
 	}
 }
