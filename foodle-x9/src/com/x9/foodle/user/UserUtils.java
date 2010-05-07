@@ -72,7 +72,7 @@ public class UserUtils {
 		UserModel user = UserModel.getFromDbByID(uid);
 		if (user == null)
 			return null;
-		if (user.getDeleteToken() != null)
+		if (user.getDeleteToken() != null && user.getUsername() == "")
 			return null;
 		
 		if (!user.getSessionToken().equals(sessionToken)) {
