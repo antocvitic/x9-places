@@ -15,7 +15,7 @@ UserModel user = UserUtils.getCurrentUser(request, response);
 	<%@page import="com.x9.foodle.user.UserModel"%>
 	<%
 		if (user != null) {
-			out.println("Got a user by id: " + user.getUsername());
+			out.println(user.getUsername() +"'s Profile");
 		} else {
 			out.println("Got null user");
 		}
