@@ -12,7 +12,7 @@ public class SearchController {
 
 	public static final String SOLR_TYPE = "venuemodel";
 
-	public static SolrDocumentList query(String q, String choice)
+	public static SolrDocumentList query(String q, String choice, String highRating)
 			throws MalformedURLException, SolrServerException {
 		SolrServer server = SolrUtils.getSolrServer();
 		SolrQuery query = new SolrQuery();
@@ -47,6 +47,13 @@ public class SearchController {
 			return null;
 		}
 		
+		//high rating search
+		if(highRating != null){
+			String temper = query.getQuery();
+			temper += " AND averageRating:[4 TO *]";
+			query.setQuery(temper);
+			System.out.println("query is: " +query.getQuery());
+		}
 		QueryResponse response = server.query(query);
 
 		SolrDocumentList docs = response.getResults();
