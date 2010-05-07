@@ -19,9 +19,9 @@ use x9db;
 /* create users table */
 create table users (
     userID int not null auto_increment , 
-    username varchar(64) character set latin1 not null, 
+    username varchar(64) character set latin1, 
     passwordHash varchar(1024) character set latin1 not null, 
-    email varchar(256) character set latin1 not null, 
+    email varchar(256) character set latin1, 
     name varchar(64), 
     repLevel int, 
     sessionToken varchar(1024) character set latin1 default null,

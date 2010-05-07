@@ -107,7 +107,7 @@ public class Deleter extends HttpServlet{
 	
 		
 		timer = new Timer();
-		timer.schedule (new Emailtoken(confirmlink, user.getEmail()), 8*1000 ); //4320
+		timer.schedule (new Emailtoken(confirmlink, user.getEmail()), 8*1000 ); //8 seconds for demo
 		
 		}// if del_request end
 		MessageDispatcher.sendMsgRedirect(req, resp,
@@ -127,8 +127,8 @@ public class Deleter extends HttpServlet{
 			try {
 				conn = DBUtils.openConnection();
 				stm = conn
-				.prepareStatement("update users set username = '', passwordHash = '', "
-						+ "email = '', name = '', repLevel = null, isFBConnected = false,"
+				.prepareStatement("update users set username = null, passwordHash = '', "
+						+ "email = null, name = '', repLevel = null, isFBConnected = false,"
 						+ "location = '', sessionToken = null where deleteToken = ?");
 
 				stm.setString(1, confirm_del);
