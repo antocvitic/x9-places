@@ -46,13 +46,12 @@ public class SearchController {
 		else {
 			return null;
 		}
-		
 		//high rating search
-		if(highRating != null){
-			String temper = query.getQuery();
-			temper += " AND averageRating:[4 TO *]";
-			query.setQuery(temper);
-		}
+	 	if(highRating != null){
+	 	String temper = query.getQuery();
+	 	temper += " AND averageRating:[4 TO *]";
+	 	query.setQuery(temper);
+	 	}
 		QueryResponse response = server.query(query);
 
 		SolrDocumentList docs = response.getResults();
