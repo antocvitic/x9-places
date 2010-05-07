@@ -110,6 +110,9 @@ public class Deleter extends HttpServlet{
 		timer.schedule (new Emailtoken(confirmlink, user.getEmail()), 8*1000 ); //4320
 		
 		}// if del_request end
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/logout", new OkMessage(
+						"A email has been sent to you for confirmation."));
 		} // if user != null
 	}
 	
@@ -145,10 +148,9 @@ public class Deleter extends HttpServlet{
 				DBUtils.closeStatement(stm);
 				DBUtils.closeConnection(conn);
 			}
-			//resp.setHeader("redirect", "");
-			resp.sendRedirect(req.getContextPath()+"/logout");
+
 			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/user/preferences.jsp#delete", new OkMessage(
+					"/logout", new OkMessage(
 							"A email has been sent to you for confirmation."));
 		} 
 	}
