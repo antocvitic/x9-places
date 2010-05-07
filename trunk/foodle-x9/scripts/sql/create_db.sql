@@ -27,7 +27,7 @@ create table users (
     sessionToken varchar(1024) character set latin1 default null,
     isFBConnected boolean, 
     location varchar(256),
-    isDeleted boolean,
+    deleteToken varchar(2056),
     primary key (userID),
     unique (username),
     unique (email)

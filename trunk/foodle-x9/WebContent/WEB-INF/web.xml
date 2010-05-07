@@ -105,7 +105,13 @@
         <servlet-name>TagEditController</servlet-name>
         <servlet-class>com.x9.foodle.tag.EditController</servlet-class>
     </servlet>
-
+    
+    <!-- Deleter -->
+    <servlet>
+        <servlet-name>Deleter</servlet-name>
+        <servlet-class>com.x9.foodle.user.Deleter</servlet-class>
+    </servlet>
+    
     <!-- Servlet mappings -->
 
     <!-- User -->
@@ -157,7 +163,12 @@
         <servlet-name>TagEditController</servlet-name>
         <url-pattern>/tag/edit</url-pattern>
     </servlet-mapping>
-
+    
+    <!-- Deleter -->
+    <servlet-mapping>
+        <servlet-name>Deleter</servlet-name>
+        <url-pattern>/user/delete</url-pattern>
+    </servlet-mapping>
 
     <!-- Testing stuff -->
     <servlet>
