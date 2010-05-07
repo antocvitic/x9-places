@@ -3,31 +3,37 @@ package com.x9.foodle.datastore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelList<E extends SortableFieldsConstraints> {
+public class ModelList<E> {
 	private Pager pager;
+	private SortableFieldsConstraints sfields;
 	private List<E> list;
 	private long offset;
 	private long resultsReturned;
 	private long resultsFound;
 
 	public ModelList() {
-		pager = null;
+		pager = new Pager();
+		sfields = null;
 		list = new ArrayList<E>();
 		offset = 0;
 		resultsReturned = 0;
 		resultsFound = 0;
 	}
 
-	public ModelList(Pager pager, List<E> list, long offset,
-			long reviewsReturned, long reviewsFound) {
+	public ModelList(Pager pager, SortableFieldsConstraints sfields,
+			List<E> list, long offset, long reviewsReturned, long reviewsFound) {
 		super();
 		if (pager == null) {
 			throw new NullPointerException("cannot have null pager");
+		}
+		if (sfields == null) {
+			throw new NullPointerException("sfields cannot be null");
 		}
 		if (list == null) {
 			throw new NullPointerException("cannot have null list");
 		}
 		this.pager = pager;
+		this.sfields = sfields;
 		this.list = list;
 		this.offset = offset;
 		this.resultsReturned = reviewsReturned;
@@ -80,17 +86,7 @@ public class ModelList<E extends SortableFieldsConstraints> {
 	}
 
 	public List<SortableFields> getApplicableSortableFields() {
-		try {
-			// please kill me
-			@SuppressWarnings("unchecked")
-			List<SortableFields> ret = (List<SortableFields>) list.get(0)
-					.getClass().getMethod("getApplicableSortableFields")
-					.invoke(null);
-			return ret;
-		} catch (Exception e) {
-			// e.printStackTrace();
-			throw new RuntimeException(e);
-		}
+		return sfields.getApplicableSortableFields();
 	}
 
 }
