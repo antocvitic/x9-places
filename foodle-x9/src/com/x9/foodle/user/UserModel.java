@@ -33,7 +33,7 @@ public class UserModel {
 	private int reputationLevel;
 	private String sessionToken = "oleoleoleole";
 	private boolean isConnectedToFacebook;
-	private boolean isDeleted;
+	private String deleteToken;
 
 	/**
 	 * Returns a UserModel representing a user with id {@code userID}. blabla.
@@ -147,8 +147,8 @@ public class UserModel {
 		return isConnectedToFacebook;
 	}
 
-	public boolean isDeleted() {
-		return isDeleted;
+	public String getDeleteToken() {
+		return deleteToken;
 	}
 
 	public int getRatingForVenue(String venueID) {
@@ -309,8 +309,8 @@ public class UserModel {
 			return this;
 		}
 
-		public Builder setDeleted(boolean isDeleted) {
-			user.isDeleted = isDeleted;
+		public Builder setDeleteToken(String deleteToken) {
+			user.deleteToken = deleteToken;
 			return this;
 		}
 
@@ -546,7 +546,7 @@ public class UserModel {
 		this.reputationLevel = 0;
 		this.sessionToken = null;
 		this.isConnectedToFacebook = false;
-		this.isDeleted = false;
+		this.deleteToken = null;
 	}
 
 	/**
@@ -578,7 +578,7 @@ public class UserModel {
 		dest.reputationLevel = src.reputationLevel;
 		dest.sessionToken = src.sessionToken;
 		dest.isConnectedToFacebook = src.isConnectedToFacebook;
-		dest.isDeleted = src.isDeleted;
+		dest.deleteToken = src.deleteToken;
 	}
 
 	/**
@@ -604,7 +604,7 @@ public class UserModel {
 		user.sessionToken = result.getString(result.findColumn("sessionToken"));
 		user.isConnectedToFacebook = result.getBoolean(result
 				.findColumn("isFBConnected"));
-		user.isDeleted = result.getBoolean(result.findColumn("isDeleted"));
+		user.deleteToken = result.getString(result.findColumn("deleteToken"));
 		return user;
 	}
 
@@ -618,7 +618,7 @@ public class UserModel {
 				+ ", name=" + name + ", reputationLevel=" + reputationLevel
 				+ ", sessionToken=" + sessionToken + ", isConnectedToFacebook="
 				+ isConnectedToFacebook + "location, " + location
-				+ "isDeleted, " + isDeleted + "]";
+				+ "deleteToken, " + deleteToken + "]";
 	}
 
 }

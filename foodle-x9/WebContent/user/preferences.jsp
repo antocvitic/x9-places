@@ -105,18 +105,18 @@
 
     <div id="delete">
         If you wish to delete your user from this site, fill in your email and password below.<br />
-        You will recieve a confirmation email only after 12 hours have passed. This is for your security,
+        You will receive a confirmation email only after 12 hours have passed. This is for your security,
         if you account has been compromised, you can cancel the delete request in 12 hours.
         WARNING: All your user-data will be deleted, forever!
-        <form id="user_delete_form" action="${pageContext.request.contextPath}/user/edit" method="POST">
-        <input type="hidden" name="editWhat" value="deletion" />
+        <form id="user_delete_form" action="${pageContext.request.contextPath}/user/delete" method="POST">
+        <input type="hidden" name="what" value="del_request" />
         <table>
              <tr>
                 <td><label for="email">Email</label></td>
             </tr>
             <tr>
                 <td><input class="loginfield placeholder" id="email" name="email" type="text"
-                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="<%= user.getEmail() %>" /></td>
+                    onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" /></td>
             </tr>
             <tr>
                 <td><label for="current_password">Current password</label></td>
