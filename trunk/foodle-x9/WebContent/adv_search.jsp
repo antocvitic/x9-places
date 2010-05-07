@@ -79,7 +79,18 @@ Integer most_freq_tag;
 	if (res != null) {
 		for (int i = 0; res.size() > i; i++) {
 			try {
-				venue = VenueModel.venueFromSolrDocument(res.get(i));
+				//new stuff starts here
+				SolrDocument doc = res.get(i);
+				
+				if(choice.equals("review")){
+					venue = VenueModel.getFromSolr((String) doc.get("reference"));
+				}
+				else if(choice.equals("comment")) {
+					venue = VenueModel.getFromSolr(ReviewModel.getFromSolr((String) doc.get("reference")).getVenueID());
+				} //ends here
+				else {
+					venue = VenueModel.venueFromSolrDocument(doc);
+				}
 				
 				for(String tag : venue.getTags()){
 					if(tagmap.containsKey(tag))
