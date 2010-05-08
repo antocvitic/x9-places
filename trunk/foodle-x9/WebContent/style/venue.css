@@ -44,12 +44,15 @@
 	-webkit-border-bottom-left-radius: 10px;
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
+	
+	overflow: hidden;
 }
 
 .venue #venue_title {
 	position: absolute;
 	top: 0px;
 	left: 5px;
+	width: 85%;
 }
 
 .venue #venue_edit {
