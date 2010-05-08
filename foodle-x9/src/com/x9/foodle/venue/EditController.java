@@ -32,9 +32,9 @@ public class EditController extends HttpServlet {
 		String description = req.getParameter("description");
 		String tags = req.getParameter("your_tags");
 		String redirect = req.getParameter("redirect");
-		String what = req.getParameter("what");
+		String dowhat = req.getParameter("what");
 
-		String reason = "";
+		String what = "";
 
 		ArrayList<String> tagsList = new ArrayList<String>();
 		if (tags != null) {
@@ -44,13 +44,13 @@ public class EditController extends HttpServlet {
 			}
 		}
 		try {
-		if (what != null && what.equals("addtags")) {
+		if (dowhat != null && dowhat.equals("addtags")) {
 			
 				VenueModel.Builder builder = null;
 				if (venueID != null && !venueID.isEmpty()) {
 					VenueModel tempVenue = VenueModel.getFromSolr(venueID);
 					if (tempVenue == null) {
-						reason = "Adding tags for this venue failed: ";
+						what = "Adding tags for this venue failed: ";
 						throw new RuntimeException("no venue with id " + venueID
 								+ " to edit");
 							
@@ -68,35 +68,42 @@ public class EditController extends HttpServlet {
 		else {
 			VenueModel.Builder builder = null;
 			if (venueID != null && !venueID.isEmpty()) {
-				//is user RepLevel enough to edit this?
+				what = "Editing venue failed";
+				VenueModel tempVenue = VenueModel.getFromSolr(venueID);
+				if (tempVenue == null) {
+					throw new RuntimeException("no venue with id in Solr " + venueID + " to edit");
+				}
 				if (UserUtils.getCurrentUser(req, resp).getReputationLevel() < UserUtils.EDIT_LEVEL) {
 					MessageDispatcher.sendMsgRedirect(req, resp,
 							"/venue/view.jsp?venueID=" + venueID, 
 							new MessageDispatcher.ErrorMessage("You do not have enough reputation points to edit this."));
-				} 		else {
-				VenueModel tempVenue = VenueModel.getFromSolr(venueID);
-				if (tempVenue == null) {
-					throw new RuntimeException("no venue with id " + venueID
-							+ " to edit");
+				} else {
+					builder = tempVenue.getEditable();
+					builder.setTitle(title);
+					builder.setAddress(address);
+					builder.setDescription(description);
+					//builder.setCreator(UserUtils.getCurrentUser(req, resp));
+					tagsList.addAll(tempVenue.getTags());
+					builder.setTags(tagsList);
+					VenueModel venue = builder.apply();
+					MessageDispatcher.sendMsgRedirect(req, resp,
+						"/venue/view.jsp?venueID=" + venue.getID(), 
+							new OkMessage("Venue edited."));
 				}
-				builder = tempVenue.getEditable();
-				what = "Edit venue failed: ";
-				}
-			} else {
+			}else { //insert it
+				what = "Inserting venue failed";
 				builder = new VenueModel.Builder();
-				what = "Venue insertion failed: ";
-			}
-
-			builder.setTitle(title);
-			builder.setAddress(address);
-			builder.setDescription(description);
-			builder.setCreator(UserUtils.getCurrentUser(req, resp));
-			builder.setTags(tagsList);
-			VenueModel venue = builder.apply();
-
-			resp.sendRedirect(redirect + "?venueID=" + venue.getID());
-
-		}
+				builder.setTitle(title);
+				builder.setAddress(address);
+				builder.setDescription(description);
+				builder.setCreator(UserUtils.getCurrentUser(req, resp));
+				builder.setTags(tagsList);
+				VenueModel venue = builder.apply();
+				MessageDispatcher.sendMsgRedirect(req, resp,
+					"/venue/view.jsp?venueID=" + venue.getID(), 
+						new OkMessage("Venue added."));
+				}
+			} 				
 	} catch (InvalidIDException e) {
 		MessageDispatcher.sendMsgRedirect(req, resp,
 				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
