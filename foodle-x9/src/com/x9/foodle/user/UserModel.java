@@ -31,7 +31,7 @@ public class UserModel {
 	private String name;
 	private String location;
 	private int reputationLevel;
-	private String sessionToken = "oleoleoleole";
+	private String sessionToken;
 	private boolean isConnectedToFacebook;
 	private String deleteToken;
 
@@ -299,10 +299,10 @@ public class UserModel {
 			return this;
 		}
 
-		// public Builder setSessionToken(String sessionToken) {
-		// user.sessionToken = sessionToken;
-		// return this;
-		// }
+		public Builder setSessionToken(String sessionToken) {
+			user.sessionToken = sessionToken;
+			return this;
+		}
 
 		public Builder setConnectedToFacebook(boolean isConnectedToFacebook) {
 			user.isConnectedToFacebook = isConnectedToFacebook;
@@ -380,12 +380,7 @@ public class UserModel {
 									"insert IGNORE into users (username, passwordHash, email, name, repLevel, isFBConnected, location, sessionToken) "
 											+ "values (?, ?, ?, ?, ?, ?, ?, ?)",
 									Statement.RETURN_GENERATED_KEYS);
-
-					// generate new session token
-					Random random = new Random(System.currentTimeMillis());
-					String token = BCrypt.hashpw(Long.toString(random
-							.nextLong()), BCrypt.gensalt());
-					stm.setString(8, token);
+					stm.setString(8, user.sessionToken);
 				}
 
 				stm.setString(1, user.username);
@@ -395,7 +390,8 @@ public class UserModel {
 				stm.setInt(5, user.reputationLevel);
 				stm.setBoolean(6, user.isConnectedToFacebook);
 				stm.setString(7, user.location);
-
+				
+				
 				if (stm.executeUpdate() == 0) {
 					throw new BadEmailException(
 							"Email or username already taken.");
