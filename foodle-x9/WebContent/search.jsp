@@ -75,13 +75,14 @@ Integer most_freq_tag;
 			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
 		<% 
 		}
+		%></div>
+<%
 	}
 %>
-</div>
 <div id="resultarea">
 <h3 style="text-align:center"> Search results for <%=temp%> </h3>
 <%		
-		if (res != null) {
+		if (res != null || res.isEmpty()) {
 			for (int i = 0; res.size() > i; i++) {
 				try {
 					SolrDocument doc = res.get(i);
