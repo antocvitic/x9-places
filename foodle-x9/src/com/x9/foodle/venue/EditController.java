@@ -43,9 +43,6 @@ public class EditController extends HttpServlet {
 				tagsList.add(scanny.next());
 			}
 		}
-
-		System.out.println(tagsList.get(0));
-
 		try {
 		if (what != null && what.equals("addtags")) {
 			
