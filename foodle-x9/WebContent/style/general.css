@@ -53,14 +53,6 @@ body
 	border-top: 1px ridge #FFF;
 }
 
-#resultarea
-{
-	margin: 12px 0px 5px 100px;
-	border: 1px solid #abc;
-	text-align: left;
-	width: 75%;
-}
-
 #wrapper {
 	margin: 0 0 0 14%;
 	border-left: solid 2px #FFFF00;
@@ -152,13 +144,6 @@ a:hover {
 	text-decoration:underline;
 }
 
-#tagcloud {
-	background-color: #cde;
-	border-color:#abc;
-	width: 50%;	
-	margin: 0 200px;
-	text-align: center;
-}
 
 
 

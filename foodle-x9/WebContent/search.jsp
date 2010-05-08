@@ -90,11 +90,12 @@ Integer most_freq_tag;
 					venue = VenueModel.venueFromSolrDocument(doc);
 					temp_two = venue.getID();				
 %>
-
+<div id="search-result">
 <h3><%=venue.getTitle()%></h3>
 <h5><a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp_two%>">Show venue</a></h5>
 
 <h5>Address: <%=venue.getAddress()%></h5>
+</div>
 <br />
 <%
 	} catch (Exception e) {

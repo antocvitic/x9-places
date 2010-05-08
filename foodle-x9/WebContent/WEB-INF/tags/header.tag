@@ -25,6 +25,9 @@
     href="${pageContext.request.contextPath}/style/header.css" />
 <link rel="stylesheet" type="text/css" charset="utf-8"
     href="${pageContext.request.contextPath}/style/venue.css" />
+<link rel="stylesheet" type="text/css" charset="utf-8"
+    href="${pageContext.request.contextPath}/style/search-results.css" />
+
 
 <!-- jQuery UI -->
 <link type="text/css"
