@@ -122,14 +122,14 @@ Integer most_freq_tag;
 		}
 	}
 %>
-</div>
+
 <div id="resultarea">
 <h3 style="text-align:center"> 
-<% if (choice.equals("tags")) %>Most relevant venues tagged with <% out.println(temp); %>
+<% if (choice.equals("tags")) { %>Most relevant venues tagged with <% out.println(temp); } %>
 <% if (choice.equals("review")) {%> Most relevant venues where review contains <% out.println(temp); }%> 
 </h3>
 <%
-	if (res == null) {
+	if (res == null || res.isEmpty()) {
 %>
 <h5>No matching results found or invalid input</h5>
 <%
