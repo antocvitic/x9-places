@@ -30,13 +30,14 @@
 	opacity: 1;
 	text-shadow: 0px 1px 0px #FFF;
 	font-weight: bold;
+	font-size: 28px;
 }
 
 .venue #venue_title_div {
 	margin-top: 2px;
 	margin-bottom: 5px;
 	position: relative;
-	height: 40px;
+	height: 36px;
 	background: url(../images/venue-title-bg.png) repeat;
 	-moz-border-radius-topleft: 10px;
 	-moz-border-radius-bottomleft: 10px;
@@ -63,7 +64,7 @@
 	background-size: 100%;
 	position: absolute;
 	top: 0px;
-	right: 60px;
+	right: 58px;
 	color: transparent;
 }
 
@@ -77,7 +78,7 @@
 
 .venue #venue_edit {
 	position: absolute;
-	top: 11px;
+	top: 8px;
 	right: 5px;
 	opacity: 1 !important;
 	background: url(../images/edit.png) no-repeat !important;
