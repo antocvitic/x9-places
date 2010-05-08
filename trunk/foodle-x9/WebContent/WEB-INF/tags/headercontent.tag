@@ -22,9 +22,8 @@
         		/>
         		<input type="submit" value="Find" id="search_button"/>
         	</form>
-        	
         	<!-- Advanced search link -->
-        	<a href="adv_search.jsp"><font size="2" color="DarkBlue">Advanced search</font></a>
+        	<a href="${pageContext.request.contextPath}/adv_search.jsp"><font size="2" color="DarkBlue">Advanced search</font></a>
         	
         </div>
         
