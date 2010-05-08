@@ -25,40 +25,40 @@
 <th>Role</th>
 </tr>
 <tr>
-<td>Adam</td>
-<td>Lead Programmer, Server Administrator, GUI/Interaction Group</td>
+<td align="center">Adam</td>
+<td align="center">Lead Programmer, Server Administrator, GUI / Interaction / Documentation Group</td>
 </tr>
 <tr>
-<td>Anto</td>
-<td>Project Leader, Programming Group</td>
+<td align="center">Anto</td>
+<td align="center">Project Leader, Programming Group</td>
 </tr>
 <tr>
-<td>Calle</td>
-<td>Programming Group</td>
+<td align="center">Calle</td>
+<td align="center">Programming Group</td>
 </tr>
 <tr>
-<td>David</td>
-<td>Programming Group, GUI/Interaction Group</td>
+<td align="center">David</td>
+<td align="center">Programming / GUI / Interaction / Documentation Group</td>
 </tr>
 <tr>
-<td>Kristoffer</td>
-<td>Customer Account Manager, Server Administrator</td>
+<td align="center">Kristoffer</td>
+<td align="center">Customer Account Manager, Server Administrator</td>
 </tr>
 <tr>
-<td>Quentin</td>
-<td>Designer, Programming Group, GUI/Interaction Group</td>
+<td align="center">Quentin</td>
+<td align="center">Designer, Programming / GUI / Interaction Group</td>
 </tr>
 <tr>
-<td>Remi</td>
-<td>Programming Group, GUI/Interaction Group</td>
+<td align="center">Remi</td>
+<td align="center">Programming / GUI / Interaction Group</td>
 </tr>
 <tr>
-<td>Sohof</td>
-<td>Report Writer, Project Secretary, Documentation Group</td>
+<td align="center">Sohof</td>
+<td align="center">Report Writer, Project Secretary, Documentation Group</td>
 </tr>
 <tr>
-<td>William</td>
-<td>Tester, Programming Group, Documentation Group</td>
+<td align="center">William</td>
+<td align="center">Tester, Programming / Documentation Group</td>
 </tr>
 </table> 
 </center>
