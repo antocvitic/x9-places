@@ -79,11 +79,11 @@
 	-webkit-border-radius: 15px;
 	border-radius: 15px;
 	height: 20px;
-	width: 20em;
+	width: 22em;
 	
 	/* padding the text inside */
 	padding-left: 22px;
-	padding-right: 15px;
+	padding-right: 67px;
 	
 	/* looks */
 	border: 1px solid rgb(71, 105, 117);
@@ -94,6 +94,7 @@
 
 .header .searchfield:focus {
 	/* give the search-field a highlighted look on focus*/
+	box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
 	-moz-box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
 	-webkit-box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
 	
@@ -101,11 +102,25 @@
 	outline: none;
 }
 
+.header #search_button {
+	background: url(../images/search-button.png) no-repeat;
+	margin: 0px;
+	border: none;
+	
+	position: absolute;
+	top: 2px;
+	right: 0px;
+	width: 65px;
+	height: 23px;
+	
+	text-shadow: 0px 1px 0px white;
+}
+
 .header #search_icon {
 	position:absolute;
 	top: 7px;
 	left: 8px;
-	opacity: 0.75;	
+	opacity: 0.75;
 }
 
 .header #header_login_div {
