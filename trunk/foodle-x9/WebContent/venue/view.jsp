@@ -75,7 +75,7 @@ if (venueID != null && !venueID.isEmpty()) {
 			<!-- getTags() returns an ArrayList (1 May 2010) -->
 			<%
 			tagmap = new TreeMap<String, Integer>();
-		
+			
 			// Collect all tags for the venue
 					for(String tag : venue.getTags()){
 						if(tagmap.containsKey(tag))
@@ -85,23 +85,27 @@ if (venueID != null && !venueID.isEmpty()) {
 					}
 		%>
 
-<div id="tagcloud" class="msg_msg" style="background-color:transparent;text-align:left;width:75%;margin-left:0;border:0px;">
-<%
-		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-		tagcount = new ArrayList<Integer>(tagmap.values());
-		Collections.sort(tagcount);
-		most_freq_tag = tagcount.get(tagcount.size()-1);
-		
-		for (String tag : tagmap.navigableKeySet()) { %>
-			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
-		<% 
+			<div id="tagcloud" class="msg_msg" 
+				style="background-color:transparent;text-align:left;width:75%;margin-left:0;border:0px;">
+			<%
+			// Print tag cloud with tagsize weighted according to tagfrequency (beta)
+		if (tagmap != null && !tagmap.isEmpty()) {
+			tagcount = new ArrayList<Integer>(tagmap.values());
+			Collections.sort(tagcount);
+			most_freq_tag = tagcount.get(tagcount.size()-1);
+			
+			for (String tag : tagmap.navigableKeySet()) { %>
+				<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
+			<% 
+			} 
 		}
-		%>
-		</p>
-		</div>
+			%>
+			</p>
+			</div> <!-- tagcloud -->
 		 
 		 
-		</div>
+		</div><!-- venue_tags close -->
+		
         <% if (user != null) { %>
         <br />
         <form id="tag_venue" action="${pageContext.request.contextPath}/venue/edit" method="POST">

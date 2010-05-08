@@ -82,7 +82,7 @@ Integer most_freq_tag;
 <div id="resultarea">
 <h3 style="text-align:center"> Search results for <%=temp%> </h3>
 <%		
-		if (res != null || res.isEmpty()) {
+		if (res != null) {
 			for (int i = 0; res.size() > i; i++) {
 				try {
 					SolrDocument doc = res.get(i);
