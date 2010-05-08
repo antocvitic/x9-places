@@ -70,7 +70,7 @@ if (venueID != null && !venueID.isEmpty()) {
         <td><label for="id">Tags, separated by spaces</label></td>
     </tr>
     <tr>
-        <td><textarea class="editfield" name="tags" id="tags"><%= tags %></textarea></td>
+        <td><textarea class="editfield" name="your_tags" id="tags"></textarea></td>
     </tr>
     <tr>
         <td><input type="submit" value="Submit" /></td>
