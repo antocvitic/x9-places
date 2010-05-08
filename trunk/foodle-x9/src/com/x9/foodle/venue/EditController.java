@@ -17,11 +17,12 @@ import com.x9.foodle.model.exceptions.InvalidDescriptionException;
 import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
+import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.Message;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
-
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
 	
@@ -50,9 +51,9 @@ public class EditController extends HttpServlet {
 			while (scanny.hasNext()) {
 				tagsList.add(scanny.next());
 			}
-		}
+		} 		
 		try {
-		if (dowhat != null && dowhat.equals("addtags")) {
+		if (dowhat != null && dowhat.equals("addtags") && !tagsList.isEmpty()) {
 			
 				VenueModel.Builder builder = null;
 				if (venueID != null && !venueID.isEmpty()) {
@@ -67,10 +68,17 @@ public class EditController extends HttpServlet {
 					tagsList.addAll(tempVenue.getTags());
 					builder.setTags(tagsList);
 					VenueModel venue = builder.apply();
+					//increase RepLevel for adding tags
+					UserModel user = UserUtils.getCurrentUser(req, resp);
+					user.applyReplevel(user.getReputationLevel() + 1);
+					UserModel venuser = venue.getCreator();
+					if (venuser.getID() != user.getID() && venuser.getUsername() != null)
+						venuser.applyReplevel(venuser.getReputationLevel() + 10);
 					
 					MessageDispatcher.sendMsgRedirect(req, resp,
 							"/venue/view.jsp?venueID=" + venue.getID(), new OkMessage(
 								"The venue has been tagged."));
+					
 				}
 		}
 		else {
@@ -107,6 +115,11 @@ public class EditController extends HttpServlet {
 				builder.setCreator(UserUtils.getCurrentUser(req, resp));
 				builder.setTags(tagsList);
 				VenueModel venue = builder.apply();
+				
+				//increase RepLevel
+				UserModel user = UserUtils.getCurrentUser(req, resp);
+				user.applyReplevel(user.getReputationLevel() + 15);
+				
 				MessageDispatcher.sendMsgRedirect(req, resp,
 					"/venue/view.jsp?venueID=" + venue.getID(), 
 						new OkMessage("Venue added."));

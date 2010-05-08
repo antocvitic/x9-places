@@ -25,6 +25,7 @@ import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidReviewReferenceException;
 import com.x9.foodle.model.exceptions.InvalidSolrModelException;
 import com.x9.foodle.model.exceptions.InvalidTextException;
+import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
@@ -292,6 +293,10 @@ public class CommentModel {
 				throws InvalidTextException {
 			if (comment.text == null) {
 				throw new InvalidTextException("Comment is empty");
+			}
+			if (comment.text.length() > 128) {
+				throw new InvalidTextException("Title is too long," +
+						"it has to bee less than 128 letters");
 			}
 			comment.text = comment.text.trim();
 			if (comment.text.isEmpty()) {

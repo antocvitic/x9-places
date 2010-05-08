@@ -15,6 +15,7 @@ import com.x9.foodle.model.exceptions.InvalidVenueReferenceException;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.venue.VenueModel;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -52,9 +53,13 @@ public class EditController extends HttpServlet {
 			builder.setCreator(UserUtils.getCurrentUser(req, resp));
 			builder.apply();
 			
-			//increase RepLevel
+			//increase RepLevel of writer and creator of venue
 			UserModel user = UserUtils.getCurrentUser(req, resp);
 			user.applyReplevel(user.getReputationLevel() + 10);
+			VenueModel ven = VenueModel.getFromSolr(venueID);
+			UserModel venuser = ven.getCreator();
+			if (venuser.getID() != user.getID() && venuser.getUsername() != null)
+				venuser.applyReplevel(venuser.getReputationLevel() + 20);
 			
 			resp.sendRedirect(redirect + "?venueID=" + venueID);
 		} catch (InvalidIDException e) {

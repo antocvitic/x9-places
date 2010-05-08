@@ -358,6 +358,10 @@ public class ReviewModel {
 			if (review.title == null) {
 				throw new InvalidTitleException("Empty title");
 			}
+			if (review.title.length() > 32) {
+				throw new InvalidTitleException("Title is too long," +
+						"it has to bee less than 32 letters");
+			}
 			review.title = review.title.trim();
 			if (review.title.isEmpty()) {
 				throw new InvalidTitleException("Empty title");
@@ -376,6 +380,10 @@ public class ReviewModel {
 				throws InvalidTextException {
 			if (review.text == null) {
 				throw new InvalidTextException("Empty text");
+			}
+			if (review.text.length() > 512) {
+				throw new InvalidTextException("Text is too long," +
+						"it has to bee less than 512 letters");
 			}
 			review.text = review.text.trim();
 			if (review.text.isEmpty()) {
