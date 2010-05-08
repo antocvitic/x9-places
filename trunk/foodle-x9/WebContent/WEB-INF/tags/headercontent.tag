@@ -60,7 +60,7 @@
             <% } else { %>
                     <p class="login_box_text">
                         <a href="${pageContext.request.contextPath}/user/profile.jsp"><%= user.getUsername() %>'s profile</a> |
-                        <a href="${pageContext.request.contextPath}/user/preferences.jsp">Preferences etc</a> |
+                        <a href="${pageContext.request.contextPath}/user/preferences.jsp">preferences</a> |
                         <a href="${pageContext.request.contextPath}/logout">logout</a>
                     </p>
             <% } %>
