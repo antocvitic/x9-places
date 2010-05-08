@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.x9.foodle.model.exceptions.InvalidAddressException;
 import com.x9.foodle.model.exceptions.InvalidAverageRatingException;
@@ -18,14 +19,21 @@ import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.MessageDispatcher.Message;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
-
+	
+	public static void checkLengths() {
+		
+	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+
+		
 		String venueID = req.getParameter("venueID");
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
@@ -68,7 +76,7 @@ public class EditController extends HttpServlet {
 		else {
 			VenueModel.Builder builder = null;
 			if (venueID != null && !venueID.isEmpty()) {
-				what = "Editing venue failed";
+				what = "Editing venue failed: ";
 				VenueModel tempVenue = VenueModel.getFromSolr(venueID);
 				if (tempVenue == null) {
 					throw new RuntimeException("no venue with id in Solr " + venueID + " to edit");
@@ -91,7 +99,7 @@ public class EditController extends HttpServlet {
 							new OkMessage("Venue edited."));
 				}
 			}else { //insert it
-				what = "Inserting venue failed";
+				what = "Inserting venue failed: ";
 				builder = new VenueModel.Builder();
 				builder.setTitle(title);
 				builder.setAddress(address);
@@ -103,7 +111,7 @@ public class EditController extends HttpServlet {
 					"/venue/view.jsp?venueID=" + venue.getID(), 
 						new OkMessage("Venue added."));
 				}
-			} 				
+			}
 	} catch (InvalidIDException e) {
 		MessageDispatcher.sendMsgRedirect(req, resp,
 				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));

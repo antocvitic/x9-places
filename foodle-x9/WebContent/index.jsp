@@ -25,7 +25,7 @@ A registered user can
 <%
 UserModel user = UserUtils.getCurrentUser(request, response);
 if (user != null) { %>
-<a href="/venue/edit.jsp">add venues</a> <% } else { %> add venues<% }%>, reviews and comments.<br />
+<a href="${pageContext.request.contextPath}/venue/edit.jsp">add venues</a><% } else { %> add venues<% }%>, reviews and comments.<br />
 As a registered user you can be the one to describe your venues, gain points<br />
 by writing reviews, rating venues and other activities. <br />Your likes and dislikes will have
 more importance for the overall ranking of reviews and venues.<br />
