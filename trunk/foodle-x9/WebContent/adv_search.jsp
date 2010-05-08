@@ -135,7 +135,7 @@ if(tagcount.size() > 0){
 <%
 	if (res == null || res.isEmpty()) {
 %>
-<h5>No matching results found or invalid input</h5>
+<h5 style="text-align:center">No matching results found or invalid input</h5>
 <%
 	} else {
 			for (int i = 0; res.size() > i; i++) {
