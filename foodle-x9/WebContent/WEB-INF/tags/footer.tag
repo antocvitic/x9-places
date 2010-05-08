@@ -2,22 +2,45 @@
 
 
 <div id="footer">
-    <p>Copyleft 2010. X9 Team.</p>
-    <p>Some links: <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=">venue/view.jsp</a> |
-    <a href="${pageContext.request.contextPath}/venue/edit.jsp">new venue</a> | 
-    <a href="${pageContext.request.contextPath}/test.jsp">test.jsp</a> | 
-    <a href="${pageContext.request.contextPath}/tag_test.jsp">tag_test.jsp</a> |
-    <a href="${pageContext.request.contextPath}/10_venues.jsp">10_venues.jsp</a> |
-    <a href="${pageContext.request.contextPath}/user/profile.jsp">profile.jsp</a>
-    </p>
-    <p>
-    Debug:
-    <a href="${pageContext.request.contextPath}/hasher">hash stuff with jBCrypt</a> |
-    <a href="${pageContext.request.contextPath}/dump-session">dump current session</a> |
-    <a href="${pageContext.request.contextPath}/dump-model">dump model data</a>
-    </p>
-
+	<font size="3">
+	<center>
+	<table border="0" cellspacing="6" width="700">
+	<tr>
+	<th>About us</th>
+	<th>Help</th>
+	<th>Join</th>
+	<th>Temp stuff</th>
+	</tr>
+	<tr>
+	<td align="center"><a href="${pageContext.request.contextPath}/X9Team.jsp">The X9 Team</a></td>
+	<td align="center"><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></td>
+	<td align="center"><a href="${pageContext.request.contextPath}/login.jsp">Register</a></td>
+	<td align="center"><a href="${pageContext.request.contextPath}/hasher">jBCrypt</a></td>
+	</tr>
+	<tr>
+	<td align="center"><a href="${pageContext.request.contextPath}/thisProject.jsp">This Project</a></td>
+	<td align="center"></td>
+	<td align="center"><a href="http://x9board.forumotion.com/">X9 Forum</a></td>
+	<td align="center"><a href="${pageContext.request.contextPath}/dump-session">Dump Session</a></td>
+	</tr>
+	<tr>
+	<td align="center"></td>
+	<td align="center"></td>
+	<td align="center"></td>
+	<td align="center"><a href="${pageContext.request.contextPath}/dump-model">Dump Model</a></td>
+	</tr>
+	<tr>
+	<td align="center"></td>
+	<td align="center"></td>
+	<td align="center"></td>
+	<td align="center"></td>
+	</tr>
+	</table> 
+	</center>
+	</font>
 <p>
+		<!-- COMMENTING AWAY THIS STUFF, REMOVE COMMENT IF YOU WANT TO USE IT
+
 Cookies:
 <%
 Cookie[] cookies = request.getCookies();
@@ -46,7 +69,10 @@ if (!sns.hasMoreElements()) {
 }
 %>
 </p>
-    
+
+							END OF COMMENT THINGIE-->  
+
+  
 </div> <!-- this closes content from  /WEB-INF/tags/headercontent.jsp -->
 </div> <!-- this closes content_wrapper from  /WEB-INF/tags/headercontent.jsp -->
 </div> <!-- this closes all from  /WEB-INF/tags/headercontent.jsp -->
