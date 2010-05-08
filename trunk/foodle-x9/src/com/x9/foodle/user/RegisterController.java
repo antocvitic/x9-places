@@ -22,6 +22,7 @@ import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.model.exceptions.BadNameException;
 import com.x9.foodle.model.exceptions.BadLocationException;
+import com.x9.foodle.util.EmailUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
@@ -62,20 +63,20 @@ public class RegisterController extends HttpServlet {
 				String dbtok = result.getString("sessionToken");
 				if (register_token.equals(dbtok)) {
 					stm = conn.prepareStatement("update users set sessionToken = ? where userID = ?");
-					stm.setString(1, dbtok.substring(4));
+					stm.setString(1, dbtok.substring(4)); //removes deny from sessionToken
 					stm.setInt(2, result.getInt("userID"));
-					if (!stm.execute()) {
+					if (!stm.execute()) {		
 						MessageDispatcher.sendMsgRedirect(req, resp,
-							req.getContextPath()+"/user/profile.jsp", new OkMessage(
+							"/user/profile.jsp", new OkMessage(
 								"Your account has been activated."));
 					}
 				} else {
 					return;
 				}
-				
 				//Auto-login user and send to profile
 				UserModel user = UserModel.getFromDbByUsername(result.getString("username"));
 				LoginController.doPostLoginStuff(user, req, resp, false);
+				
 			} catch (SQLException e) {
 				throw new SQLRuntimeException(
 						"Bad SQL syntax confirming registration", e);
@@ -113,9 +114,9 @@ public class RegisterController extends HttpServlet {
 			builder.setSessionToken(deny);
 			
 			System.out.println("Confirmation link: " + "http://localhost:8080"+req.getContextPath()+"/register?regtoken="+deny);
-			// EmailUtils.sendEmail(getServletContext(),
-			// "adam.renberg@gmail.com", "Testing emailing",
-			// "User: " + username + " has been registered");
+			//EmailUtils.sendEmail(getServletContext(),
+			//email, "Registration confirmation link",
+			//"Confirmation link: " + "http://localhost:8080"+req.getContextPath()+"/register?regtoken="+deny + " click to activate");
 			
 			builder.apply();
 
