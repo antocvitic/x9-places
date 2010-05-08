@@ -85,7 +85,7 @@ if (venueID != null && !venueID.isEmpty()) {
 					}
 		%>
 
-<div id="tagcloud" class="msg_msg">
+<div id="tagcloud" class="msg_msg" style="background-color:transparent;text-align:left;width:75%;margin-left:0;border:0px;">
 <%
 		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
 		tagcount = new ArrayList<Integer>(tagmap.values());
@@ -103,7 +103,7 @@ if (venueID != null && !venueID.isEmpty()) {
 		 
 		</div>
         <% if (user != null) { %>
-        <br /> <br />
+        <br />
         <form id="tag_venue" action="${pageContext.request.contextPath}/venue/edit" method="POST">
 		<input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
 		<input name="venueID" type="hidden" value="<%= venueID %>" />
