@@ -59,6 +59,13 @@
 	margin-top: 5px;
 }
 
+.header #new_button{
+	/* positioning of the logo image */
+	float: right;
+	margin-top: -20px;
+	margin-right: 5px;
+}
+
 .header #search {
 	/* Search div */
 	position:absolute;

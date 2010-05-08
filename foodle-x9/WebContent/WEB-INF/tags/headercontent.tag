@@ -13,6 +13,7 @@
                 <img src="${pageContext.request.contextPath}/images/spot-logo-veni.png" border="0" alt="spot logo" height="100px"/>
             </a>
         </div>
+        <a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">new venue</a>
         
         <!-- search-field -->
         <div id="search">
