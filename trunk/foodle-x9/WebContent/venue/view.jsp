@@ -19,6 +19,10 @@
     String redirect = request.getParameter("redirect");
     redirect = redirect == null ? "" : URLUtils.decode(redirect);
 
+    TreeMap<String, Integer> tagmap;
+    ArrayList<Integer> tagcount;
+    Integer most_freq_tag;
+    
 VenueModel venue = null;
 ModelList<ReviewModel> reviews = null;
 
@@ -70,14 +74,33 @@ if (venueID != null && !venueID.isEmpty()) {
 			<p>
 			<!-- getTags() returns an ArrayList (1 May 2010) -->
 			<%
-			 ArrayList<String> tagsList = venue.getTags();
-			 Iterator<String> tagsIterator = tagsList.iterator();
-			 while (tagsIterator.hasNext()) {
-			 %>
-			<small id="venue_tag"><%= tagsIterator.next()%></small>
-			<% 
-			 }%>	
-			 </p>
+			tagmap = new TreeMap<String, Integer>();
+		
+			// Collect all tags for the venue
+					for(String tag : venue.getTags()){
+						if(tagmap.containsKey(tag))
+							tagmap.put(tag, tagmap.get(tag) + 1);
+						else
+							tagmap.put(tag, 1);
+					}
+		%>
+
+<div id="tagcloud" class="msg_msg">
+<%
+		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
+		tagcount = new ArrayList<Integer>(tagmap.values());
+		Collections.sort(tagcount);
+		most_freq_tag = tagcount.get(tagcount.size()-1);
+		
+		for (String tag : tagmap.navigableKeySet()) { %>
+			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
+		<% 
+		}
+		%>
+		</p>
+		</div>
+		 
+		 
 		</div>
         <% if (user != null) { %>
         <br /> <br />
