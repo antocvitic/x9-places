@@ -32,6 +32,7 @@ import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
+import com.x9.foodle.util.MessageDispatcher;
 
 public class VenueModel {
 
@@ -380,6 +381,10 @@ public class VenueModel {
 			if (venue.title == null) {
 				throw new InvalidTitleException("Empty title");
 			}
+			if (venue.title.length() > 24) {
+				throw new InvalidTitleException("Title is too long," +
+						"it has to bee less than 24 letters");
+			}
 			venue.title = venue.title.trim();
 			if (venue.title.isEmpty()) {
 				throw new InvalidTitleException("Empty title");
@@ -399,6 +404,10 @@ public class VenueModel {
 			if (venue.address == null) {
 				throw new InvalidAddressException("Empty address");
 			}
+			if (venue.address.length() > 256) {
+				throw new InvalidAddressException("Address is too long, " +
+						"try something shorter");
+			}
 			venue.address = venue.address.trim();
 			if (venue.address.isEmpty()) {
 				throw new InvalidAddressException("Empty address");
@@ -417,6 +426,9 @@ public class VenueModel {
 				throws InvalidDescriptionException {
 			if (venue.description == null) {
 				throw new InvalidDescriptionException("Empty description");
+			}if (venue.description.length() > 256) {
+				throw new InvalidDescriptionException("Description is too long, " +
+						"try something shorter");
 			}
 			venue.description = venue.description.trim();
 			if (venue.description.isEmpty()) {
