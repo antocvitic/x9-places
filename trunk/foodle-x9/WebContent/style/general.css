@@ -176,7 +176,9 @@ a:hover {
 .loginfield {
 	width: 9em;
 }
-
+.tagfield {
+	width: 15em;
+}
 .login_box_text {
 	text-align: right;
 	margin: 5px;
