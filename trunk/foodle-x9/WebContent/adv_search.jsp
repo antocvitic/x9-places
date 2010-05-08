@@ -113,6 +113,7 @@ Integer most_freq_tag;
 <%
 		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
 		tagcount = new ArrayList<Integer>(tagmap.values());
+if(tagcount.size() > 0){	
 		Collections.sort(tagcount);
 		most_freq_tag = tagcount.get(tagcount.size()-1);
 		
@@ -123,6 +124,7 @@ Integer most_freq_tag;
 		%></div>
 <%
 	}
+}
 %>
 
 <div id="resultarea">
