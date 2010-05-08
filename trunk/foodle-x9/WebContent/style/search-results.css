@@ -1,0 +1,81 @@
+@CHARSET "UTF-8";
+
+
+/** SEARCH RESULTS
+ * This is the style for the searchresults and the tagcloud
+ */
+
+#tagcloud {
+	background-color: #cde;
+	border-color:#abc;
+	width: 50%;	
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 5px;
+	
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+ 
+#tagcloud h3 {
+	color: #56c !important;
+	text-shadow: 0px 1px 0px #FFF;
+}
+
+#tagcloud a {
+	background: #acf;
+	color: #345;
+	border: 1px solid #abc;
+	padding-left: 7px;
+	padding-right: 7px;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+
+
+	text-decoration: none;
+	
+	-moz-box-shadow: 0px 1px 3px #123;
+	-webkit-box-shadow: 0px 1px 3px #123;
+	box-shadow: 0px 1px 3px #123;
+}
+
+#tagcloud a:hover {
+	background: #def;
+}
+
+
+#resultarea
+{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	/*border: 1px solid #abc;*/
+	text-align: left;
+	width: 75% !important;
+	padding-left: 12px !important;
+		
+	-moz-border-radius-topleft: 15px;
+	-webkit-border-top-left-radius: 15px;
+	border-top-left-radius: 15px;
+	
+	border: none;
+	border-top: 1px solid #abc;
+	border-left: 1px solid #abc;
+}
+
+#search-result {
+	border: none;
+	border-top: 1px solid #abc;
+	border-left: 1px solid #abc;
+	padding: 3px !important;
+	
+	-moz-border-radius-topleft: 10px;
+	-webkit-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
