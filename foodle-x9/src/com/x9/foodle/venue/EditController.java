@@ -18,6 +18,7 @@ import com.x9.foodle.model.exceptions.InvalidNumberOfRatingsException;
 import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -29,12 +30,12 @@ public class EditController extends HttpServlet {
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String description = req.getParameter("description");
-		String tags = req.getParameter("tags");
-		
+		String tags = req.getParameter("tagad");
 		String redirect = req.getParameter("redirect");
+		String what = req.getParameter("what");
 
-		String what = "";
-		
+		String reason = "";
+
 		ArrayList<String> tagsList = new ArrayList<String>();
 		if (tags != null) {
 			Scanner scanny = new Scanner(tags);
@@ -43,7 +44,31 @@ public class EditController extends HttpServlet {
 			}
 		}
 
+		System.out.println(tagsList.get(0));
+
 		try {
+		if (what != null && what.equals("addtags")) {
+			
+				VenueModel.Builder builder = null;
+				if (venueID != null && !venueID.isEmpty()) {
+					VenueModel tempVenue = VenueModel.getFromSolr(venueID);
+					if (tempVenue == null) {
+						reason = "Adding tags for this venue failed: ";
+						throw new RuntimeException("no venue with id " + venueID
+								+ " to edit");
+							
+					}
+					builder = tempVenue.getEditable();
+					tagsList.addAll(tempVenue.getTags());
+					builder.setTags(tagsList);
+					VenueModel venue = builder.apply();
+					
+					MessageDispatcher.sendMsgRedirect(req, resp,
+							"/venue/view.jsp?venueID=" + venue.getID(), new OkMessage(
+								"The venue has been tagged."));
+				}
+		}
+		else {
 			VenueModel.Builder builder = null;
 			if (venueID != null && !venueID.isEmpty()) {
 				//is user RepLevel enough to edit this?
@@ -73,34 +98,36 @@ public class EditController extends HttpServlet {
 			VenueModel venue = builder.apply();
 
 			resp.sendRedirect(redirect + "?venueID=" + venue.getID());
-		} catch (InvalidIDException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
-		} catch (InvalidTitleException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
-		} catch (InvalidAddressException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
-		} catch (InvalidDescriptionException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
-		} catch (InvalidNumberOfRatingsException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
-		} catch (InvalidAverageRatingException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
-		} catch (InvalidCreatorIDException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp,
-					"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
-			// TODO: log error
+
 		}
+	} catch (InvalidIDException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	} catch (InvalidTitleException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	} catch (InvalidAddressException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	} catch (InvalidDescriptionException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	} catch (InvalidNumberOfRatingsException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	} catch (InvalidAverageRatingException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	} catch (InvalidCreatorIDException e) {
+		MessageDispatcher.sendMsgRedirect(req, resp,
+				"/venue/edit.jsp?venueID=" + venueID, e.toMessage(what));
+		// TODO: log error
+	}
 	}
 }
