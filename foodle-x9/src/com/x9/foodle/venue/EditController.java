@@ -30,7 +30,7 @@ public class EditController extends HttpServlet {
 		String title = req.getParameter("title");
 		String address = req.getParameter("address");
 		String description = req.getParameter("description");
-		String tags = req.getParameter("your_tags_here");
+		String tags = req.getParameter("your_tags");
 		String redirect = req.getParameter("redirect");
 		String what = req.getParameter("what");
 

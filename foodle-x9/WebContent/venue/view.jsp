@@ -88,7 +88,7 @@ if (venueID != null && !venueID.isEmpty()) {
 		<p style="text-align:left;">Tag this venue, separate by spaces</p>
 		<table>
     	<tr>
-        <td><input class="tagfield placeholder" id="tagad" name="your_tags_here" type="text"
+        <td><input class="tagfield placeholder" id="tagad" name="your_tags" type="text"
             onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  />
             <input type="submit" value="Tag it" /></td>
     	</tr> 
