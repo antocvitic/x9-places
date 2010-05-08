@@ -120,6 +120,8 @@ Integer most_freq_tag;
 			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
 		<% 
 		}
+		%></div>
+<%
 	}
 %>
 
