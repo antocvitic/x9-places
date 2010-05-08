@@ -14,7 +14,11 @@
 <%@ page import="com.x9.foodle.datastore.*" %>
 <%@ page import="com.x9.foodle.util.*" %>
 <%@ page import="com.x9.foodle.util.MessageDispatcher.*" %>
+
 <%
+    String redirect = request.getParameter("redirect");
+    redirect = redirect == null ? "" : URLUtils.decode(redirect);
+
 VenueModel venue = null;
 ModelList<ReviewModel> reviews = null;
 
@@ -76,6 +80,20 @@ if (venueID != null && !venueID.isEmpty()) {
 			 </p>
 		</div>
         <% if (user != null) { %>
+        <br /> <br />
+        <form id="tag_venue" action="${pageContext.request.contextPath}/venue/edit" method="POST">
+		<input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
+		<input name="venueID" type="hidden" value="<%= venueID %>" />
+		<input name="what" type="hidden" value="addtags" />
+		<p style="text-align:left;">Tag this venue, separate by spaces</p>
+		<table>
+    	<tr>
+        <td><input class="tagfield placeholder" id="add_tags" name="add_tags" type="text"
+            onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  />
+            <input type="submit" value="Tag it" /></td>
+    	</tr> 
+    	</table>
+    	</form>
     		<a href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>">Write a review</a>
         <% } %>
 		
