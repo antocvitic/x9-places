@@ -54,7 +54,7 @@ if (venueID != null && !venueID.isEmpty()) {
 		<div id="venue_title_div">
 			<h1 id="venue_title"><%=venue.getTitle()%></h1>
             <% if (user != null && user.getReputationLevel() >= UserUtils.EDIT_LEVEL) { %>
-    			<a href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>">Edit</a>
+    			<a href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>" id="venue_edit">Edit</a>
             <% } %>
 		</div>
 		<div id="venue_info_div">
@@ -117,7 +117,7 @@ if (venueID != null && !venueID.isEmpty()) {
     	</tr> 
     	</table>
     	</form>
-    		<a href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>">Write a review</a>
+    		<a href="${pageContext.request.contextPath}/review/edit.jsp?venueID=<%=venueID %>" id="venue_review">Write a review</a>
         <% } %>
 		
 	</div> <!-- end of venue_text -->
