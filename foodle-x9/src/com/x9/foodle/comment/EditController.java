@@ -16,6 +16,7 @@ import com.x9.foodle.user.UserModel;
 import com.x9.foodle.user.UserUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 
 @SuppressWarnings("serial")
 public class EditController extends HttpServlet {
@@ -26,21 +27,26 @@ public class EditController extends HttpServlet {
 		String commentID = req.getParameter("commentID");
 		String text = req.getParameter("text");
 		String reviewID = req.getParameter("reviewID");
-
+		text = text == null ? "" : text;
+		
 		// only used to return on error
 		String venueID = req.getParameter("venueID");
 		String redirect = req.getParameter("redirect");
 
+		if (reviewID == null) {
+			MessageDispatcher.sendMsgRedirect(req, resp,
+					"/review/edit.jsp?venueID=" + venueID, new ErrorMessage("Oops"));
+		}
 		try {
 			CommentModel.Builder builder = null;
 			if (commentID != null && !commentID.isEmpty()) {
-				// edit existing review
-				CommentModel tempReview = CommentModel.getFromSolr(commentID);
-				if (tempReview == null) {
+				// edit existing comment
+				CommentModel tempComment = CommentModel.getFromSolr(commentID);
+				if (tempComment == null) {
 					throw new RuntimeException("no comment with id: "
 							+ commentID);
 				}
-				builder = tempReview.getEditable();
+				builder = tempComment.getEditable();
 			} else {
 				// create new comment
 				builder = new CommentModel.Builder();
@@ -55,7 +61,8 @@ public class EditController extends HttpServlet {
 			ReviewModel rev = ReviewModel.getFromSolr(reviewID);
 			if (rev.getCreatorID() != UserUtils.getCurrentUser(req, resp).getID()) {
 				UserModel user = UserModel.getFromDbByID(rev.getCreatorID());
-				user.applyReplevel(user.getReputationLevel() + 5);
+				if (user != null && user.getUsername() != null)
+					user.applyReplevel(user.getReputationLevel() + 10);
 			}
 			
 			MessageDispatcher.sendMsgRedirectAbsolute(req, resp, redirect,

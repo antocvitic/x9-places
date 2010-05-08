@@ -101,7 +101,19 @@ public class RankingController extends HttpServlet {
 			stm.setInt(3, rating);
 			stm.execute();
 			DBUtils.closeStatement(stm);
-
+			
+			//increase repLevel of creator if ranking positive otherwise decrease
+			UserModel repupuser = UserModel.getFromDbByID(review.getCreatorID());
+			if (repupuser != null && repupuser.getID() != user.getID() && repupuser.getUsername() != null) {
+				if (rating > 0 ) {
+					repupuser.applyReplevel(repupuser.getReputationLevel() + 25);
+					repupuser = null;
+				} else {
+					repupuser.applyReplevel(repupuser.getReputationLevel() - 25);
+					repupuser = null;
+			}
+		}
+			
 			// get total ranking
 			stm = conn
 					.prepareStatement("select sum(ranking) from rankings where reviewID = ?");
@@ -134,7 +146,6 @@ public class RankingController extends HttpServlet {
 			} catch (InvalidCreatorIDException e) {
 				throw new RuntimeException(e);
 			}
-
 		} finally {
 			DBUtils.closeResultSet(result);
 			DBUtils.closeStatement(stm);

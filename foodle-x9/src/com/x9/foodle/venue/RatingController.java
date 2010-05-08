@@ -48,7 +48,9 @@ public class RatingController extends HttpServlet {
 		}
 
 		int intRating = Integer.parseInt(rating);
-
+		if (intRating < 0 || intRating > 5) {
+			throw new RuntimeException("ranting is out-of-range: " + intRating);
+		}
 		try {
 			Rating r = setVenueRating(UserUtils.getCurrentUser(req, resp),
 					venueID, intRating);
@@ -107,6 +109,16 @@ public class RatingController extends HttpServlet {
 			stm.execute();
 			DBUtils.closeStatement(stm);
 
+			//increase repLevel of creator if ranking positive otherwise decrease
+			if (rating > 1 ) {
+				UserModel repupcreator = UserModel.getFromDbByID(venue.getCreatorID());
+				if (repupcreator != null && repupcreator.getID() != user.getID() && repupcreator.getUsername() != null)
+					repupcreator.applyReplevel(repupcreator.getReputationLevel() + 5);
+				if (user != null && repupcreator.getID() != user.getID())
+					user.applyReplevel(user.getReputationLevel() + 1);
+				repupcreator = null;
+			}
+			
 			// get average rating and number of raters
 			stm = conn
 					.prepareStatement("select count(*), avg(rating) from ratings where venueID = ?");
