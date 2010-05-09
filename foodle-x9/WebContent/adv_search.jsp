@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
+<%@ taglib tagdir="/WEB-INF/tags/gmaps" prefix="gmaps"%>
 <h:header title="Foodle X9 - Advanced Search"></h:header>
 <h:headercontent />
 <%@page import="com.x9.foodle.util.URLUtils"%>
@@ -13,6 +14,7 @@
 <%@page import="java.util.TreeMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
+<gmaps:include/>
 
 <%
 	String temp = request.getParameter("search_term");
@@ -41,6 +43,8 @@
 		<td><input type="radio" name="adv_opt" value="tags">Tags</td>
 		
 		<td><input type="checkbox" name="rating_opt" value="highRating">High Rating</td>
+		
+		<td><input type="checkbox" name="geo_opt" value="geo">Geographic view</td>
 
 		<td><input type="submit" value="Search"></td>
 	</tr>
@@ -138,6 +142,10 @@ if(tagcount.size() > 0){
 <h5 style="text-align:center">No matching results found or invalid input</h5>
 <%
 	} else {
+			if(request.getParameter("geo_opt") != null){ %>
+				<gmaps:map css="gmaps_div" id="gmaps_frame"/>
+			<% }
+		
 			for (int i = 0; res.size() > i; i++) {
 				try {
 					SolrDocument doc = res.get(i);
@@ -157,19 +165,22 @@ if(tagcount.size() > 0){
 						venue = VenueModel.venueFromSolrDocument(doc);
 						temp = venue.getID();						
 					}
-%>
-<div id="search-result">
-<h3><%=venue.getTitle()%></h3>
-<h5> <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h5>
-<h5>Address: <%=venue.getAddress()%></h5>
-</div>
-<br />
-<%
-	} catch (Exception e) {
+					if(request.getParameter("geo_opt") != null){ %>
+						<gmaps:mark_ id="gmaps_frame" address="<%= venue.getAddress()%>" title="<%= venue.getTitle() %>" info="<%= "<br/><h5>" + venue.getTitle() + "</h5>Address: " + venue.getAddress() + "<br/><a href='" + request.getContextPath() + "/venue/view.jsp?venueID=" + venue.getID() + "'>Show venue</a><br/>Description: " + venue.getDescription() %>"/>
+					<% } else { %>
+						<div id="search-result">
+						<h3><%=venue.getTitle()%></h3>
+						<h5> <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h5>
+						<h5>Address: <%=venue.getAddress()%></h5>
+						</div>
+						<br />
+					<% }
+					} catch (Exception e) {
+								
+					}
 				}
 			}
 		}
-	}
 %>
 </div>
 <h:footer />
