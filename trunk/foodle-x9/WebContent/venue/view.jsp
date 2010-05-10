@@ -129,7 +129,7 @@ if (venueID != null && !venueID.isEmpty()) {
 	
 	<!-- map for the venue -->
 	<div id="venue_map">
-		<p><gmaps:address address="<%=venue.getAddress()%>" id="gmaps_view1" css="gmaps_div" /></p>
+		<gmaps:address address="<%=venue.getAddress()%>" id="gmaps_view1" css="gmaps_div" />
 	</div>
 	
 	
