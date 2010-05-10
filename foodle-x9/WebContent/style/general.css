@@ -192,6 +192,10 @@ a:hover {
 	width: 20em;
 }
 
+textarea {
+    font-family: arial;	
+}
+
 .msg {
     display: none;
     margin-left: auto;

@@ -16,15 +16,23 @@
         
         <!-- search-field -->
         <div id="search">
+            <%
+            String search_term = request.getParameter("search_term");
+            search_term = search_term == null ? "" : search_term.trim();
+            %>
         	<img src="${pageContext.request.contextPath}/images/small-search.png" id="search_icon"/>
-        	<form name="search form" METHOD="GET" ACTION="${pageContext.request.contextPath}/search.jsp">
-        		<input type="text" id="searchfield" class="searchfield placeholder" name="search_term" onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"
-        		/>
+        	<form id="search_form" name="search_form" method="get" action="${pageContext.request.contextPath}/search.jsp">
+        		<input type="text" id="searchfield" class="searchfield placeholder" name="search_term" 
+                onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="<%= search_term %>"/>
         		<input type="submit" value="Find" id="search_button"/>
         	</form>
         	<!-- Advanced search link -->
         	<a href="${pageContext.request.contextPath}/adv_search.jsp"><font size="2" color="DarkBlue">Advanced search</font></a>
-        	
+            <!-- <script type="text/javascript">
+            $(document).ready(function() {
+            	$("#searchfield").focus();
+            });
+            </script> -->
         </div>
         
         <!-- login/logout -->

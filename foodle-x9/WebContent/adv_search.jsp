@@ -17,8 +17,8 @@
 <gmaps:include/>
 
 <%
-	String temp = request.getParameter("search_term");
-	if (temp == null || temp == "") {
+	String query = request.getParameter("search_term");
+	if (query == null || query == "") {
 %>
 
 <FORM METHOD="GET" ACTION="adv_search.jsp">
@@ -53,43 +53,31 @@
 
 <%
 	} else {
-%>
-
-<% 
-//String search;
-String choice;
-SolrDocumentList res;
-String temp_bleh;
-String highRating;
-VenueModel venue;
-
-TreeMap<String, Integer> tagmap;
-ArrayList<Integer> tagcount;
-Integer most_freq_tag;
-%>
-<%
-	temp = URLUtils.encode(temp);
-	temp = temp.replaceAll("%C3%83%C2%A5", "&aring;");
-	temp = temp.replaceAll("%C3%83%C2%A4", "&auml;");
-	temp = temp.replaceAll("%C3%83%C2%B6", "&ouml;");
-	temp = temp.replaceAll("%C3%83%C2%85", "&Aring;");
-	temp = temp.replaceAll("%C3%83%C2%84", "&Auml;");
-	temp = temp.replaceAll("%C3%83%C2%96", "&Ouml;");
-	temp = temp.replaceAll("\\+", " ");
+	query = URLUtils.encode(query);
+	query = query.replaceAll("%C3%83%C2%A5", "&aring;");
+	query = query.replaceAll("%C3%83%C2%A4", "&auml;");
+	query = query.replaceAll("%C3%83%C2%B6", "&ouml;");
+	query = query.replaceAll("%C3%83%C2%85", "&Aring;");
+	query = query.replaceAll("%C3%83%C2%84", "&Auml;");
+	query = query.replaceAll("%C3%83%C2%96", "&Ouml;");
+	query = query.replaceAll("\\+", " ");
 
 	//search = request.getParameter("search");
-	choice = request.getParameter("adv_opt");
-	tagmap = new TreeMap<String, Integer>();
-	highRating = request.getParameter("rating_opt");
-	res = SearchController.query(temp, choice, highRating);
+	String choice = request.getParameter("adv_opt");
+	TreeMap<String, Integer> tagmap = new TreeMap<String, Integer>();
+	String highRating = request.getParameter("rating_opt");
+	SolrDocumentList res = SearchController.query(query, choice, highRating);
+    
 	
+    
+    
 	// Collect all tags from the search result
 	if (res != null) {
 		for (int i = 0; res.size() > i; i++) {
 			try {
 				//new stuff starts here
 				SolrDocument doc = res.get(i);
-				
+				VenueModel venue = null;
 				if(choice.equals("review")){
 					venue = VenueModel.getFromSolr((String) doc.get("reference"));
 				}
@@ -116,10 +104,10 @@ Integer most_freq_tag;
 <h3>Tag cloud</h3>
 <%
 		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-		tagcount = new ArrayList<Integer>(tagmap.values());
+ArrayList<Integer> tagcount = new ArrayList<Integer>(tagmap.values());
 if(tagcount.size() > 0){	
 		Collections.sort(tagcount);
-		most_freq_tag = tagcount.get(tagcount.size()-1);
+		int most_freq_tag = tagcount.get(tagcount.size()-1);
 		
 		for (String tag : tagmap.navigableKeySet()) { %>
 			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
@@ -133,16 +121,14 @@ if(tagcount.size() > 0){
 
 <div id="resultarea">
 <h3 style="text-align:center"> 
-<% if (choice.equals("tags")) { %>Most relevant venues tagged with <% out.println(temp); } %>
-<% if (choice.equals("review")) {%> Most relevant venues where review contains <% out.println(temp); }%> 
+<% if (choice.equals("tags")) { %>Most relevant venues tagged with <% out.println(query); } %>
+<% if (choice.equals("review")) {%> Most relevant venues where review contains <% out.println(query); }%> 
 </h3>
 <%
 	if (res == null || res.isEmpty()) {
 %>
 <div style="text-align:center">
 <h5 >No matching results found or invalid input</h5>
-<br/>
-<a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
 </div>
 <%
 	} else {
@@ -153,21 +139,20 @@ if(tagcount.size() > 0){
 			for (int i = 0; res.size() > i; i++) {
 				try {
 					SolrDocument doc = res.get(i);
-					
+					VenueModel venue = null;
 					//added for specific search (review + comment)
 					//this is a bit ugly
 					if(choice.equalsIgnoreCase("review")){
-						temp = (String) doc.get("reference"); //our venueID
-						venue = VenueModel.getFromSolr(temp);
+						String reviewVenueID = (String) doc.get("reference"); //our venueID
+						venue = VenueModel.getFromSolr(reviewVenueID);
 					}
 					else if(choice.equalsIgnoreCase("comment")) {
-						temp_bleh = (String) doc.get("reference"); //our reviewID
-						temp = ReviewModel.getFromSolr(temp_bleh).getVenueID();
-						venue = VenueModel.getFromSolr(temp);
+						String commentReviewID = (String) doc.get("reference"); //our reviewID
+						String venueID = ReviewModel.getFromSolr(commentReviewID).getVenueID();
+						venue = VenueModel.getFromSolr(venueID);
 					}
 					else {
-						venue = VenueModel.venueFromSolrDocument(doc);
-						temp = venue.getID();						
+						venue = VenueModel.venueFromSolrDocument(doc);						
 					}
 					if(request.getParameter("geo_opt") != null){ 
 					    String gmaps_info = "<br/><h5>" + 
@@ -181,7 +166,7 @@ if(tagcount.size() > 0){
 					<% } else { %>
 						<div id="search-result">
 						<h3><%=venue.getTitle()%></h3>
-						<h5> <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp%>">Show venue</a></h5>
+						<h5> <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=venue.getID()%>">Show venue</a></h5>
 						<h5>Address: <%=venue.getAddress()%></h5>
 						</div>
 						<br />
