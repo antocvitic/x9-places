@@ -94,9 +94,10 @@ if(tagcount.size() > 0){
 	}
 }
 %>
+<div id="resultarea">
 <%if(res != null){
 %>
-<div id="resultarea">
+
 <h3 style="text-align:center"> Search results for <%=temp%> </h3>
 <%		
 		if (res != null) {
@@ -120,13 +121,15 @@ if(tagcount.size() > 0){
 			}
 		}
 %>
-</div>
 <%
 	}else {
 		%>
-<div id="resultarea">
 <h5 style="text-align:center">No matching results found or invalid input</h5>
-	<% }
+
+	<% } %>
+    </div>
+    <%
 	}
 %>
+
 <h:footer />

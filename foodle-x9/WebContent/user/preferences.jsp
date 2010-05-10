@@ -36,7 +36,7 @@
         <li><a href="#general">General</a></li>
         <li><a href="#password">Password</a></li>
         <li><a href="#delete">Delete account</a></li>
-        <li><a href="#tab-4">Privacy...</a></li>
+        <li><a href="#privacy">Privacy...</a></li>
     </ul>
     <div id="general">
         <form id="generalt_edit_form" action="${pageContext.request.contextPath}/user/edit" method="POST">
@@ -130,6 +130,13 @@
             </tr>
             </table>
         </form>
+    </div>
+    
+    <div id="privacy">
+        Privacy is very important.....
+        <br/>
+        <br/>
+        TODO:
     </div>
 
 

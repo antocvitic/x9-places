@@ -19,9 +19,8 @@
 <br /><br /></h4>
 <font size="3">
 The project is actually called "Local search and review" and is built for the company
-<a href="http://www.findwise.se/ Findwise">Findwise</a>. <br />
+<a href="http://www.findwise.se/">Findwise</a>. <br />
 The website is built with Java EE, Apache Tomcat, Apache Solr and MySQL.
 </font>
 <br />
-</div>
 <h:footer />

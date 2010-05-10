@@ -28,7 +28,7 @@ if (reviewID != null && !reviewID.isEmpty()) {
 <input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
 <input name="reviewID" type="hidden" value="<%= reviewID %>" />
 <input name="venueID" type="hidden" value="<%= venueID %>" />
-<table>
+<table class="content_block">
     <tr>
         <td>ReviewID: <em><%= reviewID.isEmpty() ? "new venue" : reviewID  %></em></td>
     </tr>

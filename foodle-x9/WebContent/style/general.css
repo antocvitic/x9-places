@@ -178,6 +178,11 @@ a:hover {
 	padding: 3em;
 }
 
+.content_block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 .gmaps_div {
@@ -197,6 +202,7 @@ a:hover {
     display: none;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 5px;
     padding: 5px;
     text-align: left;
     width: 50%;

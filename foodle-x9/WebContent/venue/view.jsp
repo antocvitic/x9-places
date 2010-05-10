@@ -72,7 +72,7 @@ if (venueID != null && !venueID.isEmpty()) {
 		</div>
 
 		<div id=venue_tags>
-			<p>
+			
 			<!-- getTags() returns an ArrayList (1 May 2010) -->
 			<%
 			tagmap = new TreeMap<String, Integer>();
@@ -101,7 +101,7 @@ if (venueID != null && !venueID.isEmpty()) {
 			} 
 		}
 			%>
-			</p>
+			
 			</div> <!-- tagcloud -->
 		 
 		 
