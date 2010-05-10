@@ -42,10 +42,10 @@ if (venueID != null && !venueID.isEmpty()) {
 <% } else { %>
 <h3 class="my_header">Add new venue</h3>
 <% } %>
+<center> 
 <form action="${pageContext.request.contextPath}/venue/edit" method="POST">
 <input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
 <input name="venueID" type="hidden" value="<%= venueID %>" />
-<center> 
 <table class="content_block">
     <tr>
         <td><label for="title">Title</label></td>
@@ -77,10 +77,9 @@ if (venueID != null && !venueID.isEmpty()) {
     <tr>
         <td><input type="submit" value="Submit" /></td>
     </tr>
-</center>
 </table>
 </form>
-
+</center>
 
 
 

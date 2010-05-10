@@ -34,7 +34,7 @@
 
 		<td><input type="radio" name="adv_opt" value="venue">Venue</td>
 
-		<td><input type="radio" name="adv_opt" value="street">Street</td>
+		<td><input type="radio" name="adv_opt" value="street">Address</td>
 
 		<td><input type="radio" name="adv_opt" value="review">Review</td>
 
@@ -165,8 +165,15 @@ if(tagcount.size() > 0){
 						venue = VenueModel.venueFromSolrDocument(doc);
 						temp = venue.getID();						
 					}
-					if(request.getParameter("geo_opt") != null){ %>
-						<gmaps:mark_ id="gmaps_frame" address="<%= venue.getAddress()%>" title="<%= venue.getTitle() %>" info="<%= "<br/><h5>" + venue.getTitle() + "</h5>Address: " + venue.getAddress() + "<br/><a href='" + request.getContextPath() + "/venue/view.jsp?venueID=" + venue.getID() + "'>Show venue</a><br/>Description: " + venue.getDescription() %>"/>
+					if(request.getParameter("geo_opt") != null){ 
+					    String gmaps_info = "<br/><h5>" + 
+        				    venue.getTitle() + "</h5>Address: " + 
+                            venue.getAddress() + "<br/><a href='" + 
+                            request.getContextPath() + "/venue/view.jsp?venueID=" + 
+                            venue.getID() + "'>Show venue</a><br/>Description: " + 
+                            venue.getDescription();
+                    %>
+						<gmaps:mark_ id="gmaps_frame" address="<%= venue.getAddress()%>" title="<%= venue.getTitle() %>" info="<%= gmaps_info %>"/>
 					<% } else { %>
 						<div id="search-result">
 						<h3><%=venue.getTitle()%></h3>
