@@ -43,7 +43,8 @@ if ("true".equals(enableNewComments)) {
                 <input type="hidden" name="reviewID" value="<%= review.getID() %>" />
                 <input type="hidden" name="venueID" value="<%= review.getVenueID() %>" />
                 <input type="hidden" name="redirect" value="<%= URLUtils.getCurrentURL(request) %>" />
-                <textarea name="text" rows="3" cols="50"></textarea>
+                <textarea name="text" rows="3" cols="50" 
+                    onkeypress="return imposeMaxLength(this, <%= CommentModel.Validator.COMMENT_TEXT_MAX_LENGTH %>);"></textarea>
                 <br/>
                 <input type="submit" value="Post comment" />
             </form>

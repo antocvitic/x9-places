@@ -52,21 +52,21 @@ if (venueID != null && !venueID.isEmpty()) {
     </tr>
     <tr>
         <td><input class="editfield" name="title" id="title"
-            type="text" value="<%= title %>"/></td>
+            type="text" value="<%= title %>" maxlength="<%= VenueModel.Validator.VENUE_TITLE_MAX_LENGTH %>"/></td>
     </tr>
     <tr>
         <td><label for="address">Address</label></td>
     </tr>
     <tr>
         <td><input class="editfield" name="address" id="address"
-            type="text" value="<%= address %>"/></td>
+            type="text" value="<%= address %>" maxlength="<%= VenueModel.Validator.VENUE_ADDRESS_MAX_LENGTH %>"/></td>
     </tr>
     <tr>
         <td><label for="description">Description</label></td>
     </tr>
     <tr>
-        <td><textarea class="editfield" name="description"
-            id="description"><%= description %></textarea></td>
+        <td><textarea class="editfield" name="description" id="description" 
+            onkeypress="return imposeMaxLength(this, <%= VenueModel.Validator.VENUE_DESCRIPTION_MAX_LENGTH %>);"><%= description %></textarea></td>
     </tr>
     <tr>
         <td><label for="id">Tags, separated by spaces</label></td>

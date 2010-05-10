@@ -388,7 +388,7 @@ public class VenueModel {
 			if (venue.title.length() > VENUE_TITLE_MAX_LENGTH) {
 				throw new InvalidTitleException("Title is too long ("
 						+ venue.title.length()
-						+ " characters) it has to be less than "
+						+ " characters) it can to be no more than "
 						+ VENUE_TITLE_MAX_LENGTH + " characters");
 			}
 			if (venue.title.isEmpty()) {
@@ -413,7 +413,8 @@ public class VenueModel {
 			if (venue.address.length() > VENUE_ADDRESS_MAX_LENGTH) {
 				throw new InvalidAddressException("Address is too long, ("
 						+ venue.address.length()
-						+ " characters), it has to be less than " + VENUE_ADDRESS_MAX_LENGTH + " characters");
+						+ " characters), it can to be no more than "
+						+ VENUE_ADDRESS_MAX_LENGTH + " characters");
 			}
 			if (venue.address.isEmpty()) {
 				throw new InvalidAddressException("Empty address");
@@ -438,7 +439,8 @@ public class VenueModel {
 				throw new InvalidDescriptionException(
 						"Description is too long ("
 								+ venue.description.length()
-								+ " characters), it has to be less than " + VENUE_DESCRIPTION_MAX_LENGTH + " characters");
+								+ " characters), it can to be no more than "
+								+ VENUE_DESCRIPTION_MAX_LENGTH + " characters");
 			}
 			if (venue.description.isEmpty()) {
 				throw new InvalidDescriptionException("Empty description");

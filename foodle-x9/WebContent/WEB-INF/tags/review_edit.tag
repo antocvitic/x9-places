@@ -2,8 +2,9 @@
 <%@ attribute name="venueID"%>
 <%@ attribute name="reviewID" %>
 <%@ tag import="com.x9.foodle.review.*" %>
+<%@ tag import="com.x9.foodle.venue.*" %>
 <% 
-
+VenueModel venue = VenueModel.getFromSolr(venueID);
 String title;
 String text;
 if (reviewID != null && !reviewID.isEmpty()) {
@@ -30,24 +31,32 @@ if (reviewID != null && !reviewID.isEmpty()) {
 <input name="reviewID" type="hidden" value="<%= reviewID %>" />
 <input name="venueID" type="hidden" value="<%= venueID %>" />
 <table class="content_block">
+    <% 
+    String doingWhat = "";
+    if (reviewID.isEmpty()) { 
+        doingWhat = "New review for venue: ";
+    } else {
+        doingWhat = "Editing review for venue: ";
+    }
+    %>
     <tr>
-        <td>ReviewID: <em><%= reviewID.isEmpty() ? "new venue" : reviewID  %></em></td>
-    </tr>
-    <tr>
-        <td>VenueID: <em><%= venueID %></em></td>
+        <td><%= doingWhat %> <em><%= venue.getTitle() %></em> at <%= venue.getAddress() %></td>
     </tr>
     <tr>
         <td><label for="title">Title</label></td>
     </tr>
     <tr>
         <td><input class="editfield" name="title" id="title"
-            type="text" value="<%= title %>"/></td>
+            type="text" value="<%= title %>" maxlength="<%= ReviewModel.Validator.REVIEW_TITLE_MAX_LENGTH %>"/></td>
     </tr>
     <tr>
         <td><label for="text">Text</label></td>
     </tr>
     <tr>
-        <td><textarea class="editfield" name="text" id="text"><%= text %></textarea></td>
+        <td>
+        <textarea class="editfield" name="text" id="text" 
+            onkeypress="return imposeMaxLength(this, <%= ReviewModel.Validator.REVIEW_TEXT_MAX_LENGTH %>);"><%= text %></textarea>
+        </td>
     </tr>
     <tr>
         <td><input type="submit" value="Submit" /></td>
