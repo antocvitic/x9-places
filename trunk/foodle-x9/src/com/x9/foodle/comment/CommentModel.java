@@ -299,7 +299,7 @@ public class CommentModel {
 			if (comment.text.length() > COMMENT_TEXT_MAX_LENGTH) {
 				throw new InvalidTextException("Comment is too long, ("
 						+ comment.text.length()
-						+ " characters), it has to be less than "
+						+ " characters), it can to be no more than "
 						+ COMMENT_TEXT_MAX_LENGTH + " characters");
 			}
 			if (comment.text.isEmpty()) {

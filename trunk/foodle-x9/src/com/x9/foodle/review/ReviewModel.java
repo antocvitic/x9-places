@@ -316,6 +316,9 @@ public class ReviewModel {
 
 	public static class Validator {
 
+		public static final int REVIEW_TITLE_MAX_LENGTH = 40;
+		public static final int REVIEW_TEXT_MAX_LENGTH = 1024;
+
 		/**
 		 * Validates {@code review}, throws exception on invalidity.
 		 * 
@@ -358,11 +361,13 @@ public class ReviewModel {
 			if (review.title == null) {
 				throw new InvalidTitleException("Empty title");
 			}
-			if (review.title.length() > 32) {
-				throw new InvalidTitleException("Title is too long," +
-						"it has to bee less than 32 letters");
-			}
 			review.title = review.title.trim();
+			if (review.title.length() > REVIEW_TITLE_MAX_LENGTH) {
+				throw new InvalidTitleException("Title is too long ("
+						+ review.title.length()
+						+ " characters) it can to be no more than "
+						+ REVIEW_TITLE_MAX_LENGTH + " characters");
+			}
 			if (review.title.isEmpty()) {
 				throw new InvalidTitleException("Empty title");
 			}
@@ -381,11 +386,13 @@ public class ReviewModel {
 			if (review.text == null) {
 				throw new InvalidTextException("Empty text");
 			}
-			if (review.text.length() > 512) {
-				throw new InvalidTextException("Text is too long," +
-						"it has to bee less than 512 letters");
-			}
 			review.text = review.text.trim();
+			if (review.text.length() > REVIEW_TEXT_MAX_LENGTH) {
+				throw new InvalidTextException("Text is too long ("
+						+ review.text.length()
+						+ " characters) it can to be no more than "
+						+ REVIEW_TEXT_MAX_LENGTH + " characters");
+			}
 			if (review.text.isEmpty()) {
 				throw new InvalidTextException("Empty text");
 			}

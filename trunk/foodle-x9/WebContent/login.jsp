@@ -6,7 +6,8 @@
 
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 
-<%@page import="com.x9.foodle.util.*"%>
+<%@ page import="com.x9.foodle.util.*" %>
+<%@ page import="com.x9.foodle.user.*" %>
 
 <%
     String redirect = request.getParameter("redirect");
@@ -39,6 +40,7 @@
     </tr>
     <tr>
         <td><input class="loginfield placeholder" id="username" name="username" type="text"
+            maxlength="<%= UserModel.Validator.USER_USERNAME_MAX_LENGTH %>"
             onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  /></td>
     </tr>
     <tr>
@@ -67,6 +69,7 @@
     </tr>
     <tr>
         <td><input class="loginfield placeholder password_placeholder" id="password" name="password" type="password"
+            maxlength="<%= UserModel.Validator.USER_PASSWORD_MAX_LENGTH %>"
             onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)"  /></td>
     </tr>
     <tr>
