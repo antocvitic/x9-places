@@ -22,6 +22,7 @@ import com.x9.foodle.model.exceptions.BadNameException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.util.MessageDispatcher;
+import com.x9.foodle.util.URLUtils;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
 @SuppressWarnings("serial")
@@ -63,7 +64,7 @@ public class RegisterController extends HttpServlet {
 					stm = conn
 							.prepareStatement("update users set sessionToken = ? where userID = ?");
 					stm.setString(1, dbtok.substring(4)); // removes deny from
-															// sessionToken
+					// sessionToken
 					stm.setInt(2, result.getInt("userID"));
 					if (!stm.execute()) {
 						MessageDispatcher.sendMsgRedirect(req, resp,
@@ -117,9 +118,9 @@ public class RegisterController extends HttpServlet {
 				String deny = "deny" + token;
 				builder.setSessionToken(deny);
 
-				System.out.println("Confirmation link: "
-						+ "http://localhost:8080" + req.getContextPath()
-						+ "/register?regtoken=" + deny);
+				String confirmlink = URLUtils.getServerURL(req) + "/register?regtoken=" + deny;
+
+				System.out.println("Confirmation link: " + confirmlink);
 				// EmailUtils.sendEmail(getServletContext(),
 				// email, "Registration confirmation link",
 				// "Confirmation link: " +

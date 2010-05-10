@@ -465,7 +465,7 @@ public class UserModel {
 		}
 
 		public static void validateName(UserModel user) throws BadNameException {
-			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
+			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_ -]*");
 			if (!p.matcher(user.name).matches()) {
 				throw new BadNameException(
 						"Name contained invalid characters: " + user.name);

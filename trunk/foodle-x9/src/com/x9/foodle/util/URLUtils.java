@@ -1,12 +1,20 @@
 package com.x9.foodle.util;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class URLUtils {
+
+	public static String getServerURL(HttpServletRequest request)
+			throws MalformedURLException {
+		return new URL(request.getScheme(), request.getServerName(), request
+				.getServerPort(), request.getContextPath()).toString();
+	}
 
 	public static String getCurrentURL(HttpServletRequest request) {
 		String qs = request.getQueryString();

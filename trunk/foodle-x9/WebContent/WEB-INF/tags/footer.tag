@@ -1,46 +1,54 @@
 <%@ tag import="java.util.Enumeration" %>
-
+<%@ tag import="com.x9.foodle.user.*" %>
+<%
+UserModel user = UserUtils.getCurrentUser(request, response);
+%>
 
 <div id="footer">
+    <center>
 	<font size="3">
-	<center>
+	
 	<table border="0" cellspacing="6" width="700">
 	<tr>
-	<th>About us</th>
-	<th>Help</th>
-	<th>Join</th>
-	<th>Temp stuff</th>
+    	<th>About us</th>
+    	<th>Help</th>
+    	<th>Join</th>
+    	<th>Temp stuff</th>
 	</tr>
 	<tr>
-	<td align="center"><a href="${pageContext.request.contextPath}/X9Team.jsp">The X9 Team</a></td>
-	<td align="center"><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></td>
-	<td align="center"><a href="${pageContext.request.contextPath}/login.jsp">Register</a></td>
-	<td align="center"><a href="${pageContext.request.contextPath}/hasher">jBCrypt</a></td>
+    	<td align="center"><a href="${pageContext.request.contextPath}/X9Team.jsp">The X9 Team</a></td>
+    	<td align="center"><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></td>
+        <% if (user == null) { %>
+	    <td align="center"><a href="${pageContext.request.contextPath}/login.jsp">Register</a></td>
+        <% } else { %>
+        <td align="center"></td>
+        <% } %>
+    	<td align="center"><a href="${pageContext.request.contextPath}/hasher">jBCrypt</a></td>
 	</tr>
 	<tr>
-	<td align="center"><a href="${pageContext.request.contextPath}/thisProject.jsp">This Project</a></td>
-	<td align="center"></td>
-	<td align="center"><a href="http://x9board.forumotion.com/">X9 Forum</a></td>
-	<td align="center"><a href="${pageContext.request.contextPath}/dump-session">Dump Session</a></td>
+    	<td align="center"><a href="${pageContext.request.contextPath}/thisProject.jsp">This Project</a></td>
+    	<td align="center"></td>
+    	<td align="center"><a href="http://x9board.forumotion.com/">X9 Forum</a></td>
+    	<td align="center"><a href="${pageContext.request.contextPath}/dump-session">Dump Session</a></td>
 	</tr>
 	<tr>
-	<td align="center"></td>
-	<td align="center"></td>
-	<td align="center"></td>
-	<td align="center"><a href="${pageContext.request.contextPath}/dump-model">Dump Model</a></td>
+    	<td align="center"></td>
+    	<td align="center"></td>
+    	<td align="center"></td>
+    	<td align="center"><a href="${pageContext.request.contextPath}/dump-model">Dump Model</a></td>
 	</tr>
 	<tr>
-	<td align="center"></td>
-	<td align="center"></td>
-	<td align="center"></td>
-	<td align="center"></td>
+    	<td align="center"></td>
+    	<td align="center"></td>
+    	<td align="center"></td>
+    	<td align="center"></td>
 	</tr>
 	</table> 
-	</center>
 	</font>
-<p>
-		<!-- COMMENTING AWAY THIS STUFF, REMOVE COMMENT IF YOU WANT TO USE IT
+    </center>
 
+		<!-- COMMENTING AWAY THIS STUFF, REMOVE COMMENT IF YOU WANT TO USE IT
+<p>
 Cookies:
 <%
 Cookie[] cookies = request.getCookies();
@@ -73,7 +81,7 @@ if (!sns.hasMoreElements()) {
 							END OF COMMENT THINGIE-->  
 
   
-</div> <!-- this closes content from  /WEB-INF/tags/headercontent.jsp -->
+</div> <!-- this closes footer -->
 </div> <!-- this closes content_wrapper from  /WEB-INF/tags/headercontent.jsp -->
 </div> <!-- this closes all from  /WEB-INF/tags/headercontent.jsp -->
 </body>
