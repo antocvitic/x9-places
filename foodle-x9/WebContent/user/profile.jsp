@@ -51,7 +51,7 @@ ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new P
             </tr>
             <tr>
                 <td>Reviews written</td>
-                <td><%= reviews == null ? 0 : comments.getResultsFound() %></td>
+                <td><%= reviews == null ? 0 : reviews.getResultsFound() %></td>
             </tr>
             <tr>
                 <td>Comments written</td>
@@ -67,16 +67,25 @@ ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new P
         if (venues != null) {
         %>
              <br/>
-            <h:pager_header mlist="<%= venues %>" hashAnchor="venues"/>
+             <h:pager_header mlist="<%= venues %>" hashAnchor="venues"/>
                 <hr/>
+                <center>
+                <table>
                 <% for (VenueModel venue : venues.getList()) { %>
-            	<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>">
-                <%= venue.getTitle() %>
-                at <%= venue.getAddress() %>
-                - <%= venue.getAverageRating() %> / 5, <%= venue.getNumberOfRatings() %> ratings
-                </a>
-                <br/>
+                    <tr>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>">
+                                <%= venue.getTitle() %>
+                                at <%= venue.getAddress() %>
+                            </a>
+                        </td>
+                        <td>
+                            <%= venue.getAverageRating() %> / 5, <%= venue.getNumberOfRatings() %> ratings
+                        </td>
+                    </tr>
             	<% } %>
+                </table>
+                </center>
                 <hr/>
             <h:pager_footer mlist="<%= venues %>" hashAnchor="venues"/>
         <% } else { %>
