@@ -2,11 +2,16 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 
 <%@ attribute name="review" type="com.x9.foodle.review.ReviewModel" required="true" %>
+<%@ attribute name="enableComments" %>
+<%@ attribute name="enableNewComments" %>
 <%@ tag import="com.x9.foodle.review.*" %>
 <%@ tag import="com.x9.foodle.user.*" %>
 <%@ tag import="com.x9.foodle.comment.*" %>
 <%@ tag import="com.x9.foodle.datastore.*" %>
-<% UserModel user = UserUtils.getCurrentUser(request, response); %>
+<% 
+UserModel user = UserUtils.getCurrentUser(request, response); 
+
+%>
 <div id="review_<%= review.getID() %>" class="review">
 	<div class="review_title_div">
 		<p><b><%= review.getTitle() %></b> by <%= review.getCreator().getUsername() %> (<%= review.getTimeAdded() %>)</p>
@@ -24,5 +29,7 @@
     ModelList<CommentModel> comments = review.getComments(new Pager(request, "c" + review.getID(), new Pager(new SortField(SortableFields.TIME_ADDED))));
     %>
     
-    <h:comments review="<%= review %>" comments="<%= comments %>" enableNewComments="<%= user == null ? \"false\" : \"true\" %>" />
+    <% if ("true".equals(enableComments)) { %>
+    <h:comments review="<%= review %>" comments="<%= comments %>" enableNewComments="<%= enableNewComments %>" />
+    <% } %>
 </div>

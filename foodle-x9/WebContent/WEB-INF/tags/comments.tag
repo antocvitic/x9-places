@@ -10,6 +10,7 @@
 <%@ attribute name="review" type="com.x9.foodle.review.ReviewModel" required="true"%>
 <%@ attribute name="comments" type="com.x9.foodle.datastore.ModelList" required="true"%>
 <%@ attribute name="enableNewComments" %>
+<%@ attribute name="hashAnchor" %>
 <%
 @SuppressWarnings("unchecked")
     ModelList<CommentModel> mlist = (ModelList<CommentModel>) comments;
@@ -21,7 +22,7 @@ if (mlist.isEmpty()) {
     <%
 } else {
 	%>
-    <h:pager_header mlist="<%= comments %>"/>
+    <h:pager_header mlist="<%= comments %>" hashAnchor="<%= hashAnchor %>"/>
     <%
     for (CommentModel comment : mlist.getList()) {
     %>

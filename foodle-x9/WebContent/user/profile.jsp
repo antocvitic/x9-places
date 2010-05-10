@@ -8,67 +8,81 @@
 <%@ page import="com.x9.foodle.datastore.*" %>
 <%
 UserModel user = UserUtils.getCurrentUser(request, response);
+String title = user.getUsername() + "'s profile page - Foodle X9";
 %>
 
-<h:header>
-    <jsp:attribute name="title">
-	<%@page import="com.x9.foodle.user.UserModel"%>
-	<%
-		if (user != null) {
-			out.println(user.getUsername() +"'s Profile");
-		} else {
-			out.println("Got null user");
-		}
-	%>
-</jsp:attribute>
+<h:header title="<%= title %>">
+    <script type="text/javascript">
+    $(function(){
+        // init tabs
+        $('#tabs').tabs();
+        $("#tabs").bind("tabsshow", function(event, ui) { 
+            window.location.hash = ui.tab.hash;
+        })
+                
+    });
+    </script>
 </h:header>
 <h:headercontent />
 
 
-<h1>Profile</h1>
-Your reputation level:
-<%
-out.println(user.getReputationLevel());
-%>
-<br />
-Your venues: <br/>
-<%
-ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v"));
-%>
-<%
-if (venues != null) {
-%>
-<h:pager_header mlist="<%= venues %>"/><br/>
+<h1><%= user.getUsername() %>'s profile</h1>
 
-<%= venues.getPager().toString() %><br/>
-Showing <%= venues.getResultsReturned() %> venues of <%= venues.getResultsFound() %>, starting at <%= venues.getOffset() %><br/>
-	<% for (VenueModel venue : venues.getList()) { %>
-	<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
-	<% } %>
-<hr />
-<% } %> <!-- if venues != null -->
-Your reviews:
-<%
-ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r"));
-%>
-<%
-if (reviews != null ) {
-%>
-Showing <%= reviews.getResultsReturned() %> reviews of <%= reviews.getResultsFound() %>, starting at <%= reviews.getOffset() %>
-<h:reviews reviews="<%= reviews %>" />
-<hr />
-<% } %> <!-- if reviews != null -->
-Your comments:
-<%
-ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(new SortField(SortableFields.TITLE)));
-%>
-<%
-if (comments != null ) {
-%>
-Showing <%= comments.getResultsReturned() %> comments of <%= comments.getResultsFound() %>, starting at <%= comments.getOffset() %><br/>
-<h:comments review="<%= null %>" comments="<%= comments %>" enableNewComments="false"></h:comments>
-<hr />
-<% } %> <!-- if comments != null -->
-
-
+<div id="tabs">
+    <ul>
+        <li><a href="#general">General</a></li>
+        <li><a href="#venues">Venues</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#comments">Comments</a></li>
+    </ul>
+    <div id="general">
+        Your reputation level: <strong><%= user.getReputationLevel() %></strong>
+    </div>
+    <div id="venues">
+        Your venues: <br/>
+        <%
+        ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
+        %>
+        <%
+        if (venues != null) {
+        %>
+            <h:pager_header mlist="<%= venues %>" hashAnchor="venues"/>
+                <hr/>
+                <% for (VenueModel venue : venues.getList()) { %>
+            	<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
+            	<% } %>
+                <hr/>
+            <h:pager_footer mlist="<%= venues %>"/>
+        <% } else { %>
+            No venues
+        <% } %>
+    </div>
+    <div id="reviews">
+        Your reviews:
+        <%
+        ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
+        %>
+        <%
+        if (reviews != null ) {
+        %>
+            <h:reviews reviews="<%= reviews %>" hashAnchor="reviews"/>
+        <% } else { %>
+            No reviews
+        <% } %>
+    </div>
+    <div id="comments">
+        Your comments:
+        <%
+        ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(request, "c", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
+        %>
+        <%
+        if (comments != null ) {
+        %>
+            <h:comments review="<%= null %>" comments="<%= comments %>" enableNewComments="false" hashAnchor="comments"/>
+            <hr />
+        <% } else { %>
+            No comments
+        <% } %>
+    </div>
+</div>
 <h:footer />

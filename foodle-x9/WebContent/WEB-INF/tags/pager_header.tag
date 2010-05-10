@@ -5,8 +5,8 @@
 <%@ tag import="com.x9.foodle.datastore.*"%>
 <%@ tag import="com.x9.foodle.util.*"%>
 
-<%@ attribute name="mlist" type="com.x9.foodle.datastore.ModelList"
-    required="true"%>
+<%@ attribute name="mlist" type="com.x9.foodle.datastore.ModelList" required="true"%>
+<%@ attribute name="hashAnchor" %>
 <%
 ModelList<?> cmlist = (ModelList<?>)mlist;
 Pager pager = mlist.getPager();
@@ -23,6 +23,10 @@ for (SortableFields sf : applicableFields) {
         link += new Pager(pager).setSortField(new SortField(sf, pager.getFirstSortField().order.getOpposite())).getAsParams();
     } else {
         link += new Pager(pager).setSortField(new SortField(sf)).getAsParams();
+    }
+    
+    if (hashAnchor != null && !hashAnchor.isEmpty()) {
+        link += "#" + hashAnchor;
     }
 %>
 <a href="<%= link %>"><%= sf.display %><%= sel %></a> | 

@@ -5,7 +5,7 @@ insert into users
      name, repLevel, sessionToken, isFBConnected)
     values 
     ('abel', '$2a$10$4JtOPG1Ger19Ht4sy65EEuSGtinXNYSxm7GhvjpoE0jVyRBXdjLtC', /* pwd = leba */
-     'abel@nonmail.com','Abel', 0, 'hejabel', false );
+     'abel@nonmail.com','Abel', 1000, 'hejabel', false );
 
 insert into users
     (username, passwordHash, email, 
