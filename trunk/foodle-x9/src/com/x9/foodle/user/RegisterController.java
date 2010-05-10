@@ -118,7 +118,8 @@ public class RegisterController extends HttpServlet {
 				String deny = "deny" + token;
 				builder.setSessionToken(deny);
 
-				String confirmlink = URLUtils.getServerURL(req) + "/register?regtoken=" + deny;
+				String confirmlink = URLUtils.getServerURL(req)
+						+ "/register?regtoken=" + deny;
 
 				System.out.println("Confirmation link: " + confirmlink);
 				// EmailUtils.sendEmail(getServletContext(),
@@ -133,7 +134,7 @@ public class RegisterController extends HttpServlet {
 						.sendMsgRedirect(
 								req,
 								resp,
-								redirect,
+								"/",
 								new OkMessage(
 										"An email has been sent to you for confirmation."));
 

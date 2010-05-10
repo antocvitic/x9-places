@@ -31,10 +31,17 @@ public class LoginController extends HttpServlet {
 		UserModel user = null;
 
 		if (username == null
-				|| (user = UserModel.getFromDbByUsername(username)) == null
-				|| user.getSessionToken().startsWith("deny")) {
+				|| (user = UserModel.getFromDbByUsername(username)) == null) {
 			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp",
-					new ErrorMessage("Login failed: No such user (" + username + ")"));
+					new ErrorMessage("Login failed: No such user (" + username
+							+ ")"));
+			return;
+		}
+
+		if (user.getSessionToken().startsWith("deny")) {
+			MessageDispatcher
+					.sendMsgRedirect(req, resp, "/login.jsp", new ErrorMessage(
+							"Login failed: Account not activated yet"));
 			return;
 		}
 
