@@ -29,5 +29,5 @@ if (reviews.isEmpty()) {
         <h:review review="<%= review %>" enableComments="<%= enableComments %>" enableNewComments="<%= enableNewComments %>"/>
         <br />
     <% } %>
-    <h:pager_footer mlist="<%= reviews%>"/>
+    <h:pager_footer mlist="<%= reviews%>" hashAnchor="<%= hashAnchor %>"/>
 <% } %>

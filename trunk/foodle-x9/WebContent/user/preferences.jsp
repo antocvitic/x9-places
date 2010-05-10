@@ -134,9 +134,6 @@
     
     <div id="privacy">
         Privacy is very important.....
-        <br/>
-        <br/>
-        TODO:
     </div>
 
 

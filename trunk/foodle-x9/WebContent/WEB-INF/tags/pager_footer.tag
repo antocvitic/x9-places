@@ -1,12 +1,14 @@
 <%@ tag body-content="empty"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 
+<%@ attribute name="mlist" type="com.x9.foodle.datastore.ModelList" required="true"%>
+<%@ attribute name="hashAnchor" %>
+
 <%@ tag import="java.util.*"%>
 <%@ tag import="com.x9.foodle.datastore.*"%>
 <%@ tag import="com.x9.foodle.util.*"%>
 
-<%@ attribute name="mlist" type="com.x9.foodle.datastore.ModelList"
-    required="true"%>
+
 <%
 ModelList<?> cmlist = (ModelList<?>)mlist;
 Pager pager = mlist.getPager();
@@ -34,6 +36,9 @@ pagePager.setOffset(0);
 for (int page = 1; page <= cmlist.getNumberOfPages(); page++) {
     pagePager.setOffset((page-1)*pagePager.getMaxReturned());
     String link = request.getRequestURL() + "?" + queryString + pagePager.getAsParams();
+    if (hashAnchor != null && !hashAnchor.isEmpty()) {
+        link += "#" + hashAnchor;
+    }
 %>
 <%
 if (page == cmlist.getCurrentPage()) {
