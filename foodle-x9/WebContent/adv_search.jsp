@@ -139,7 +139,11 @@ if(tagcount.size() > 0){
 <%
 	if (res == null || res.isEmpty()) {
 %>
-<h5 style="text-align:center">No matching results found or invalid input</h5>
+<div style="text-align:center">
+<h5 >No matching results found or invalid input</h5>
+<br/>
+<a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
+</div>
 <%
 	} else {
 			if(request.getParameter("geo_opt") != null){ %>
@@ -189,5 +193,7 @@ if(tagcount.size() > 0){
 			}
 		}
 %>
+<br/>
+<a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
 </div>
 <h:footer />
