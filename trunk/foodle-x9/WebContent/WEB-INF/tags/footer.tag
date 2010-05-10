@@ -18,17 +18,18 @@ UserModel user = UserUtils.getCurrentUser(request, response);
 	<tr>
     	<td align="center"><a href="${pageContext.request.contextPath}/X9Team.jsp">The X9 Team</a></td>
     	<td align="center"><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></td>
-        <% if (user == null) { %>
-	    <td align="center"><a href="${pageContext.request.contextPath}/login.jsp">Register</a></td>
-        <% } else { %>
-        <td align="center"></td>
-        <% } %>
+        <td align="center"><a href="http://x9board.forumotion.com/">X9 Forum</a></td>
+        
     	<td align="center"><a href="${pageContext.request.contextPath}/hasher">jBCrypt</a></td>
 	</tr>
 	<tr>
     	<td align="center"><a href="${pageContext.request.contextPath}/thisProject.jsp">This Project</a></td>
     	<td align="center"></td>
-    	<td align="center"><a href="http://x9board.forumotion.com/">X9 Forum</a></td>
+    	<% if (user == null) { %>
+        <td align="center"><a href="${pageContext.request.contextPath}/login.jsp">Register</a></td>
+        <% } else { %>
+        <td align="center"></td>
+        <% } %>
     	<td align="center"><a href="${pageContext.request.contextPath}/dump-session">Dump Session</a></td>
 	</tr>
 	<tr>

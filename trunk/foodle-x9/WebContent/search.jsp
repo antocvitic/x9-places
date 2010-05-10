@@ -95,18 +95,17 @@ if(tagcount.size() > 0){
 }
 %>
 <div id="resultarea">
-<%if(res != null){
-%>
+<% if(res != null){ %>
 
 <h3 style="text-align:center"> Search results for <%=temp%> </h3>
 <%		
-		if (res != null) {
-			for (int i = 0; res.size() > i; i++) {
-				try {
-					SolrDocument doc = res.get(i);
+	if (res != null) {
+		for (int i = 0; res.size() > i; i++) {
+			try {
+				SolrDocument doc = res.get(i);
 
-					venue = VenueModel.venueFromSolrDocument(doc);
-					temp_two = venue.getID();				
+				venue = VenueModel.venueFromSolrDocument(doc);
+				temp_two = venue.getID();				
 %>
 <div id="search-result">
 <h3><%=venue.getTitle()%></h3>
@@ -116,17 +115,19 @@ if(tagcount.size() > 0){
 </div>
 <br />
 <%
-	} catch (Exception e) {
-				}
-			}
+} catch (Exception e) {}
 		}
-%>
-<%
-	}else {
-		%>
-<h5 style="text-align:center">No matching results found or invalid input</h5>
+	}
+} else { %>
+<div style="text-align:center">
+<h5 >No matching results found or invalid input</h5>
+<br/>
+<a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
+</div>
 
 	<% } %>
+    <br/>
+    <a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
     </div>
     <%
 	}
