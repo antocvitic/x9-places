@@ -9,6 +9,9 @@
 <%
 UserModel user = UserUtils.getCurrentUser(request, response);
 String title = user.getUsername() + "'s profile page - Foodle X9";
+ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
+ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
+ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(request, "c", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
 %>
 
 <h:header title="<%= title %>">
@@ -27,7 +30,7 @@ String title = user.getUsername() + "'s profile page - Foodle X9";
 
 
 <h1><%= user.getUsername() %>'s profile</h1>
-
+<br/>
 <div id="tabs">
     <ul>
         <li><a href="#general">General</a></li>
@@ -36,32 +39,52 @@ String title = user.getUsername() + "'s profile page - Foodle X9";
         <li><a href="#comments">Comments</a></li>
     </ul>
     <div id="general">
-        Your reputation level: <strong><%= user.getReputationLevel() %></strong>
+        <center>
+        <table style="text-align: left;">
+            <tr>
+                <td style="width: 180px"; >Reputation level</td>
+                <td><strong><%= user.getReputationLevel() %></strong></td>
+            </tr>
+            <tr>
+                <td>Venues written</td>
+                <td><%= venues == null ? 0 : venues.getResultsFound() %></td>
+            </tr>
+            <tr>
+                <td>Reviews written</td>
+                <td><%= reviews == null ? 0 : comments.getResultsFound() %></td>
+            </tr>
+            <tr>
+                <td>Comments written</td>
+                <td><%= comments == null ? 0 : comments.getResultsFound() %></td>
+            </tr>
+        </table>
+        </center>
     </div>
     <div id="venues">
-        Your venues: <br/>
-        <%
-        ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
-        %>
+        Your venues:
+        
         <%
         if (venues != null) {
         %>
+             <br/>
             <h:pager_header mlist="<%= venues %>" hashAnchor="venues"/>
                 <hr/>
                 <% for (VenueModel venue : venues.getList()) { %>
-            	<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>"><%= venue.getTitle() %></a><br/>
+            	<a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%= venue.getID() %>">
+                <%= venue.getTitle() %>
+                at <%= venue.getAddress() %>
+                - <%= venue.getAverageRating() %> / 5, <%= venue.getNumberOfRatings() %> ratings
+                </a>
+                <br/>
             	<% } %>
                 <hr/>
-            <h:pager_footer mlist="<%= venues %>"/>
+            <h:pager_footer mlist="<%= venues %>" hashAnchor="venues"/>
         <% } else { %>
             No venues
         <% } %>
     </div>
     <div id="reviews">
         Your reviews:
-        <%
-        ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
-        %>
         <%
         if (reviews != null ) {
         %>
@@ -73,13 +96,9 @@ String title = user.getUsername() + "'s profile page - Foodle X9";
     <div id="comments">
         Your comments:
         <%
-        ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(request, "c", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
-        %>
-        <%
         if (comments != null ) {
         %>
             <h:comments review="<%= null %>" comments="<%= comments %>" enableNewComments="false" hashAnchor="comments"/>
-            <hr />
         <% } else { %>
             No comments
         <% } %>

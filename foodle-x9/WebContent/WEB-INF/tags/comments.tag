@@ -30,7 +30,7 @@ if (mlist.isEmpty()) {
         <h:comment comment="<%= comment %>" />
         <br />
     <% } %>
-    <h:pager_footer mlist="<%= comments %>"/>
+    <h:pager_footer mlist="<%= comments %>" hashAnchor="<%= hashAnchor %>"/>
     
     <%
 }

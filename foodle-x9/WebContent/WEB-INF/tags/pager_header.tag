@@ -41,6 +41,9 @@ for (int i : Pager.MAX_RETURNED_LIST) {
         selected = "selected=\"selected\"";
     }
     String value = request.getRequestURL() + "?" + queryString + new Pager(pager).setOffset(0).setMaxReturned(i).getAsParams();
+    if (hashAnchor != null && !hashAnchor.isEmpty()) {
+        value += "#" + hashAnchor;
+    }
 %>
     <option value="<%= value %>" <%= selected %>><%= i %></option>
 <% } %>
