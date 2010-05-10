@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,11 +17,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.x9.foodle.datastore.DBUtils;
 import com.x9.foodle.datastore.SQLRuntimeException;
 import com.x9.foodle.model.exceptions.BadEmailException;
+import com.x9.foodle.model.exceptions.BadLocationException;
+import com.x9.foodle.model.exceptions.BadNameException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
-import com.x9.foodle.model.exceptions.BadNameException;
-import com.x9.foodle.model.exceptions.BadLocationException;
-import com.x9.foodle.util.EmailUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
@@ -41,7 +39,7 @@ public class RegisterController extends HttpServlet {
 		String redirect = req.getParameter("redirect");
 		String register_token = req.getParameter("regtoken");
 		redirect = redirect == null ? "" : redirect;
-		
+
 		if (register_token != null && password == null) {
 			Connection conn = null;
 			PreparedStatement stm = null;
@@ -62,21 +60,24 @@ public class RegisterController extends HttpServlet {
 				}
 				String dbtok = result.getString("sessionToken");
 				if (register_token.equals(dbtok)) {
-					stm = conn.prepareStatement("update users set sessionToken = ? where userID = ?");
-					stm.setString(1, dbtok.substring(4)); //removes deny from sessionToken
+					stm = conn
+							.prepareStatement("update users set sessionToken = ? where userID = ?");
+					stm.setString(1, dbtok.substring(4)); // removes deny from
+															// sessionToken
 					stm.setInt(2, result.getInt("userID"));
-					if (!stm.execute()) {		
+					if (!stm.execute()) {
 						MessageDispatcher.sendMsgRedirect(req, resp,
-							"/user/profile.jsp", new OkMessage(
-								"Your account has been activated."));
+								"/user/profile.jsp", new OkMessage(
+										"Your account has been activated."));
 					}
 				} else {
 					return;
 				}
-				//Auto-login user and send to profile
-				UserModel user = UserModel.getFromDbByUsername(result.getString("username"));
+				// Auto-login user and send to profile
+				UserModel user = UserModel.getFromDbByUsername(result
+						.getString("username"));
 				LoginController.doPostLoginStuff(user, req, resp, false);
-				
+
 			} catch (SQLException e) {
 				throw new SQLRuntimeException(
 						"Bad SQL syntax confirming registration", e);
@@ -85,65 +86,77 @@ public class RegisterController extends HttpServlet {
 				DBUtils.closeStatement(stm);
 				DBUtils.closeConnection(conn);
 			}
-		}
-		else {
-		try {
-			UserModel.Builder builder = new UserModel.Builder();
+		} else {
+			try {
+				UserModel.Builder builder = new UserModel.Builder();
 
-			String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+				String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
 
-			builder.setUsername(username);
-			builder.setPasswordHash(passwordHash);
-			builder.setEmail(email);
-			builder.setName(name);
-			builder.setLocation(location);
-			
-			builder.validate();
+				builder.setUsername(username);
+				builder.setPasswordHash(passwordHash);
+				builder.setEmail(email);
+				builder.setName(name);
+				builder.setLocation(location);
 
-			// we need to validate password here, as UserModel only cares about
-			// the hash
-			UserModel.Validator.validatePassword(password, password2);
+				builder.validate();
 
-			//We can save the confirmation token temporarily in sessionToken since
-			//it is hard to guess anyway for hijacking a session before confirmation.
-			//the deny as prefix to token is to check if the user tries login before confirmation.
-			Random random = new Random(System.currentTimeMillis());
-			String token = BCrypt.hashpw(Long.toString(random
-					.nextLong()), BCrypt.gensalt());
-			String deny = "deny"+token;
-			builder.setSessionToken(deny);
-			
-			System.out.println("Confirmation link: " + "http://localhost:8080"+req.getContextPath()+"/register?regtoken="+deny);
-			//EmailUtils.sendEmail(getServletContext(),
-			//email, "Registration confirmation link",
-			//"Confirmation link: " + "http://localhost:8080"+req.getContextPath()+"/register?regtoken="+deny + " click to activate");
-			
-			builder.apply();
+				// we need to validate password here, as UserModel only cares
+				// about
+				// the hash
+				UserModel.Validator.validatePassword(password, password2);
 
-			MessageDispatcher.sendMsgRedirect(req, resp,
-				redirect, new OkMessage(
-					"An email has been sent to you for confirmation."));
-			
-		} catch (BadUsernameException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
-					.toMessage("Registration failed: "));
-		} catch (BadPasswordException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
-					.toMessage("Registration failed: "));
-		} catch (BadEmailException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
-					.toMessage("Registration failed: "));
-		} catch (BadNameException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
-					.toMessage("Registration failed: "));	
-		} catch (BadLocationException e) {
-			MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
-					.toMessage("Registration failed: "));	
-		}
+				// We can save the confirmation token temporarily in
+				// sessionToken since
+				// it is hard to guess anyway for hijacking a session before
+				// confirmation.
+				// the deny as prefix to token is to check if the user tries
+				// login before confirmation.
+				Random random = new Random(System.currentTimeMillis());
+				String token = BCrypt.hashpw(Long.toString(random.nextLong()),
+						BCrypt.gensalt());
+				String deny = "deny" + token;
+				builder.setSessionToken(deny);
+
+				System.out.println("Confirmation link: "
+						+ "http://localhost:8080" + req.getContextPath()
+						+ "/register?regtoken=" + deny);
+				// EmailUtils.sendEmail(getServletContext(),
+				// email, "Registration confirmation link",
+				// "Confirmation link: " +
+				// "http://localhost:8080"+req.getContextPath()+"/register?regtoken="+deny
+				// + " click to activate");
+
+				builder.apply();
+
+				MessageDispatcher
+						.sendMsgRedirect(
+								req,
+								resp,
+								redirect,
+								new OkMessage(
+										"An email has been sent to you for confirmation."));
+
+			} catch (BadUsernameException e) {
+				MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+						.toMessage("Registration failed: "));
+			} catch (BadPasswordException e) {
+				MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+						.toMessage("Registration failed: "));
+			} catch (BadEmailException e) {
+				MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+						.toMessage("Registration failed: "));
+			} catch (BadNameException e) {
+				MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+						.toMessage("Registration failed: "));
+			} catch (BadLocationException e) {
+				MessageDispatcher.sendMsgRedirect(req, resp, "/login.jsp", e
+						.toMessage("Registration failed: "));
+			}
 		}
 	}
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-	throws ServletException, IOException {
+			throws ServletException, IOException {
 		doPost(req, resp);
 	}
 }

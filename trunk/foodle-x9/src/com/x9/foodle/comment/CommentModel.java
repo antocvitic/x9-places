@@ -25,7 +25,6 @@ import com.x9.foodle.model.exceptions.InvalidIDException;
 import com.x9.foodle.model.exceptions.InvalidReviewReferenceException;
 import com.x9.foodle.model.exceptions.InvalidSolrModelException;
 import com.x9.foodle.model.exceptions.InvalidTextException;
-import com.x9.foodle.model.exceptions.InvalidTitleException;
 import com.x9.foodle.review.ReviewModel;
 import com.x9.foodle.user.UserModel;
 import com.x9.foodle.util.DateUtils;
@@ -256,6 +255,8 @@ public class CommentModel {
 
 	public static class Validator {
 
+		public static final int COMMENT_TEXT_MAX_LENGTH = 256;
+
 		/**
 		 * Validates {@code comment}, throws exception on invalidity.
 		 * 
@@ -294,11 +295,13 @@ public class CommentModel {
 			if (comment.text == null) {
 				throw new InvalidTextException("Comment is empty");
 			}
-			if (comment.text.length() > 128) {
-				throw new InvalidTextException("Title is too long," +
-						"it has to bee less than 128 letters");
-			}
 			comment.text = comment.text.trim();
+			if (comment.text.length() > COMMENT_TEXT_MAX_LENGTH) {
+				throw new InvalidTextException("Comment is too long, ("
+						+ comment.text.length()
+						+ " characters), it has to be less than "
+						+ COMMENT_TEXT_MAX_LENGTH + " characters");
+			}
 			if (comment.text.isEmpty()) {
 				throw new InvalidTextException("Comment is empty");
 			}

@@ -136,7 +136,7 @@ if (venueID != null && !venueID.isEmpty()) {
 	
 </div> <!-- end of venue -->
 
-<h:reviews reviews="<%=reviews %>" />
+<h:reviews reviews="<%=reviews %>" enableComments="true" enableNewComments="<%= user == null ? \"false\" : \"true\" %>"/>
 <% } %>
 
 <h:footer />

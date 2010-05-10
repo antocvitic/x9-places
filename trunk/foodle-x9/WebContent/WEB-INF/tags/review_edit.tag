@@ -24,6 +24,7 @@ if (reviewID != null && !reviewID.isEmpty()) {
 %>
 
 <div id="review_edit">
+<center> <!-- sorry for the center tag --> 
 <form action="${pageContext.request.contextPath}/review/edit" method="POST">
 <input name="redirect" type="hidden" value="${pageContext.request.contextPath}/venue/view.jsp" />
 <input name="reviewID" type="hidden" value="<%= reviewID %>" />
@@ -54,4 +55,5 @@ if (reviewID != null && !reviewID.isEmpty()) {
 
 </table>
 </form>
+</center>
 </div>

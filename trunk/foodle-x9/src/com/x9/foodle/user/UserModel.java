@@ -5,10 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Random;
 import java.util.regex.Pattern;
-
-import org.mindrot.jbcrypt.BCrypt;
 
 import com.x9.foodle.datastore.DBUtils;
 import com.x9.foodle.datastore.SQLRuntimeException;
@@ -390,8 +387,7 @@ public class UserModel {
 				stm.setInt(5, user.reputationLevel);
 				stm.setBoolean(6, user.isConnectedToFacebook);
 				stm.setString(7, user.location);
-				
-				
+
 				if (stm.executeUpdate() == 0) {
 					throw new BadEmailException(
 							"Email or username already taken.");
@@ -424,6 +420,11 @@ public class UserModel {
 
 	public static class Validator {
 
+		public static final int USER_USERNAME_MAX_LENGTH = 20;
+		public static final int USER_USERNAME_MIN_LENGTH = 4;
+		public static final int USER_PASSWORD_MAX_LENGTH = 40;
+		public static final int USER_PASSWORD_MIN_LENGTH = 4;
+
 		public static void validate(UserModel user)
 				throws BadUsernameException, BadPasswordException,
 				BadEmailException, BadNameException, BadLocationException {
@@ -441,14 +442,17 @@ public class UserModel {
 			if (user.username == null) {
 				throw new BadUsernameException("Empty username");
 			}
-			if (user.username.length() < 4) {
-				throw new BadUsernameException(
-						"Username too short (length was "
-								+ user.username.length() + ")");
+			if (user.username.length() < USER_USERNAME_MIN_LENGTH) {
+				throw new BadUsernameException("Username too short ("
+						+ user.username.length()
+						+ " characters), needs to be at least "
+						+ USER_USERNAME_MIN_LENGTH);
 			}
-			if (user.username.length() > 20) {
-				throw new BadUsernameException("Username too long (length was "
-						+ user.username.length() + ")");
+			if (user.username.length() > USER_USERNAME_MAX_LENGTH) {
+				throw new BadUsernameException("Username too long ("
+						+ user.username.length()
+						+ " characters ), needs to be at least "
+						+ USER_USERNAME_MAX_LENGTH);
 			}
 
 			Pattern p = Pattern.compile("[a-zA-Z][a-zA-Z0-9_-]*");
@@ -489,12 +493,16 @@ public class UserModel {
 				throw new BadPasswordException("The passwords don't match");
 			}
 
-			if (password.length() < 4) {
-				throw new BadPasswordException("Password too short");
+			if (password.length() < USER_PASSWORD_MIN_LENGTH) {
+				throw new BadPasswordException(
+						"Password too short, it has to be at least "
+								+ USER_PASSWORD_MIN_LENGTH + " characters");
 			}
 
-			if (password.length() > 40) {
-				throw new BadPasswordException("Password too long");
+			if (password.length() > USER_PASSWORD_MAX_LENGTH) {
+				throw new BadPasswordException(
+						"Password too long, it has to be at least "
+								+ USER_PASSWORD_MAX_LENGTH + " characters");
 			}
 
 			// TODO: check password strength?
