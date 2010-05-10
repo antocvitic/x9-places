@@ -15,50 +15,35 @@
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.regex.Pattern;"%>
 <%
-	String temp = request.getParameter("search_term");
-	if (temp == null || temp == "") {
-%>
+SolrDocumentList res = null;
+	String query = request.getParameter("search_term");
+	if (query != null && !query.isEmpty()) {
+		query = URLUtils.encode(query);
+		query = query.replaceAll("%C3%83%C2%A5", "&aring;");
+		query = query.replaceAll("%C3%83%C2%A4", "&auml;");
+		query = query.replaceAll("%C3%83%C2%B6", "&ouml;");
+		query = query.replaceAll("%C3%83%C2%85", "&Aring;");
+		query = query.replaceAll("%C3%83%C2%84", "&Auml;");
+		query = query.replaceAll("%C3%83%C2%96", "&Ouml;");
+		query = query.replaceAll("\\+", " ");
 
-<%
-	} else {
-%>
-<%
-SolrDocumentList res;
-VenueModel venue;
-String temp_two;
-
-TreeMap<String, Integer> tagmap;
-ArrayList<Integer> tagcount;
-Integer most_freq_tag;
-
-%>
-<%
-		temp = URLUtils.encode(temp);
-		temp = temp.replaceAll("%C3%83%C2%A5", "&aring;");
-		temp = temp.replaceAll("%C3%83%C2%A4", "&auml;");
-		temp = temp.replaceAll("%C3%83%C2%B6", "&ouml;");
-		temp = temp.replaceAll("%C3%83%C2%85", "&Aring;");
-		temp = temp.replaceAll("%C3%83%C2%84", "&Auml;");
-		temp = temp.replaceAll("%C3%83%C2%96", "&Ouml;");
-		temp = temp.replaceAll("\\+", " ");
-
-		res = SearchController.query(temp, "all", null);
-		tagmap = new TreeMap<String, Integer>();
+		res = SearchController.query(query, "all", null);
+		TreeMap<String, Integer> tagmap = new TreeMap<String, Integer>();
 		
 		// Collect all tags from the search result
 		if (res != null) {
 			for (int i = 0; res.size() > i; i++) {
 				try {
 
-					venue = VenueModel.venueFromSolrDocument(res.get(i));
+					VenueModel venue;
 					//Determine type of the search result.
 					SolrDocument doc = res.get(i);
 					
 					
-					if(((String)doc.get("type")).equals("reviewmodel")){
+					if(doc.get("type").equals("reviewmodel")){
 						venue = VenueModel.getFromSolr((String) doc.get("reference"));
 					}
-					else if(((String)doc.get("type")).equals("commentmodel")) {
+					else if(doc.get("type").equals("commentmodel")) {
 						venue = VenueModel.getFromSolr(ReviewModel.getFromSolr((String) doc.get("reference")).getVenueID());
 					} 
 					else {
@@ -80,10 +65,10 @@ Integer most_freq_tag;
 <h3>Tag cloud</h3>
 <%
 		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-		tagcount = new ArrayList<Integer>(tagmap.values());
+ArrayList<Integer> tagcount = new ArrayList<Integer>(tagmap.values());
 if(tagcount.size() > 0){	
 		Collections.sort(tagcount);
-		most_freq_tag = tagcount.get(tagcount.size()-1);
+		int most_freq_tag = tagcount.get(tagcount.size()-1);
 		
 		for (String tag : tagmap.navigableKeySet()) { %>
 			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
@@ -93,23 +78,23 @@ if(tagcount.size() > 0){
 <%
 	}
 }
+        
+} // end if query != null
 %>
 <div id="resultarea">
-<% if(res != null){ %>
+<% if(res != null) { %>
 
-<h3 style="text-align:center"> Search results for <%=temp%> </h3>
+<h3 style="text-align:center"> Search results for <%=query%> </h3>
 <%		
-	if (res != null) {
-		for (int i = 0; res.size() > i; i++) {
-			try {
-				SolrDocument doc = res.get(i);
+	for (int i = 0; res.size() > i; i++) {
+		try {
+			SolrDocument doc = res.get(i);
 
-				venue = VenueModel.venueFromSolrDocument(doc);
-				temp_two = venue.getID();				
+			VenueModel venue = VenueModel.venueFromSolrDocument(doc);				
 %>
 <div id="search-result">
 <h3><%=venue.getTitle()%></h3>
-<h5><a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=temp_two%>">Show venue</a></h5>
+<h5><a href="${pageContext.request.contextPath}/venue/view.jsp?venueID=<%=venue.getID()%>">Show venue</a></h5>
 
 <h5>Address: <%=venue.getAddress()%></h5>
 </div>
@@ -117,20 +102,13 @@ if(tagcount.size() > 0){
 <%
 } catch (Exception e) {}
 		}
-	}
-} else { %>
+%>
+<% } else { %>
 <div style="text-align:center">
 <h5 >No matching results found or invalid input</h5>
+</div>
+<% } %>
 <br/>
 <a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
 </div>
-
-	<% } %>
-    <br/>
-    <a id="new_button" href="${pageContext.request.contextPath}/venue/edit.jsp">Add a new venue</a>
-    </div>
-    <%
-	}
-%>
-
 <h:footer />

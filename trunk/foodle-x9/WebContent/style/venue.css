@@ -352,7 +352,21 @@
 }
 
 .pager {
+}
 
+.pager a, .pager a:active, .pager a:visited {
+	font-size: small;
+	color: black;
+	font-weight: 700;
+	text-shadow: none;
+	opacity: 1.0;
+}
+
+.pager a:hover {
+	color: rgb(20, 40, 0) !important;
+	text-decoration: underline !important;
+	text-shadow: none;
+	opacity: 1.0;
 }
 
 .pager_header {
