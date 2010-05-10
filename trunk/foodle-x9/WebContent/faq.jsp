@@ -14,18 +14,18 @@
 
 
 <h1>FAQ</h1><br />
-<h4>What is Foodle?</h4>
-Foodle is an online service to serve as a city guide that helps people find 
+<h4>What is Spot?</h4>
+Spot is an online service to serve as a city guide that helps people find 
 cool places to eat, shop, drink, relax and play. The guide is based on submitted 
 venues and reviews from an active community. The main capabilities are searching 
 for venues, tags and reading reviews or comments with the goal to find useful information 
 for any type of activity you would like to do.<br />
 <br />
-<h4>Is Foodle free?</h4>
+<h4>Is Spot free?</h4>
 Yes, it is free!
 <br />
 <br />
-<h4>Why use Foodle?</h4>
+<h4>Why use Spot?</h4>
 It is an easy and fun way for locals and tourists of a city to share opinions 
 on the places they know and visit. You can find out about the gems of your
 city by your fellow neighbours, colleagues and friends. 
@@ -33,7 +33,7 @@ The reviews are written by real people, not magazines or
 newspapers who might have hidden agendas or biased opinions.
 <br />
 <br />
-<h4>Who uses Foodle?</h4>
+<h4>Who uses Spot?</h4>
 There are two broad categories of users. First there are the people who want to 
 share information about their favorite places or activities. Or who simply want 
 to share their experiences and opinions about places they visited.
@@ -45,7 +45,7 @@ And they rely more on real peoples opinons rather than bying different types of 
 which are not free of charge or could be biased.
 <br />
 <br />
-<h4>What should I be reviewing on Foodle?</h4>
+<h4>What should I be reviewing on Spot?</h4>
 Anything or any place that you feel you want to share with other people.
 <br />
 <br />
@@ -58,7 +58,7 @@ who you are, unless you want to. Simply post reviews using an alias.
 No, they can´t.
 <br />
 <br />
-<h4>Is Foodle in my hometown?</h4>
+<h4>Is Spot in my hometown?</h4>
 If it is not it could be, just submit a review for any type of venue you wish.
 <br />
 <br />
@@ -66,12 +66,12 @@ If it is not it could be, just submit a review for any type of venue you wish.
 Business owners can create user profiles like anyone else, and in that respect they can comment on your review. But there is no special category for business owners.
 <br />
 <br />
-<h4>Will Foodle remove bad reviews if a business pays for sponsorship?</h4>
-No, that would go against the real purpose and spirit of Foodle.
+<h4>Will Spot remove bad reviews if a business pays for sponsorship?</h4>
+No, that would go against the real purpose and spirit of Spot.
 <br />
 <br />
-<h4>Does Foodle allow sponsors to move bad reviews to the bottom of their page?</h4>
-No, that would go against the real purpose and spirit of Foodle. 
+<h4>Does Spot allow sponsors to move bad reviews to the bottom of their page?</h4>
+No, that would go against the real purpose and spirit of Spot. 
 <br />
 <br />
 <h4>How does the reputation system work?</h4>
