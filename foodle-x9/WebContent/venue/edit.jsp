@@ -8,13 +8,13 @@
 <%@ page import="com.x9.foodle.venue.*" %>
 <%@ page import="com.x9.foodle.util.*" %>
 <%@ page import="com.x9.foodle.util.MessageDispatcher.*" %>
+<%@ page import="java.util.*" %>
 <% 
 String venueID = request.getParameter("venueID");
 
 String title = "";
 String address = "";
 String description = "";
-String tags = "";
 
 VenueModel venue = null;
 
@@ -27,7 +27,6 @@ if (venueID != null && !venueID.isEmpty()) {
     title = venue.getTitle();
     address = venue.getAddress();
     description = venue.getDescription();
-    tags = StringUtils.join(venue.getTags(), " ");
 } else {
     venueID = "";   
 }
