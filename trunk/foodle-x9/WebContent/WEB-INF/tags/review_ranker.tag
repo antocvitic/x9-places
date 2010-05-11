@@ -23,8 +23,8 @@
         }
     }
     %>
-        <a href="#" class="<%= actionClass %> <%= upClass %> review_ranker_button review_ranker_up">up</a>
-        <a href="#" class="<%= actionClass %> <%= downClass %> review_ranker_button review_ranker_down">down</a>
+        <a href="#" class="<%= actionClass %> <%= upClass %> review_ranker_button review_ranker_up"></a>
+        <a href="#" class="<%= actionClass %> <%= downClass %> review_ranker_button review_ranker_down"></a>
         <script type="text/javascript">
             $("#review_ranker_<%= review.getID() %>").data("reviewID", "<%= review.getID() %>");
             $("#review_ranker_<%= review.getID() %>").data("postURL", "${pageContext.request.contextPath}/review/rank");
