@@ -39,21 +39,45 @@
 
 <table cellspacing="-1">
 	<tr>
-		<td><input type="radio" name="adv_opt" value="all" CHECKED> All</td>
+		<td>
+            <input id="adv_opt_all" type="radio" name="adv_opt" value="all" checked="checked">
+            <label for="adv_opt_all">All</label>
+        </td>
 
-		<td><input type="radio" name="adv_opt" value="venue"> Venue</td>
+		<td>
+            <input id="adv_opt_venue" type="radio" name="adv_opt" value="venue">
+            <label for="adv_opt_venue">Venue</label>
+        </td>
 
-		<td><input type="radio" name="adv_opt" value="street"> Address</td>
+		<td>
+            <input id="adv_opt_address" type="radio" name="adv_opt" value="street">
+            <label for="adv_opt_address">Address</label>
+        </td>
 
-		<td><input type="radio" name="adv_opt" value="review"> Review</td>
+		<td>
+            <input id="adv_opt_review" type="radio" name="adv_opt" value="review">
+            <label for="adv_opt_review">Review</label>
+        </td>
 
-		<td><input type="radio" name="adv_opt" value="comment"> Comment</td>
+		<td>
+            <input id="adv_opt_comment" type="radio" name="adv_opt" value="comment">
+            <label for="adv_opt_comment">Comment</label>
+        </td>
 
-		<td><input type="radio" name="adv_opt" value="tags"> Tags</td>
+		<td>
+            <input id="adv_opt_tag" type="radio" name="adv_opt" value="tags">
+            <label for="adv_opt_tag">Tags</label>
+        </td>
 		
-		<td><input type="checkbox" name="rating_opt" value="highRating"> High Rating</td>
+		<td>
+            <input id="rating_opt" type="checkbox" name="rating_opt" value="highRating">
+            <label for="rating_opt">High Rating</label>
+        </td>
 		
-		<td><input type="checkbox" name="geo_opt" value="geo"> Geographic view</td>
+		<td>
+            <input id="geo_opt" type="checkbox" name="geo_opt" value="geo">
+            <label for="geo_opt">Geographic view</label>
+        </td>
 	</tr>
 </table>
 </FORM>
