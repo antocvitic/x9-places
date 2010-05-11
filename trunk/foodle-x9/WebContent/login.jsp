@@ -18,16 +18,17 @@
 <h:header title="Login or register - Spot X9">
 
 <script type="text/javascript">
-function toggleTOS() {
-    $('#terms_of_service').dialog('open');
-    return false;
-}
 
 $(document).ready(function() {
     // Dialog           
     $('#terms_of_service').dialog({
         autoOpen: false,
         width: 600
+    });
+    
+    $("#tos_toggler").click(function() {
+        $('#terms_of_service').dialog('open');
+    return false;
     });
 });
 
@@ -92,7 +93,7 @@ $(document).ready(function() {
     </tr>
     
     <tr>
-        <td>I accept to the <a href="javascript:toggleTOS()">Terms of Service</a></td>
+        <td>I accept to the <a href="#" id="tos_toggler">Terms of Service</a></td>
     </tr>
     <tr>
         <td><input class="loginfield" id="tos"
