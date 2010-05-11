@@ -36,23 +36,23 @@
 
 
 
-<table cellspacing="0">
+<table cellspacing="-1">
 	<tr>
-		<td><input type="radio" name="adv_opt" value="all" CHECKED>All</td>
+		<td><input type="radio" name="adv_opt" value="all" CHECKED> All</td>
 
-		<td><input type="radio" name="adv_opt" value="venue">Venue</td>
+		<td><input type="radio" name="adv_opt" value="venue"> Venue</td>
 
-		<td><input type="radio" name="adv_opt" value="street">Address</td>
+		<td><input type="radio" name="adv_opt" value="street"> Address</td>
 
-		<td><input type="radio" name="adv_opt" value="review">Review</td>
+		<td><input type="radio" name="adv_opt" value="review"> Review</td>
 
-		<td><input type="radio" name="adv_opt" value="comment">Comment</td>
+		<td><input type="radio" name="adv_opt" value="comment"> Comment</td>
 
-		<td><input type="radio" name="adv_opt" value="tags">Tags</td>
+		<td><input type="radio" name="adv_opt" value="tags"> Tags</td>
 		
-		<td><input type="checkbox" name="rating_opt" value="highRating">High Rating</td>
+		<td><input type="checkbox" name="rating_opt" value="highRating"> High Rating</td>
 		
-		<td><input type="checkbox" name="geo_opt" value="geo">Geographic view</td>
+		<td><input type="checkbox" name="geo_opt" value="geo"> Geographic view</td>
 	</tr>
 </table>
 </FORM>

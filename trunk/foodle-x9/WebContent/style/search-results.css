@@ -119,6 +119,9 @@
 	-moz-box-shadow: 0px 1px 0px #FFF;/*, inset 0px 1px 3px #000;*/
 	-webkit-box-shadow: 0px 1px 0px #FFF;
 	box-shadow: 0px 1px 0px #FFF;
+	
+	margin-left: 0px !important;
+	width: 85%;
 }
 
 .adv_search_form {
@@ -127,11 +130,10 @@
 
 .adv_search_form #search {
 	position: relative;
-	width: 400px;
-	left: 50%;
-	margin-left: -200px;
+	margin: auto;
 	margin-top: 20px;
 	margin-bottom: 15px;
+	width: 65%;
 }
 
 .adv_search_form .searchfield:focus {
@@ -152,7 +154,7 @@
 	
 	position: absolute;
 	top: 0px;
-	right: 7px;
+	right: 0px;
 	width: 65px;
 	height: 23px;
 	
@@ -168,12 +170,13 @@
 
 .adv_search_form table {
 	margin: auto;
-	
+	border-collapse:collapse
 }
 
 .adv_search_form td {
-	border-left: 1px solid rgba(0,0,0,0.3);
-	border-right: 1px solid white;
+	border-left: 1px solid rgba(0,0,0,0.5);
+	border-right: 1px solid rgba(0,0,0,0.5);
+	
 	padding: 5px;
 	padding-left: 7px;
 	padding-right: 7px;
