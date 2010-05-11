@@ -22,6 +22,7 @@
 %>
 
 <FORM class="adv_search_form" METHOD="GET" ACTION="adv_search.jsp">
+<h1>Advanced search</h1>
 <div id="search">
          	<%
             String search_term = request.getParameter("search_term");
