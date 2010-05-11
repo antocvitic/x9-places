@@ -61,10 +61,8 @@ if(res != null) {
 	<h3>Tag cloud - most common tags</h3>
 	<%
 	// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-	ArrayList<Integer> tagcount = new ArrayList<Integer>(tagmap.values());
-	if(tagcount.size() > 0){	
-			Collections.sort(tagcount);
-			int most_freq_tag = tagcount.get(tagcount.size()-1);
+	if(tag_freq_list.size() > 0){	
+			int most_freq_tag = tag_freq_list.get(tag_freq_list.size()-1).getValue();
 			
 			// Skip to 10 most common tags
 			Iterator<Map.Entry<String, Integer>> it = tag_freq_list.iterator();
@@ -74,7 +72,7 @@ if(res != null) {
 			
 			while (it.hasNext() ) { 
 				Map.Entry<String, Integer> entry = it.next(); %>
-				<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=entry.getKey()%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(entry.getKey())/most_freq_tag+8%>pt"><%=entry.getKey()%></a>&nbsp;
+				<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=entry.getKey()%>&adv_opt=tags" style="font-size: <%=(((Integer)(8*tagmap.get(entry.getKey()))/most_freq_tag)+8)%>pt"><%=entry.getKey()%></a>&nbsp;
 			<% 
 			}
 	%></div>
