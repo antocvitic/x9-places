@@ -63,7 +63,8 @@ If it is not it could be, just submit a review for any type of venue you wish.
 <br />
 <br />
 <h4>Can business owners publicly comment on my reviews?</h4>
-Business owners can create user profiles like anyone else, and in that respect they can comment on your review. But there is no special category for business owners.
+Business owners can create user profiles like anyone else, and in that respect they 
+can comment on your review. But there is no special category for business owners.
 <br />
 <br />
 <h4>Will Spot remove bad reviews if a business pays for sponsorship?</h4>
@@ -74,6 +75,24 @@ No, that would go against the real purpose and spirit of Spot.
 No, that would go against the real purpose and spirit of Spot. 
 <br />
 <br />
+<h4>What can I search for?</h4>
+You can search for Venues, Reviews, Tags, Addresses, Comments. The simplest way to type in 
+keyword of what you are looking for and where. E.g "bar in Stockholm".
+<br />
+<br />
+<h4>How does the advanced search work?</h4>
+Select the radio-button you wish the search term to look for, you have the options venue, 
+review and tags. Select the check-box High rating if you wish to show only results where the 
+rating is high. This feature is for your convenience if you want to narrow down your search to 
+specifics.
+<br />
+<br />
+<h4>Why do I have to login?</h4>
+We require a login in order to prevent spam and advertising by venue owners. 
+Your information is kept safe with us, never shared with third-party and is encrypted. 
+<br />
+<br />
+
 <h4>How does the reputation system work?</h4>
 *commenting on review - creator of review gets 10<br />
 *ranking review up - creator of review gets 25 <br />
