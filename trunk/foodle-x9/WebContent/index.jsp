@@ -41,8 +41,7 @@
 				tag_freq_list = new LinkedList<Map.Entry<String, Integer>>(tagmap.entrySet());
 			    Collections.sort(tag_freq_list, new Comparator<Map.Entry<String, Integer>>() {
 			          public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-			               return (o1.getValue())
-			              .compareTo(o2.getValue());
+			               return (o1.getValue()).compareTo(o2.getValue());
 			          }
 			     });
 
@@ -57,28 +56,9 @@
 <% // START OF TAG CLOUD BLOCK ---------------------
 if(res != null) {
 %>
-	<div id="tagcloud" class="msg_msg">
-	<h3>Tag cloud - most common tags</h3>
-	<%
-	// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-	if(tag_freq_list.size() > 0){	
-			int most_freq_tag = tag_freq_list.get(tag_freq_list.size()-1).getValue();
-			
-			// Skip to 10 most common tags
-			Iterator<Map.Entry<String, Integer>> it = tag_freq_list.iterator();
-			for(int tsize = tag_freq_list.size(); tsize > 10; tsize--){
-				it.next();
-			}
-			
-			while (it.hasNext() ) { 
-				Map.Entry<String, Integer> entry = it.next(); %>
-				<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=entry.getKey()%>&adv_opt=tags" style="font-size: <%=(((Integer)(8*tagmap.get(entry.getKey()))/most_freq_tag)+8)%>pt"><%=entry.getKey()%></a>&nbsp;
-			<% 
-			}
-	%></div>
-	<%
-	}
-} // END OF TAG CLOUD BLOCK ---------------------
+	<h:tagcloud tagmap="<%= tagmap %>" tag_freq_list="<%= tag_freq_list %>"/>
+<%
+} 
 %>
 
 <br/><h1>Local venue search and review service</h1><br />

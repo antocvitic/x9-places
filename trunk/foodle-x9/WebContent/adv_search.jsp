@@ -11,13 +11,13 @@
 <%@page import="com.x9.foodle.review.*"%>
 <%@page import="org.apache.solr.common.SolrDocumentList"%>
 <%@page import="org.apache.solr.common.SolrDocument"%>
-<%@page import="java.util.TreeMap"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.Collections"%>
+<%@page import="java.util.*"%>
 <gmaps:include/>
 
 <%
 	String query = request.getParameter("search_term");
+	TreeMap<String, Integer> tagmap = new TreeMap<String, Integer>();
+	List<Map.Entry<String, Integer>> tag_freq_list = null;
 	if (query == null || query == "") {
 %>
 
@@ -95,7 +95,6 @@
 
 	//search = request.getParameter("search");
 	String choice = request.getParameter("adv_opt");
-	TreeMap<String, Integer> tagmap = new TreeMap<String, Integer>();
 	String highRating = request.getParameter("rating_opt");
 	SolrDocumentList res = SearchController.query(query, choice, highRating);
     
@@ -125,29 +124,27 @@
 					else
 						tagmap.put(tag, 1);
 				}
+				
+				tag_freq_list = new LinkedList<Map.Entry<String, Integer>>(tagmap.entrySet());
+			    Collections.sort(tag_freq_list, new Comparator<Map.Entry<String, Integer>>() {
+			          public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+			               return (o1.getValue()).compareTo(o2.getValue());
+			          }
+			    });
+			    
 			} catch (Exception e) {
 				
 			}
 		}
+	}
 	 %>
 
-<div id="tagcloud" class="msg_msg">
-<h3>Tag cloud</h3>
+<% // START OF TAG CLOUD BLOCK ---------------------
+if(res != null) {
+%>
+	<h:tagcloud tagmap="<%= tagmap %>" tag_freq_list="<%= tag_freq_list %>"/>
 <%
-		// Print tag cloud with tagsize weighted according to tagfrequency (beta)
-ArrayList<Integer> tagcount = new ArrayList<Integer>(tagmap.values());
-if(tagcount.size() > 0){	
-		Collections.sort(tagcount);
-		int most_freq_tag = tagcount.get(tagcount.size()-1);
-		
-		for (String tag : tagmap.navigableKeySet()) { %>
-			<a href="${pageContext.request.contextPath}/adv_search.jsp?search_term=<%=tag%>&adv_opt=tags" style="font-size: <%=6*tagmap.get(tag)/most_freq_tag+8%>pt"><%=tag%></a>&nbsp;
-		<% 
-		}
-		%></div>
-<%
-	}
-}
+} 
 %>
 
 <div id="resultarea">
