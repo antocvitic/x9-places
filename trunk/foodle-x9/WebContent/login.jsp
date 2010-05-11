@@ -15,7 +15,7 @@
  %>
 
 
-<h:header title="Login or register - Foodle X9">
+<h:header title="Login or register - Spot X9">
 
 <script type="text/javascript">
 
