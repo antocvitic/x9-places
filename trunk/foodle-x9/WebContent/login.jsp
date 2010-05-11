@@ -18,7 +18,18 @@
 <h:header title="Login or register - Spot X9">
 
 <script type="text/javascript">
+function toggleTOS() {
+    $('#terms_of_service').dialog('open');
+    return false;
+}
 
+$(document).ready(function() {
+    // Dialog           
+    $('#terms_of_service').dialog({
+        autoOpen: false,
+        width: 600
+    });
+});
 
 </script>
 
@@ -79,6 +90,14 @@
         <td><input class="loginfield" id="password2"
             name="password2" type="password" /></td>
     </tr>
+    
+    <tr>
+        <td>I accept to the <a href="javascript:toggleTOS()">Terms of Service</a></td>
+    </tr>
+    <tr>
+        <td><input class="loginfield" id="tos"
+            name="tos" type="checkbox" /></td>
+    </tr>
 
     <tr>
         <td><input type="submit" value="Register" /></td>
@@ -86,6 +105,8 @@
 </table>
 </form>
 </div>
+
+
 
 <div id="login_div">
 <form id="login" action="${pageContext.request.contextPath}/login" method="POST">
@@ -111,6 +132,12 @@
     </tr>
 </table>
 </form>
+</div>
+
+<div id="terms_of_service" title="Terms of Service">
+
+Spot is in a beta stage, so it might crash or work in mysterious ways at any time.<br/>
+By adding content to Spot you give Spot a perpetual license to do whatever Spot wishes with it.
 </div>
 
 <h:footer />

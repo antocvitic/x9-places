@@ -24,6 +24,7 @@ import com.x9.foodle.model.exceptions.BadUsernameException;
 import com.x9.foodle.util.EmailUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.URLUtils;
+import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
 
 @SuppressWarnings("serial")
@@ -38,8 +39,10 @@ public class RegisterController extends HttpServlet {
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
 		String location = req.getParameter("location");
+		String tos = req.getParameter("tos");
 		String redirect = req.getParameter("redirect");
 		String register_token = req.getParameter("regtoken");
+
 		redirect = redirect == null ? "" : redirect;
 
 		if (register_token != null && password == null) {
@@ -89,6 +92,17 @@ public class RegisterController extends HttpServlet {
 				DBUtils.closeConnection(conn);
 			}
 		} else {
+
+			if (tos == null) {
+				MessageDispatcher
+						.sendMsgRedirect(
+								req,
+								resp,
+								"/login.jsp",
+								new ErrorMessage(
+										"Registration failed: You must accept the ToS"));
+				return;
+			}
 			try {
 				UserModel.Builder builder = new UserModel.Builder();
 
