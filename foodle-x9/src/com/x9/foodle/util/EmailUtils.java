@@ -13,8 +13,9 @@ import javax.servlet.ServletContext;
 
 /**
  * Bla bla
+ * 
  * @author tgwizard
- *
+ * 
  */
 public class EmailUtils {
 	public static void sendEmail(ServletContext servletContext, String to,
@@ -27,6 +28,12 @@ public class EmailUtils {
 		props.put("mail.smtps.auth", "true");
 		Session session = Session.getInstance(props, null);
 		Message email = new MimeMessage(session);
+
+		System.out.println("----- Email -----");
+		System.out.println("To: " + to);
+		System.out.println("Subject: " + subject);
+		System.out.println("Message: " + msg);
+		System.out.println("------ End ------");
 
 		try {
 			email.setFrom(new InternetAddress(from));
@@ -43,9 +50,13 @@ public class EmailUtils {
 				t.close();
 			}
 		} catch (AddressException e) {
-			throw new RuntimeException(e);
+			// throw new RuntimeException(e);
+			System.err.println("Email error");
+			e.printStackTrace();
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			// throw new RuntimeException(e);
+			System.err.println("Email error");
+			e.printStackTrace();
 		}
 	}
 }
