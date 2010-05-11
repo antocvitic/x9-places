@@ -19,6 +19,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.x9.foodle.datastore.DBUtils;
 import com.x9.foodle.datastore.SQLRuntimeException;
+import com.x9.foodle.util.EmailUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.URLUtils;
 import com.x9.foodle.util.MessageDispatcher.ErrorMessage;
@@ -40,9 +41,10 @@ public class Deleter extends HttpServlet {
 		@Override
 		public void run() {
 			// send the email
-			// EmailUtils.sendEmail(getServletContext(),
-			// "adam.renberg@gmail.com", "Testing emailing",
-			// "User: " + username + " has been registered");
+			EmailUtils.sendEmail(getServletContext(), toemail,
+					"Spot Account Deletion",
+					"Click on the following link to delete your account:\n"
+							+ toemail);
 			System.out.println("Sending email: " + tolink + "to email: "
 					+ toemail);
 			timer.cancel();

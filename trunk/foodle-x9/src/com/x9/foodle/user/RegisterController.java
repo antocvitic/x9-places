@@ -21,6 +21,7 @@ import com.x9.foodle.model.exceptions.BadLocationException;
 import com.x9.foodle.model.exceptions.BadNameException;
 import com.x9.foodle.model.exceptions.BadPasswordException;
 import com.x9.foodle.model.exceptions.BadUsernameException;
+import com.x9.foodle.util.EmailUtils;
 import com.x9.foodle.util.MessageDispatcher;
 import com.x9.foodle.util.URLUtils;
 import com.x9.foodle.util.MessageDispatcher.OkMessage;
@@ -122,11 +123,10 @@ public class RegisterController extends HttpServlet {
 						+ "/register?regtoken=" + deny;
 
 				System.out.println("Confirmation link: " + confirmlink);
-				// EmailUtils.sendEmail(getServletContext(),
-				// email, "Registration confirmation link",
-				// "Confirmation link: " +
-				// "http://localhost:8080"+req.getContextPath()+"/register?regtoken="+deny
-				// + " click to activate");
+				EmailUtils.sendEmail(getServletContext(), email,
+						"Spot Registration confirmation link",
+						"Click on the following link to activate your spot account:\n"
+								+ confirmlink);
 
 				builder.apply();
 
