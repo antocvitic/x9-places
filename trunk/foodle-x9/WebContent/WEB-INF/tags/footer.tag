@@ -21,7 +21,7 @@ UserModel user = UserUtils.getCurrentUser(request, response);
 	</tr>
 	<tr>
     	<td align="center"><a href="${pageContext.request.contextPath}/thisProject.jsp">This Project</a></td>
-    	<td align="center"></td>
+    	<td align="center"><a href="${pageContext.request.contextPath}/static/manual.pdf">The Manual</a></td>
     	<% if (user == null) { %>
         <td align="center"><a href="${pageContext.request.contextPath}/login.jsp">Register</a></td>
         <% } else { %>
