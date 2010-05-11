@@ -21,14 +21,22 @@
 	if (query == null || query == "") {
 %>
 
-<FORM METHOD="GET" ACTION="adv_search.jsp">
-<table cellspacing="5" width="400" cellpadding="0" border="0">
-	<tr>
-		<td><B>Search:</B></td>
-		<td><input type="text" name="search_term" size=15></td>
-	</tr>
-	<tr>
-	</tr>
+<FORM class="adv_search_form" METHOD="GET" ACTION="adv_search.jsp">
+<div id="search">
+         	<%
+            String search_term = request.getParameter("search_term");
+            search_term = search_term == null ? "" : search_term.trim();
+            %>
+     <img src="${pageContext.request.contextPath}/images/small-search.png" id="search_icon"/>
+     <input type="text" id="searchfield" class="searchfield placeholder" name="search_term" 
+            onFocus="removePlaceholder(this)" onBlur="addPlaceholder(this)" value="<%= search_term %>"/>
+     <input type="submit" value="Find" id="search_button"/>
+</div>
+
+
+
+
+<table cellspacing="0">
 	<tr>
 		<td><input type="radio" name="adv_opt" value="all" CHECKED>All</td>
 
@@ -45,8 +53,6 @@
 		<td><input type="checkbox" name="rating_opt" value="highRating">High Rating</td>
 		
 		<td><input type="checkbox" name="geo_opt" value="geo">Geographic view</td>
-
-		<td><input type="submit" value="Search"></td>
 	</tr>
 </table>
 </FORM>

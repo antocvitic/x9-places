@@ -37,7 +37,8 @@
 	-webkit-border-radius: 15px;
 	border-radius: 15px;
 
-
+	color: #123;
+	
 	text-decoration: none;
 	
 	-moz-box-shadow: 0px 1px 3px #123;
@@ -78,4 +79,123 @@
 	-moz-border-radius-topleft: 10px;
 	-webkit-border-top-left-radius: 10px;
 	border-top-left-radius: 10px;
+}
+
+
+.adv_search_table td {
+	background: red;
+	padding: 10px;
+	width: 100px;
+}
+
+#adv_radio_rev  {
+	vertical-align: middle;
+}
+
+
+.adv_search_radio:hover  {
+	
+}
+
+
+
+
+
+.adv_search_form .searchfield {
+	/* position */
+	background: white;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	height: 20px;
+	width: 22em;
+	
+	/* padding the text inside */
+	padding-left: 22px;
+	padding-right: 67px;
+	
+	/* looks */
+	border: 1px solid rgb(71, 105, 117);
+	-moz-box-shadow: 0px 1px 0px #FFF;/*, inset 0px 1px 3px #000;*/
+	-webkit-box-shadow: 0px 1px 0px #FFF;
+	box-shadow: 0px 1px 0px #FFF;
+}
+
+.adv_search_form {
+	text-align: center;
+}
+
+.adv_search_form #search {
+	position: relative;
+	width: 400px;
+	left: 50%;
+	margin-left: -200px;
+	margin-top: 20px;
+	margin-bottom: 15px;
+}
+
+.adv_search_form .searchfield:focus {
+	/* give the search-field a highlighted look on focus*/
+	box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
+	-moz-box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
+	-webkit-box-shadow: 0px 1px 0px #FFF, 0px 0px 20px #FFF;
+	
+	/* without the square outline */
+	outline: none;
+}
+
+.adv_search_form #search_button {
+	background: url(../images/search-button.png) bottom no-repeat;
+	margin: 0px;
+	border: none;
+	padding-bottom: 3px;
+	
+	position: absolute;
+	top: 0px;
+	right: 7px;
+	width: 65px;
+	height: 23px;
+	
+	text-shadow: 0px 1px 0px white;
+}
+
+.adv_search_form #search_icon {
+	position:absolute;
+	top: 5px;
+	left: 12px;
+	opacity: 0.75;
+}
+
+.adv_search_form table {
+	margin: auto;
+	
+}
+
+.adv_search_form td {
+	border-left: 1px solid rgba(0,0,0,0.3);
+	border-right: 1px solid white;
+	padding: 5px;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+
+#new_button {
+	/* links are bold with a etched look */
+	color: #000 !important;
+	opacity:0.8;
+	text-shadow: 0px 1px 0px #FFF;
+	font-weight: bold;
+	
+}
+#new_button:hover {
+	/* adds a big background blur when moused over 
+	 * and makes the font-color darker.
+	 * Has no other decoration */
+	color: #000;
+	opacity:1;
+	text-shadow: 0px 1px 0px #FFF, 0px 0px 10px #FFF;
+	font-weight: bold;
+	
+	text-decoration: none !important;	
 }
