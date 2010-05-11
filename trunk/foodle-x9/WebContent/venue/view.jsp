@@ -53,7 +53,7 @@ if (venueID != null && !venueID.isEmpty()) {
 	<div id="venue_text">
 		<div id="venue_title_div">
 			<h1 id="venue_title"><%=venue.getTitle()%></h1>
-			<div id="hide-long-title">a</div>
+			<div id="hide-long-title"></div>
             <% if (user != null && user.getReputationLevel() >= UserUtils.EDIT_LEVEL) { %>
     			<a href="${pageContext.request.contextPath}/venue/edit.jsp?venueID=<%=venueID %>" id="venue_edit">Edit</a>
             <% } %>
