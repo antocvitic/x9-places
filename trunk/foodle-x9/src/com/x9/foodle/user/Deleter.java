@@ -44,9 +44,7 @@ public class Deleter extends HttpServlet {
 			EmailUtils.sendEmail(getServletContext(), toemail,
 					"Spot Account Deletion",
 					"Click on the following link to delete your account:\n"
-							+ toemail);
-			System.out.println("Sending email: " + tolink + "to email: "
-					+ toemail);
+							+ tolink);
 			timer.cancel();
 		}
 	}
@@ -125,7 +123,7 @@ public class Deleter extends HttpServlet {
 			}// if del_request end
 			MessageDispatcher.sendMsgRedirect(req, resp, "/logout",
 					new OkMessage(
-							"A email has been sent to you for confirmation."));
+							"An email has been sent to you for confirmation."));
 		} // if user != null
 	}
 
