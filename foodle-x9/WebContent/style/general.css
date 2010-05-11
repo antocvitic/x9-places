@@ -180,8 +180,13 @@ a:hover {
 
 
 .gmaps_div {
-	height: 500px;
 	width: 500px;
+	height: 500px;
+}
+
+.gmaps_div_big {
+    width: 700px;
+    height: 600px;
 }
 
 .my_header {

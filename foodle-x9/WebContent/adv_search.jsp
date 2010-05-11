@@ -164,7 +164,7 @@ if(tagcount.size() > 0){
 <%
 	} else {
 			if(request.getParameter("geo_opt") != null){ %>
-				<gmaps:map css="gmaps_div" id="gmaps_frame"/>
+				<gmaps:map css="gmaps_div_big" id="gmaps_frame"/>
 			<% }
 		
 			for (int i = 0; res.size() > i; i++) {
