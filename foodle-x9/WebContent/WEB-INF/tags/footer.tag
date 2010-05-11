@@ -8,19 +8,16 @@ UserModel user = UserUtils.getCurrentUser(request, response);
     <center>
 	<font size="3">
 	
-	<table border="0" cellspacing="6" width="700">
+	<table border="0" cellspacing="6" width="500">
 	<tr>
     	<th>About us</th>
     	<th>Help</th>
     	<th>Join</th>
-    	<th>Temp stuff</th>
 	</tr>
 	<tr>
     	<td align="center"><a href="${pageContext.request.contextPath}/X9Team.jsp">The X9 Team</a></td>
     	<td align="center"><a href="${pageContext.request.contextPath}/faq.jsp">FAQ</a></td>
         <td align="center"><a href="http://x9board.forumotion.com/">X9 Forum</a></td>
-        
-    	<td align="center"><a href="${pageContext.request.contextPath}/hasher">jBCrypt</a></td>
 	</tr>
 	<tr>
     	<td align="center"><a href="${pageContext.request.contextPath}/thisProject.jsp">This Project</a></td>
@@ -30,19 +27,6 @@ UserModel user = UserUtils.getCurrentUser(request, response);
         <% } else { %>
         <td align="center"></td>
         <% } %>
-    	<td align="center"><a href="${pageContext.request.contextPath}/dump-session">Dump Session</a></td>
-	</tr>
-	<tr>
-    	<td align="center"></td>
-    	<td align="center"></td>
-    	<td align="center"></td>
-    	<td align="center"><a href="${pageContext.request.contextPath}/dump-model">Dump Model</a></td>
-	</tr>
-	<tr>
-    	<td align="center"></td>
-    	<td align="center"></td>
-    	<td align="center"></td>
-    	<td align="center"></td>
 	</tr>
 	</table> 
 	</font>
