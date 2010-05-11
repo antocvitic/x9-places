@@ -13,13 +13,14 @@
 <%@page import="java.util.*"%>
 <%@page import="java.util.regex.Pattern;"%>
 <%
-SolrDocumentList res = null;
+	SolrDocumentList res = null;
 	String query = request.getParameter("search_term");
-	res = SearchController.query(query, "all", null);
 	TreeMap<String, Integer> tagmap = new TreeMap<String, Integer>();
 	List<Map.Entry<String, Integer>> tag_freq_list = null;
 	
 	if (query != null && !query.isEmpty()) {
+		res = SearchController.query(query, "all", null);
+		
 		query = URLUtils.encode(query);
 		query = query.replaceAll("%C3%83%C2%A5", "&aring;");
 		query = query.replaceAll("%C3%83%C2%A4", "&auml;");
