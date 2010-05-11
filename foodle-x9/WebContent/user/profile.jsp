@@ -8,7 +8,7 @@
 <%@ page import="com.x9.foodle.datastore.*" %>
 <%
 UserModel user = UserUtils.getCurrentUser(request, response);
-String title = user.getUsername() + "'s profile page - Foodle X9";
+String title = user.getUsername() + "'s profile page - Spot X9";
 ModelList<VenueModel> venues = VenueModel.getFromSolrCreatedBy(user, new Pager(request, "v", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
 ModelList<ReviewModel> reviews = ReviewModel.getFromSolrCreatedBy(user, new Pager(request, "r", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));
 ModelList<CommentModel> comments = CommentModel.getFromSolrCreatedBy(user, new Pager(request, "c", new Pager(new SortField(SortableFields.TIME_ADDED, Order.DESC))));

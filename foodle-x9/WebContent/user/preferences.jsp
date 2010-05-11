@@ -14,7 +14,7 @@
  %>
 
 
-<h:header title="Account preferences - Foodle X9">
+<h:header title="Account preferences - Spot X9">
 
 <script type="text/javascript">
     $(function(){
