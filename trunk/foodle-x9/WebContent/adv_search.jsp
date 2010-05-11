@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h"%>
 <%@ taglib tagdir="/WEB-INF/tags/gmaps" prefix="gmaps"%>
-<h:header title="Foodle X9 - Advanced Search"></h:header>
+<h:header title="Spot X9 - Advanced Search"></h:header>
 <h:headercontent />
 <%@page import="com.x9.foodle.util.URLUtils"%>
 <%@page import="com.x9.foodle.util.DateUtils"%>
